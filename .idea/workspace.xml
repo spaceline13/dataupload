@@ -2,9 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1834d139-89fc-411f-a925-e4a78ed763a4" name="Default Changelist" comment="Data Upload Tool v.0.01">
-      <change afterPath="$PROJECT_DIR$/.env" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run_batch_file_as_single_command.sh" beforeDir="false" afterPath="$PROJECT_DIR$/run_batch_file_as_single_command.sh" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -354,7 +351,7 @@
       <workItem from="1566308573242" duration="872000" />
       <workItem from="1566368498642" duration="23756000" />
       <workItem from="1566454339856" duration="22787000" />
-      <workItem from="1566541049774" duration="21271000" />
+      <workItem from="1566541049774" duration="21563000" />
     </task>
     <task id="LOCAL-00001" summary="Data Upload Tool v.0.01">
       <created>1566396173668</created>
@@ -384,11 +381,18 @@
       <option name="project" value="LOCAL" />
       <updated>1566567663817</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Data Upload Tool v.0.01">
+      <created>1566568410131</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1566568410131</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="146198000" />
+    <option name="totallyTimeSpent" value="146490000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
@@ -445,11 +449,11 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Data Upload Tool v.0.01" />
     <MESSAGE value="Data Upload Tool v.0.02 - screens and basic logic of the client side application" />
     <MESSAGE value="Data Upload Tool v.0.02 - Auto deploy scripts" />
     <MESSAGE value="Data Upload Tool v.0.02 - gitignore" />
-    <option name="LAST_COMMIT_MESSAGE" value="Data Upload Tool v.0.02 - gitignore" />
+    <MESSAGE value="Data Upload Tool v.0.01" />
+    <option name="LAST_COMMIT_MESSAGE" value="Data Upload Tool v.0.01" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/redux/selectors/todoSelectors.js" />
