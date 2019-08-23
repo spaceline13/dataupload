@@ -2,46 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1834d139-89fc-411f-a925-e4a78ed763a4" name="Default Changelist" comment="Data Upload Tool v.0.01">
-      <change afterPath="$PROJECT_DIR$/src/components/atoms/RFCheckbox.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/atoms/RFFormHelper.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/atoms/RFRadioButton.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/atoms/RFSelectBox.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/atoms/RFTextField.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/atoms/SelectBox.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/molecules/CustomForm.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/molecules/MappingRow.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/organisms/Mapper.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/organisms/MetaForm.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/redux/actions/resourceActions.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/redux/reducers/resource.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/redux/selectors/mainSelectors.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/redux/selectors/resourceSelectors.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pm2_run_batch_file.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/run_batch_file_as_single_command.sh" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/EN_Texts.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/EN_Texts.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/atoms/SelectableBox.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/atoms/SelectableCard.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/molecules/MiddleScreenContainer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/molecules/MiddleScreenContainer.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/molecules/SelectableGroup.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/molecules/SelectableGroup.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/molecules/StepSubtitle.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/molecules/StepSubtitle.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/organisms/Footer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/organisms/Footer.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/organisms/Header.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/organisms/Header.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/organisms/Selector.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/organisms/Selector.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/organisms/Stepper.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/organisms/Stepper.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/organisms/Uploader.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/organisms/Uploader.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/templates/HeaderContentsFooterTemplate.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/templates/HeaderContentsFooterTemplate.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/FinishedPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/FinishedPage.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/MappingPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/MappingPage.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/MetadataPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/MetadataAndSendPage.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/redux/actions/stepsActions.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/actions/stepsActions.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/redux/actions/uploadActions.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/redux/config.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/config.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/redux/constants.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/actions/actionTypes.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/redux/reducers/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/reducers/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/redux/reducers/steps.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/reducers/steps.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/redux/reducers/upload.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/reducers/main.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/redux/selectors/uploadSelectors.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/styles/theme.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/styles/theme.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -76,6 +39,7 @@
           <entry key="js" value="396" />
           <entry key="json" value="5" />
           <entry key="prettierrc" value="1" />
+          <entry key="sh" value="4" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
@@ -84,6 +48,7 @@
           <entry key="HTML" value="3" />
           <entry key="JSON" value="9" />
           <entry key="JavaScript" value="396" />
+          <entry key="PLAIN_TEXT" value="4" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.js.language.service.starts">
@@ -98,7 +63,8 @@
           <entry key="js" value="27618" />
           <entry key="json" value="10" />
           <entry key="prettierrc" value="12" />
-          <entry key="txt" value="23" />
+          <entry key="sh" value="28" />
+          <entry key="txt" value="81" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
@@ -106,21 +72,30 @@
           <entry key="HTML" value="136" />
           <entry key="JSON" value="62" />
           <entry key="JavaScript" value="27618" />
-          <entry key="PLAIN_TEXT" value="23" />
+          <entry key="PLAIN_TEXT" value="109" />
         </counts>
       </usages-collector>
     </session>
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/organisms/MetaForm.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="276">
-              <caret line="54" lean-forward="true" selection-start-line="54" selection-end-line="54" />
+            <state relative-caret-position="192">
+              <caret line="49" column="42" lean-forward="true" selection-start-line="49" selection-start-column="42" selection-end-line="49" selection-end-column="42" />
               <folding>
                 <element signature="e#0#26#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/run_batch_file_as_single_command.sh">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="23">
+              <caret line="1" column="30" selection-start-line="1" selection-start-column="30" selection-end-line="1" selection-end-column="30" />
             </state>
           </provider>
         </entry>
@@ -186,9 +161,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/components/molecules/NavigationStepper.js" />
-        <option value="$PROJECT_DIR$/src/App.js" />
-        <option value="$PROJECT_DIR$/src/redux/selectors/stepsSelectors.js" />
         <option value="$PROJECT_DIR$/src/pages/SelectTypePage.js" />
         <option value="$PROJECT_DIR$/src/pages/SelectObjectsPage.js" />
         <option value="$PROJECT_DIR$/src/components/molecules/SelectableGroup.js" />
@@ -237,6 +209,9 @@
         <option value="$PROJECT_DIR$/src/pages/FinishedPage.js" />
         <option value="$PROJECT_DIR$/src/pages/MetadataAndSendPage.js" />
         <option value="$PROJECT_DIR$/src/components/organisms/MetaForm.js" />
+        <option value="$PROJECT_DIR$/to_run_with_sudo_permissions.sh" />
+        <option value="$PROJECT_DIR$/run.sh" />
+        <option value="$PROJECT_DIR$/run_batch_file_as_single_command.sh" />
       </list>
     </option>
   </component>
@@ -275,43 +250,6 @@
               <item name="data-upload-tool" type="b2602c69:ProjectViewProjectNode" />
               <item name="data-upload-tool" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="data-upload-tool" type="b2602c69:ProjectViewProjectNode" />
-              <item name="data-upload-tool" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="data-upload-tool" type="b2602c69:ProjectViewProjectNode" />
-              <item name="data-upload-tool" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="components" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="data-upload-tool" type="b2602c69:ProjectViewProjectNode" />
-              <item name="data-upload-tool" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="components" type="462c0819:PsiDirectoryNode" />
-              <item name="organisms" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="data-upload-tool" type="b2602c69:ProjectViewProjectNode" />
-              <item name="data-upload-tool" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="components" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="data-upload-tool" type="b2602c69:ProjectViewProjectNode" />
-              <item name="data-upload-tool" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="pages" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="data-upload-tool" type="b2602c69:ProjectViewProjectNode" />
-              <item name="data-upload-tool" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="redux" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
@@ -321,7 +259,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../react-redux-hooks-boilerplate" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../K2P Project" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.selected.package.eslint" value="C:\Users\asus\WebstormProjects\data-upload-tool\node_modules\eslint" />
@@ -333,16 +271,16 @@
     <property name="settings.editor.selected.configurable" value="com.chrisrm.idea.config" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\asus\WebstormProjects\data-upload-tool" />
+      <recent name="C:\Users\asus\WebstormProjects\data-upload-tool\src\components\molecules" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\asus\WebstormProjects\data-upload-tool\src\redux\actions" />
       <recent name="C:\Users\asus\WebstormProjects\data-upload-tool\src\components\molecules" />
       <recent name="C:\Users\asus\WebstormProjects\data-upload-tool\src\components\atoms" />
       <recent name="C:\Users\asus\WebstormProjects\data-upload-tool\src\components\organisms" />
       <recent name="C:\Users\asus\WebstormProjects\data-upload-tool\src\store" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\asus\WebstormProjects\data-upload-tool\src\components\molecules" />
-      <recent name="C:\Users\asus\WebstormProjects\data-upload-tool" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -376,7 +314,7 @@
       <workItem from="1566308573242" duration="872000" />
       <workItem from="1566368498642" duration="23756000" />
       <workItem from="1566454339856" duration="22787000" />
-      <workItem from="1566541049774" duration="18794000" />
+      <workItem from="1566541049774" duration="20140000" />
     </task>
     <task id="LOCAL-00001" summary="Data Upload Tool v.0.01">
       <created>1566396173668</created>
@@ -385,11 +323,18 @@
       <option name="project" value="LOCAL" />
       <updated>1566396173668</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Data Upload Tool v.0.02 - screens and basic logic of the client side application">
+      <created>1566565551289</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1566565551289</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="143721000" />
+    <option name="totallyTimeSpent" value="145067000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
@@ -447,23 +392,10 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Data Upload Tool v.0.01" />
-    <option name="LAST_COMMIT_MESSAGE" value="Data Upload Tool v.0.01" />
+    <MESSAGE value="Data Upload Tool v.0.02 - screens and basic logic of the client side application" />
+    <option name="LAST_COMMIT_MESSAGE" value="Data Upload Tool v.0.02 - screens and basic logic of the client side application" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$USER_HOME$/AppData/Local/Temp/Rar$DIa14028.23165/AddTodoButton.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="8" lean-forward="true" selection-start-line="8" selection-end-line="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Temp/Rar$DIa14028.24136/TodoList.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="130">
-          <caret line="7" column="48" lean-forward="true" selection-start-line="7" selection-start-column="48" selection-end-line="7" selection-end-column="48" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/AppData/Local/Temp/Rar$DIa14028.25201/TodoLayout.js">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -844,13 +776,27 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/pm2_run_batch_file.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="46">
+          <caret line="2" column="15" lean-forward="true" selection-start-line="2" selection-start-column="15" selection-end-line="2" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/components/organisms/MetaForm.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="276">
-          <caret line="54" lean-forward="true" selection-start-line="54" selection-end-line="54" />
+        <state relative-caret-position="192">
+          <caret line="49" column="42" lean-forward="true" selection-start-line="49" selection-start-column="42" selection-end-line="49" selection-end-column="42" />
           <folding>
             <element signature="e#0#26#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/run_batch_file_as_single_command.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="23">
+          <caret line="1" column="30" selection-start-line="1" selection-start-column="30" selection-end-line="1" selection-end-column="30" />
         </state>
       </provider>
     </entry>
