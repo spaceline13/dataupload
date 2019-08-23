@@ -1,0 +1,33 @@
+# This is a sample build configuration for JavaScript.
+# Check our guides at https://confluence.atlassian.com/x/14UWN for more examples.
+# Only use spaces to indent your .yml configuration.
+# -----
+# You can specify a custom docker image from Docker Hub as your build environment.
+image:  sjstreeting/pipelines-hugo
+
+pipelines:
+   branches:
+      master:
+        - step:
+                name: Project Upload
+                script:
+                  - rsync -zrSlh --stats ./ ubuntu@34.240.74.141:/var/www/html/uploadTool/
+        - step:
+                name: Set execution permissions
+                script:
+                 - pipe: atlassian/ssh-run:0.1.4
+                   variables:
+                     SSH_USER: 'ubuntu'
+                     SERVER: '34.240.74.141'
+                     COMMAND: 'sudo chmod 777 /var/www/html/uploadTool/pm2_run_batch_file.sh'
+
+        - step:
+               name: Run
+               script:
+                - pipe: atlassian/ssh-run:0.1.4
+                  variables:
+                    SSH_USER: 'ubuntu'
+                    SERVER: '34.240.74.141'
+                    COMMAND: 'sudo bash /var/www/html/uploadTool/run_batch_file_as_single_command.sh'
+
+
