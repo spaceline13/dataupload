@@ -5,6 +5,7 @@ import styled from 'styled-components';
 
 const Container = styled.div`
     margin: 10px;
+    margin-bottom: 20px;
 `;
 const StepSubtitle = ({ subtitle }) => (
     <Container>

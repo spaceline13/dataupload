@@ -1,4 +1,4 @@
-import { SET_ACTIVE_STEP, SET_STEPS } from '../constants';
+import { SET_ACTIVE_STEP, SET_STEPS } from '../actions/actionTypes';
 
 const initialState = {
     activeStep: 0,

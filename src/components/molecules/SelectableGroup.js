@@ -4,7 +4,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel/FormControlLabe
 import Box from '@material-ui/core/Box/Box';
 import PropTypes from 'prop-types';
 
-import SelectableBox from '../atoms/SelectableBox';
+import SelectableCard from '../atoms/SelectableCard';
 
 const SelectableGroup = ({ selectables, selected, onChange }) => {
     const [value, setValue] = React.useState('female');
@@ -29,7 +29,7 @@ const SelectableGroup = ({ selectables, selected, onChange }) => {
                             label={''}
                             style={{ flex: '1 1 0%', margin: '10px', maxWidth: '250px', alignItems: 'normal' }}
                             value={selectable.value}
-                            control={<SelectableBox title={selectable.name} subtitle={selectable.text} image={selectable.image} selected={value === selectable.value} />}
+                            control={<SelectableCard title={selectable.name} subtitle={selectable.text} image={selectable.image} selected={value === selectable.value} />}
                         />
                     ))}
                 </RadioGroup>

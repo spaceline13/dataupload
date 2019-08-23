@@ -2,14 +2,10 @@ import React from 'react';
 
 import HeaderContentsFooterTemplate from '../components/templates/HeaderContentsFooterTemplate';
 
-const Contents = () => <div>Finished</div>;
-
-const FinishedPage = () => {
-    return (
-        <HeaderContentsFooterTemplate>
-            <Contents />
-        </HeaderContentsFooterTemplate>
-    );
-};
+const FinishedPage = () => (
+    <HeaderContentsFooterTemplate>
+        <div />
+    </HeaderContentsFooterTemplate>
+);
 
 export default FinishedPage;

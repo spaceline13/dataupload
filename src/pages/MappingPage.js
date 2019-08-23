@@ -1,13 +1,12 @@
 import React from 'react';
 
+import Mapper from '../components/organisms/Mapper';
 import HeaderContentsFooterTemplate from '../components/templates/HeaderContentsFooterTemplate';
-
-const Contents = () => <div>Mapping the Fields</div>;
 
 const MappingPage = () => {
     return (
         <HeaderContentsFooterTemplate>
-            <Contents />
+            <Mapper />
         </HeaderContentsFooterTemplate>
     );
 };

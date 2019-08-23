@@ -5,12 +5,12 @@ import Radio from '@material-ui/core/Radio/Radio';
 import Typography from '@material-ui/core/Typography/Typography';
 import PropTypes from 'prop-types';
 
-const SelectableBox = props => {
+const SelectableCard = props => {
     return (
         <Box padding={'18px'} borderRadius={'5px'} border={props.selected ? '2px solid #526c91' : '1px solid lightgrey'}>
             <Grid container>
                 <Grid item xs={10}>
-                    <img src={props.image} />
+                    <img alt={''} src={props.image} />
                 </Grid>
                 <Grid item xs={2}>
                     <Radio {...props} />
@@ -28,11 +28,11 @@ const SelectableBox = props => {
     );
 };
 
-SelectableBox.propTypes = {
+SelectableCard.propTypes = {
     title: PropTypes.string,
     subtitle: PropTypes.string,
     selected: PropTypes.bool,
     image: PropTypes.string,
 };
 
-export default SelectableBox;
+export default SelectableCard;

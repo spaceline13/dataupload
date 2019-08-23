@@ -1,8 +1,8 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { getUploadState } from '../../redux/selectors/uploadSelectors';
-import { setUploadObjects, setUploadType } from '../../redux/actions/uploadActions';
+import { getUploadState } from '../../redux/selectors/mainSelectors';
+import { setUploadObjects, setUploadType } from '../../redux/actions/mainActions';
 import SelectableGroup from '../molecules/SelectableGroup';
 import { SELECT_OBJECTS_STEP_NAME, SELECT_TYPE_STEP_NAME } from '../../EN_Texts';
 import { getActiveStep } from '../../redux/selectors/stepsSelectors';

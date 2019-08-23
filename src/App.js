@@ -9,7 +9,7 @@ import SelectObjectsPage from './pages/SelectObjectsPage';
 import { ROUTE_FINISHED, ROUTE_MAIN, ROUTE_MAPPING, ROUTE_METADATA, ROUTE_SELECT_OJECTS, ROUTE_SELECT_TYPE, ROUTE_UPLOAD_FILE, STEPS } from './constants';
 import { setSteps } from './redux/actions/stepsActions';
 import UploadFilePage from './pages/UploadFilePage';
-import MetadataPage from './pages/MetadataPage';
+import MetadataAndSendPage from './pages/MetadataAndSendPage';
 import MappingPage from './pages/MappingPage';
 import FinishedPage from './pages/FinishedPage';
 import theme from './styles/theme';
@@ -30,7 +30,7 @@ const App = () => {
                 <Route exact path={ROUTE_SELECT_OJECTS} component={SelectObjectsPage} />
                 <Route exact path={ROUTE_UPLOAD_FILE} component={UploadFilePage} />
                 <Route exact path={ROUTE_MAPPING} component={MappingPage} />
-                <Route exact path={ROUTE_METADATA} component={MetadataPage} />
+                <Route exact path={ROUTE_METADATA} component={MetadataAndSendPage} />
                 <Route exact path={ROUTE_FINISHED} component={FinishedPage} />
             </Router>
         </ThemeProvider>

@@ -5,7 +5,7 @@ const rawTheme = createMuiTheme({
     palette: {
         primary: {
             light: '#69696a',
-            main: '#ff7a59',
+            main: '#c31632',
             dark: '#1e1e1f',
         },
         secondary: {
@@ -24,7 +24,7 @@ const rawTheme = createMuiTheme({
         },
         success: {
             xLight: green[50],
-            dark: green[700],
+            dark: '#179c7e',
         },
     },
     typography: {

@@ -1,0 +1,9 @@
+export const SET_STEPS = 'SET_STEPS';
+export const SET_ACTIVE_STEP = 'SET_ACTIVE_STEP';
+export const SET_UPLOAD_TYPE = 'SET_UPLOAD_TYPE';
+export const SET_UPLOAD_OBJECTS = 'SET_UPLOAD_OBJECTS';
+export const SET_UPLOAD_FILE = 'SET_UPLOAD_FILE';
+export const SET_CURRENT_SHEET = 'SET_CURRENT_SHEET';
+export const SET_RESOURCE = 'SET_RESOURCE';
+export const INIT_MAPPINGS = 'INIT_MAPPINGS';
+export const SET_MAPPING = 'SET_MAPPING';

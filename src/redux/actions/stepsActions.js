@@ -1,4 +1,4 @@
-import { SET_STEPS, SET_ACTIVE_STEP } from '../constants';
+import { SET_STEPS, SET_ACTIVE_STEP } from './actionTypes';
 
 const setSteps = steps => ({
     type: SET_STEPS,

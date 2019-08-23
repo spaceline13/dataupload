@@ -11,27 +11,27 @@ import CancelButton from '../molecules/CancelButton';
 import { getStepByRoute, getStepsList } from '../../redux/selectors/stepsSelectors';
 import { setActive } from '../../redux/actions/stepsActions';
 
-const Footer = props => {
+const Footer = ({history, onFinish}) => {
     const steps = useSelector(getStepsList);
-    const current = useSelector(state => getStepByRoute(state, props.history.location.pathname));
+    const current = useSelector(state => getStepByRoute(state, history.location.pathname));
     const back = current.index > 0 ? steps[current.index - 1] : null;
     const next = current.index < steps.length - 1 ? steps[current.index + 1] : null;
-    const finish = current.index === steps.length - 1;
+    const finish = current.index === steps.length - 2;
 
     const dispatch = useDispatch();
     const goBack = () => {
-        props.history.push(back.route);
+        history.push(back.route);
         dispatch(setActive(back.index));
     };
     const goNext = () => {
-        props.history.push(next.route);
+        history.push(next.route);
         dispatch(setActive(next.index));
     };
     const doCancel = () => {
         window.location.href = '/';
     };
     const doFinish = () => {
-        alert('finished');
+        if (onFinish) onFinish(goNext);
     };
 
     return (
@@ -41,7 +41,7 @@ const Footer = props => {
                     {back && <BackButton onClick={goBack} />}
                     <CancelButton onClick={doCancel} />
                 </Box>
-                {next && <NextButton onClick={goNext} />}
+                {next && !finish && <NextButton onClick={goNext} />}
                 {finish && <FinishButton onClick={doFinish} />}
             </Box>
         </Box>
@@ -49,5 +49,6 @@ const Footer = props => {
 };
 Footer.propTypes = {
     history: PropTypes.object,
+    onFinish: PropTypes.func
 };
 export default withRouter(Footer);
