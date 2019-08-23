@@ -1,2 +1,2 @@
 #!/bin/bash
-su -c /var/www/html/uploadTool/to_run_with_sudo_permissions.sh root
+su -c /var/www/html/uploadTool/pm2_run_batch_file.sh root

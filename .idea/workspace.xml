@@ -2,9 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1834d139-89fc-411f-a925-e4a78ed763a4" name="Default Changelist" comment="Data Upload Tool v.0.01">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.env" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run_batch_file_as_single_command.sh" beforeDir="false" afterPath="$PROJECT_DIR$/run_batch_file_as_single_command.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -33,20 +34,22 @@
         <counts>
           <entry key="babelrc" value="1" />
           <entry key="css" value="2" />
+          <entry key="env" value="1" />
           <entry key="eslintrc" value="2" />
           <entry key="gitignore" value="1" />
           <entry key="html" value="3" />
           <entry key="js" value="396" />
-          <entry key="json" value="5" />
+          <entry key="json" value="6" />
           <entry key="prettierrc" value="1" />
           <entry key="sh" value="5" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
+          <entry key=".env file" value="1" />
           <entry key="CSS" value="2" />
           <entry key="HTML" value="3" />
-          <entry key="JSON" value="9" />
+          <entry key="JSON" value="10" />
           <entry key="JavaScript" value="396" />
           <entry key="PLAIN_TEXT" value="6" />
         </counts>
@@ -62,18 +65,18 @@
           <entry key="gitignore" value="9" />
           <entry key="html" value="136" />
           <entry key="js" value="27618" />
-          <entry key="json" value="10" />
+          <entry key="json" value="33" />
           <entry key="prettierrc" value="12" />
           <entry key="sh" value="28" />
-          <entry key="txt" value="113" />
+          <entry key="txt" value="127" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="HTML" value="136" />
-          <entry key="JSON" value="62" />
+          <entry key="JSON" value="85" />
           <entry key="JavaScript" value="27618" />
-          <entry key="PLAIN_TEXT" value="150" />
+          <entry key="PLAIN_TEXT" value="164" />
         </counts>
       </usages-collector>
     </session>
@@ -92,11 +95,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/run_batch_file_as_single_command.sh">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="23">
-              <caret line="1" column="30" selection-start-line="1" selection-start-column="30" selection-end-line="1" selection-end-column="30" />
+            <state relative-caret-position="46">
+              <caret line="2" lean-forward="true" selection-start-line="2" selection-end-line="2" />
             </state>
           </provider>
         </entry>
@@ -110,11 +113,29 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/.gitignore">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="253">
               <caret line="11" column="6" lean-forward="true" selection-start-line="11" selection-start-column="6" selection-end-line="11" selection-end-column="6" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/package.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="115">
+              <caret line="35" column="14" selection-start-line="35" selection-start-column="14" selection-end-line="35" selection-end-column="14" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/.env">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <caret column="9" selection-start-column="9" selection-end-column="9" />
             </state>
           </provider>
         </entry>
@@ -180,8 +201,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/pages/SelectObjectsPage.js" />
-        <option value="$PROJECT_DIR$/src/components/molecules/SelectableGroup.js" />
         <option value="$PROJECT_DIR$/src/components/organisms/Selector.js" />
         <option value="$PROJECT_DIR$/src/pages/UploadFilePage.js" />
         <option value="$PROJECT_DIR$/src/components/molecules/DragDropFile.js" />
@@ -229,8 +248,10 @@
         <option value="$PROJECT_DIR$/src/components/organisms/MetaForm.js" />
         <option value="$PROJECT_DIR$/to_run_with_sudo_permissions.sh" />
         <option value="$PROJECT_DIR$/run.sh" />
-        <option value="$PROJECT_DIR$/run_batch_file_as_single_command.sh" />
         <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/package.json" />
+        <option value="$PROJECT_DIR$/.env" />
+        <option value="$PROJECT_DIR$/run_batch_file_as_single_command.sh" />
       </list>
     </option>
   </component>
@@ -333,7 +354,7 @@
       <workItem from="1566308573242" duration="872000" />
       <workItem from="1566368498642" duration="23756000" />
       <workItem from="1566454339856" duration="22787000" />
-      <workItem from="1566541049774" duration="20519000" />
+      <workItem from="1566541049774" duration="21271000" />
     </task>
     <task id="LOCAL-00001" summary="Data Upload Tool v.0.01">
       <created>1566396173668</created>
@@ -356,11 +377,18 @@
       <option name="project" value="LOCAL" />
       <updated>1566567310245</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Data Upload Tool v.0.02 - gitignore">
+      <created>1566567663817</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1566567663817</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="145446000" />
+    <option name="totallyTimeSpent" value="146198000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
@@ -420,15 +448,10 @@
     <MESSAGE value="Data Upload Tool v.0.01" />
     <MESSAGE value="Data Upload Tool v.0.02 - screens and basic logic of the client side application" />
     <MESSAGE value="Data Upload Tool v.0.02 - Auto deploy scripts" />
-    <option name="LAST_COMMIT_MESSAGE" value="Data Upload Tool v.0.02 - Auto deploy scripts" />
+    <MESSAGE value="Data Upload Tool v.0.02 - gitignore" />
+    <option name="LAST_COMMIT_MESSAGE" value="Data Upload Tool v.0.02 - gitignore" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$USER_HOME$/AppData/Local/Temp/Rar$DIa14028.26067/TodoPage.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Temp/Rar$DIa14028.27249/todoSelectors.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/redux/selectors/todoSelectors.js" />
     <entry file="file://$PROJECT_DIR$/src/pages/SelectTypePage.js">
       <provider selected="true" editor-type-id="text-editor">
@@ -810,13 +833,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/run_batch_file_as_single_command.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="23">
-          <caret line="1" column="30" selection-start-line="1" selection-start-column="30" selection-end-line="1" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/pm2_run_batch_file.sh">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="69">
@@ -828,6 +844,27 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="253">
           <caret line="11" column="6" lean-forward="true" selection-start-line="11" selection-start-column="6" selection-end-line="11" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.env">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="9" selection-start-column="9" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="115">
+          <caret line="35" column="14" selection-start-line="35" selection-start-column="14" selection-end-line="35" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/run_batch_file_as_single_command.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="46">
+          <caret line="2" lean-forward="true" selection-start-line="2" selection-end-line="2" />
         </state>
       </provider>
     </entry>
