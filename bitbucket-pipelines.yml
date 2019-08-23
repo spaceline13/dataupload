@@ -8,7 +8,7 @@ image:  sjstreeting/pipelines-hugo
 pipelines:
    branches:
       master:
-        - step:
+        - step: 
                 name: Project Upload
                 script:
                   - rsync -zrSlh --stats ./ ubuntu@34.240.74.141:/var/www/html/uploadTool/
