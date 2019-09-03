@@ -9,23 +9,24 @@ import BackButton from '../molecules/BackButton';
 import FinishButton from '../molecules/FinishButton';
 import CancelButton from '../molecules/CancelButton';
 import { getStepByRoute, getStepsList } from '../../redux/selectors/stepsSelectors';
-import { setActive } from '../../redux/actions/stepsActions';
+import { addFootstep, setActive } from '../../redux/actions/stepsActions';
 
-const Footer = ({history, onFinish}) => {
+const Footer_StepController = ({ history, onFinish }) => {
     const steps = useSelector(getStepsList);
-    const current = useSelector(state => getStepByRoute(state, history.location.pathname));
-    const back = current.index > 0 ? steps[current.index - 1] : null;
+    const current = useSelector(getStepByRoute(history.location.pathname));
+    const back = current.index > 1 ? steps[current.index - 1] : null; // current.index > 1 to display back on the second and not the first page
     const next = current.index < steps.length - 1 ? steps[current.index + 1] : null;
-    const finish = current.index === steps.length - 2;
-
+    const finish = current.index === steps.length - 2; // steps.length - 2 to display finish on the pre-last page and not the last
     const dispatch = useDispatch();
     const goBack = () => {
-        history.push(back.route);
+        dispatch(addFootstep(current.index));
         dispatch(setActive(back.index));
+        history.push(back.route);
     };
     const goNext = () => {
-        history.push(next.route);
+        dispatch(addFootstep(current.index));
         dispatch(setActive(next.index));
+        history.push(next.route);
     };
     const doCancel = () => {
         window.location.href = '/';
@@ -47,8 +48,8 @@ const Footer = ({history, onFinish}) => {
         </Box>
     );
 };
-Footer.propTypes = {
+Footer_StepController.propTypes = {
     history: PropTypes.object,
-    onFinish: PropTypes.func
+    onFinish: PropTypes.func,
 };
-export default withRouter(Footer);
+export default withRouter(Footer_StepController);

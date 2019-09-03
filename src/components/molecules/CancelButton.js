@@ -1,13 +1,13 @@
 import React from 'react';
+import Button from '@material-ui/core/Button/Button';
 
-import StandardButton from '../atoms/StandardButton';
-import {CANCEL_TEXT} from "../../EN_Texts";
+import { CANCEL_TEXT } from '../../EN_Texts';
 
 const CancelButton = props => {
     return (
-        <StandardButton color={'secondary'} float={'left'} {...props}>
+        <Button color={'secondary'} float={'left'} {...props}>
             {CANCEL_TEXT}
-        </StandardButton>
+        </Button>
     );
 };
 

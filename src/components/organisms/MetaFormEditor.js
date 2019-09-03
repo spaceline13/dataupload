@@ -1,16 +1,13 @@
 import React from 'react';
-import { getFormValues, reduxForm } from 'redux-form';
+import { reduxForm } from 'redux-form';
 import MenuItem from '@material-ui/core/MenuItem/MenuItem';
-import { useSelector } from 'react-redux';
 
 import RFTextField from '../atoms/RFTextField';
 import RFCheckbox from '../atoms/RFCheckbox';
 import RFRadioButton from '../atoms/RFRadioButton';
 import RFSelectBox from '../atoms/RFSelectBox';
 import CustomForm from '../molecules/CustomForm';
-
-//formname
-const formName = 'metadata';
+import { METADATA_STEP_NAME } from '../../EN_Texts';
 
 //async validate
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
@@ -27,7 +24,7 @@ const asyncValidate = (values /*, dispatch */) => {
 //sync validate
 const validate = values => {
     const errors = {};
-    const requiredFields = ['firstName', 'lastName', 'email', 'favoriteColor', 'notes'];
+    const requiredFields = ['firstName', 'lastName', 'email', 'favoriteColor', 'description'];
     requiredFields.forEach(field => {
         if (!values[field]) {
             errors[field] = 'Required';
@@ -53,20 +50,15 @@ const fields = [
     { name: 'description', component: RFTextField, label: 'Description' },
 ];
 
-const MetaForm = () => {
-    const form = useSelector(getFormValues(formName));
-    const runMyCode = () => {
-        console.log(form);
-    };
+const MetaFormEditor = () => {
     return (
         <center>
             <CustomForm items={fields} submitLabel={'send'} clearLabel={'clear'} />
-            <button onClick={runMyCode}>console log the form values</button>
         </center>
     );
 };
 export default reduxForm({
-    form: formName, // a unique identifier for this form
+    form: METADATA_STEP_NAME, // a unique identifier for this form
     validate,
     asyncValidate,
-})(MetaForm);
+})(MetaFormEditor);

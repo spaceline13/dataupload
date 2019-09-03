@@ -2,10 +2,11 @@ import Box from '@material-ui/core/Box/Box';
 import React from 'react';
 import { Field } from 'redux-form';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
 const CustomForm = ({ items, handleSubmit }) => {
     return (
-        <form onSubmit={handleSubmit}>
+        <MyForm onSubmit={handleSubmit}>
             <Box>
                 {items.map((item, i) => (
                     <Box key={i}>
@@ -15,9 +16,13 @@ const CustomForm = ({ items, handleSubmit }) => {
                     </Box>
                 ))}
             </Box>
-        </form>
+        </MyForm>
     );
 };
+const MyForm = styled.form`
+    display: inline-block;
+    text-align: left;
+`;
 CustomForm.propTypes = {
     handleSubmit: PropTypes.func,
     items: PropTypes.array,

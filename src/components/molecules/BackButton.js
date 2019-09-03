@@ -1,14 +1,14 @@
 import React from 'react';
 import NavigateBefore from '@material-ui/icons/NavigateBefore';
+import Button from '@material-ui/core/Button/Button';
 
-import StandardButton from '../atoms/StandardButton';
-import {BACK_TEXT} from "../../EN_Texts";
+import { BACK_TEXT } from '../../EN_Texts';
 
 const BackButton = props => {
     return (
-        <StandardButton color={'primary'} variant="outlined" float={'left'} {...props}>
+        <Button color={'primary'} variant="outlined" float={'left'} {...props}>
             <NavigateBefore /> {BACK_TEXT}
-        </StandardButton>
+        </Button>
     );
 };
 

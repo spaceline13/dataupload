@@ -7,14 +7,12 @@ import Grid from '@material-ui/core/Grid/Grid';
 import Hidden from '@material-ui/core/Hidden/Hidden';
 
 import NavigationStepper from '../molecules/NavigationStepper';
-import { getStepsList, getStepsTexts } from '../../redux/selectors/stepsSelectors';
+import { getStepByRoute, getStepsTexts } from '../../redux/selectors/stepsSelectors';
 import { APP_TITLE, OF_TEXT, STEP_TEXT } from '../../EN_Texts';
 
 const Stepper = ({ history }) => {
-    const steps = useSelector(getStepsList);
     const stepTexts = useSelector(getStepsTexts);
-    const activeStep = steps.find(step => step.route === history.location.pathname).index; //useSelector(getActiveIndex);
-
+    const activeStep = useSelector(getStepByRoute(history.location.pathname)).index; //useSelector(getActiveIndex);
     return (
         <Grid container>
             <Hidden smDown>
