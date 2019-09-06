@@ -11,15 +11,17 @@ const SelectBox = ({ givenValue, items, onChange }) => {
         setValue(value);
         onChange(value);
     };
-
     return (
         <FormControl>
             <Select displayEmpty value={value} onChange={handleChange}>
-                {items.map((item, i) => (
-                    <MenuItem key={i} value={item.value}>
-                        {item.label}
-                    </MenuItem>
-                ))}
+                {items.map(
+                    (item, i) =>
+                        item && (
+                            <MenuItem key={i} value={item ? item.value : null}>
+                                {item ? item.label : 'None'}
+                            </MenuItem>
+                        ),
+                )}
             </Select>
         </FormControl>
     );

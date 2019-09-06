@@ -7,7 +7,7 @@ import SelectTypePage from './pages/SelectTypePage';
 import MainPage from './pages/MainPage';
 import SelectObjectsPage from './pages/SelectObjectsPage';
 import { ROUTE_FINISHED, ROUTE_MAIN, ROUTE_MAPPING, ROUTE_METADATA, ROUTE_SELECT_OJECTS, ROUTE_SELECT_TYPE, ROUTE_UPLOAD_FILE, ROUTE_UPLOAD_STREAM, STEPS } from './STEPS_and_routes';
-import {setFileSteps, setSteps, setStreamSteps} from './redux/actions/stepsActions';
+import { setFileSteps, setSteps, setStreamSteps } from './redux/actions/stepsActions';
 import UploadFilePage from './pages/UploadFilePage';
 import MetadataAndSendPage from './pages/MetadataAndSendPage';
 import MappingPage from './pages/MappingPage';
@@ -19,7 +19,9 @@ require('dotenv').config();
 
 const App = () => {
     const dispatch = useDispatch();
-    const getSteps = async () => {
+
+    //GET STEPS
+    (async () => {
         let response = await fetch(`${process.env.REACT_APP_SERVER_ENDPOINT}/steps`, {
             method: 'GET',
             credentials: 'include',
@@ -34,8 +36,8 @@ const App = () => {
             dispatch(setFileSteps(json.data.fileSteps));
             dispatch(setStreamSteps(json.data.streamSteps));
         }
-    };
-    getSteps();
+    })();
+
     return (
         <ThemeProvider theme={theme}>
             {/* TO DO: USE Material UI CssBaseline here instead of body css in index html*/}

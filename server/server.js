@@ -28,6 +28,19 @@ app.use(express.json());
 //URLENCODED
 app.use(express.urlencoded());
 
+//get user data
+app.get('/uploadedData', (req, res) => {
+    res.send({
+        status: 'ok',
+        data: [
+            { name: 'My first Upload', type: 'file', size: '20MB', created: '20/04/2018' },
+            { name: 'My second Upload', type: 'file', size: '20MB', created: '20/04/2018' },
+            { name: 'Another file', type: 'file', size: '20MB', created: '20/04/2018' },
+            { name: 'My sensors', type: 'stream', size: '-', created: '20/04/2018' },
+        ],
+    });
+});
+
 //get steps
 app.get('/steps', (req, res) => {
     res.send({
@@ -183,6 +196,73 @@ app.get('/steps', (req, res) => {
                 },
             ],
         },
+    });
+});
+
+app.get('/objectProperties', (req, res) => {
+    const object = req.query.object;
+    let props = [];
+    switch (object) {
+        case 'incidents': {
+            props = [{ label: 'Name', value: 'name' }, { label: 'Product', value: 'product' }, { label: 'Country', value: 'country' }, { label: 'Date', value: 'date' }];
+            break;
+        }
+        case 'companies': {
+            props = [{ label: 'Name', value: 'name' }, { label: 'Subject', value: 'subject' }, { label: 'Country', value: 'country' }, { label: 'Size', value: 'size' }];
+            break;
+        }
+        case 'prices': {
+            props = [{ label: 'Product', value: 'product' }, { label: 'Price', value: 'price' }, { label: 'Currency', value: 'currency' }, { label: 'Date', value: 'date' }];
+            break;
+        }
+        case 'extra': {
+            props = [{ label: 'Name', value: 'name' }, { label: 'Subject', value: 'subject' }, { label: 'Extra', value: 'extra' }, { label: 'Date', value: 'date' }];
+            break;
+        }
+        default: {
+            break;
+        }
+    }
+    res.send({
+        status: 'ok',
+        data: props,
+    });
+});
+
+app.get('/metadataFields', (req, res) => {
+    res.send({
+        status: 'ok',
+        data: [
+            { name: 'firstName', type: 'TextField', label: 'First Name' },
+            { name: 'lastName', type: 'TextField', label: 'Last Name' },
+            { name: 'email', type: 'TextField', label: 'Email' },
+            {
+                name: 'a sample radio',
+                type: 'RadioButton',
+                label: 'Test',
+                items: [{ value: 'test1', name: 'Test1' }, { value: 'test2', name: 'Test2' }, { value: 'test3', name: 'Test3' }],
+            },
+            {
+                name: 'usage',
+                type: 'SelectBox',
+                label: 'I want to upload my data for',
+                items: [
+                    { value: '', name: '' },
+                    { value: 'personal', name: 'Personal Use' },
+                    { value: 'foodakai', name: 'Upload to Foodakai Platform' },
+                    { value: 'global', name: 'Available to all Agroknow apps' },
+                ],
+            },
+            { name: 'agree', type: 'Checkbox', label: 'I agree with the terms' },
+            { name: 'description', type: 'TextField', label: 'Description' },
+        ],
+    });
+});
+app.post('/sendCSV', (req, res) => {
+    const csv = req.body.csv;
+    res.send({
+        status: 'ok',
+        csv: csv,
     });
 });
 

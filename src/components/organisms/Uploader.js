@@ -42,7 +42,7 @@ const Uploader = () => {
             dispatch(setCurrentSheet(0));
             dispatch(initMappings(initialMappings));
 
-            console.log('file loaded:', wb);
+            //console.log('file loaded:', wb);
         };
         if (rABS) reader.readAsBinaryString(file);
         else reader.readAsArrayBuffer(file);

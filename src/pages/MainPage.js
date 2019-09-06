@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import Typography from '@material-ui/core/Typography/Typography';
 import Box from '@material-ui/core/Box/Box';
 import TableRow from '@material-ui/core/TableRow/TableRow';
@@ -16,20 +16,29 @@ import LogoContentsTemplate from '../components/templates/LogoContentsTemplate';
 import { getStepsList } from '../redux/selectors/stepsSelectors';
 import { addFootstep } from '../redux/actions/stepsActions';
 
-function createData(name, type, size, created) {
-    return { name, type, size, created };
-}
-
-const rows = [
-    createData('My first Upload', 'file', '20MB', '20/04/2018'),
-    createData('My second Upload', 'file', '20MB', '20/04/2018'),
-    createData('Another file', 'file', '20MB', '20/04/2018'),
-    createData('My sensors', 'stream', '-', '20/04/2018'),
-];
-
 const MainPage = ({ history }) => {
     const dispatch = useDispatch();
     const steps = useSelector(getStepsList);
+
+    const [rows, setRows] = useState([]);
+    useEffect(() => {
+        //GET USER DATA
+        (async () => {
+            let response = await fetch(`${process.env.REACT_APP_SERVER_ENDPOINT}/uploadedData`, {
+                method: 'GET',
+                credentials: 'include',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                },
+            });
+            let json = await response.json();
+            if (json.status === 'ok') {
+                setRows(json.data);
+            }
+        })();
+    }, []);
+
     return (
         <LogoContentsTemplate>
             <Box marginTop={'10vh'} />
@@ -74,7 +83,7 @@ const MainPage = ({ history }) => {
                             <TableCell align="center">{row.created}</TableCell>
                             <TableCell align="right">
                                 <Button color={'primary'} variant={'contained'}>
-                                    <RemoveIcon color={'secondary.light'} />
+                                    <RemoveIcon/>
                                 </Button>
                             </TableCell>
                         </TableRow>
