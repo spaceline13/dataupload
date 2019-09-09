@@ -1,11 +1,4 @@
-import {
-    ADD_FOOTSTEP,
-    SET_ACTIVE_STEP,
-    SET_CURRENT_STEPS,
-    SET_FILE_STEPS,
-    SET_FOOTSTEPS,
-    SET_STREAM_STEPS
-} from '../actions/actionTypes';
+import { ADD_FOOTSTEP, SET_ACTIVE_STEP, SET_CURRENT_STEPS, SET_FILE_STEPS, SET_FOOTSTEPS, SET_STREAM_STEPS } from '../actions/actionTypes';
 
 const initialState = {
     currentSteps: [],

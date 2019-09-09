@@ -1,10 +1,11 @@
 import FormControl from '@material-ui/core/FormControl/FormControl';
 import Select from '@material-ui/core/Select/Select';
 import React from 'react';
+import MenuItem from '@material-ui/core/MenuItem/MenuItem';
 
 import RFFromHelper from './RFFormHelper';
 
-const RFSelectBox = ({ input, label, meta: { touched, error }, children, ...custom }) => (
+const RFSelectBox = ({ input, label, meta: { touched, error }, items, ...custom }) => (
     <FormControl error={touched && error}>
         <Select
             {...input}
@@ -13,7 +14,11 @@ const RFSelectBox = ({ input, label, meta: { touched, error }, children, ...cust
                 name: 'age',
                 id: 'age-native-simple',
             }}>
-            {children}
+            {items.map((item, index) => (
+                <MenuItem key={index} value={item.value}>
+                    {item.name}
+                </MenuItem>
+            ))}
         </Select>
         {RFFromHelper({ touched, error })}
     </FormControl>

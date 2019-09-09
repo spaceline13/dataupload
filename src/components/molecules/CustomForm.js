@@ -9,16 +9,19 @@ const CustomForm = ({ items, handleSubmit }) => {
         <MyForm onSubmit={handleSubmit}>
             <Box>
                 {items.map((item, i) => (
-                    <Box key={i}>
-                        <Field name={item.name} component={item.component} label={item.label}>
+                    <Box padding={'10px'} minWidth={'300px'} key={i}>
+                        <FixedWidthField name={item.name} component={item.component} label={item.label} items={item.items}>
                             {item.children}
-                        </Field>
+                        </FixedWidthField>
                     </Box>
                 ))}
             </Box>
         </MyForm>
     );
 };
+const FixedWidthField = styled(Field)`
+    width: 100%;
+`;
 const MyForm = styled.form`
     display: inline-block;
     text-align: left;

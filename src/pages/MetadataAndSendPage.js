@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getFormAsyncErrors, getFormSyncErrors, getFormValues, submit } from 'redux-form';
 import { Redirect } from 'react-router-dom';
@@ -7,10 +7,12 @@ import HeaderContentsFooterTemplate from '../components/templates/HeaderContents
 import MetaFormEditor from '../components/organisms/MetaFormEditor';
 import { setMetadata } from '../redux/actions/mainActions';
 import { METADATA_STEP_NAME } from '../EN_Texts';
-import { getUploadMetadata } from '../redux/selectors/mainSelectors';
-import ServerSender from '../components/organisms/ServerSender';
+import { getUploadMappings, getUploadMetadata } from '../redux/selectors/mainSelectors';
+import ServerSendingDialog from '../components/molecules/ServerSendingDialog';
 import { footstepValidation } from '../redux/selectors/stepsSelectors';
 import { ROUTE_MAIN } from '../STEPS_and_routes';
+import composeCSVselectedCols from '../utils/composeCSVselectedCols';
+import { getCurrentSheet } from '../redux/selectors/resourceSelectors';
 
 /*************
  * Needs to be done:
@@ -21,6 +23,29 @@ const MetadataAndSendPage = () => {
     const dispatch = useDispatch();
     const form = useSelector(getFormValues(METADATA_STEP_NAME));
     const metadataStore = useSelector(getUploadMetadata);
+    const currentSheet = useSelector(getCurrentSheet);
+    const mappings = useSelector(getUploadMappings);
+
+    const [fields, setFields] = useState([]);
+    useEffect(() => {
+        //GET METADATA FIELDS
+        (async () => {
+            let response = await fetch(`${process.env.REACT_APP_SERVER_ENDPOINT}/metadataFields`, {
+                method: 'GET',
+                credentials: 'include',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                },
+            });
+            let json = await response.json();
+            if (json.status === 'ok') {
+                setFields(json.data);
+            }
+        })();
+    }, []);
+
+    // VALIDATE AND SEND
     const formSyncErrors = useSelector(getFormSyncErrors(METADATA_STEP_NAME));
     const formAsyncErrors = useSelector(getFormAsyncErrors(METADATA_STEP_NAME));
     const isValid =
@@ -30,20 +55,40 @@ const MetadataAndSendPage = () => {
     const handleFinish = cb => {
         dispatch(setMetadata(form));
         setSending(true);
-        setTimeout(() => {
-            dispatch(submit(METADATA_STEP_NAME));
-            setSending(false);
-            if (isValid) {
-                if (cb) cb(); //go next
+
+        //sendToServer
+        (async () => {
+            let response = await fetch(`${process.env.REACT_APP_SERVER_ENDPOINT}/sendCSV`, {
+                method: 'POST',
+                credentials: 'include',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    csv: composeCSVselectedCols(currentSheet, mappings),
+                }),
+            });
+            let json = await response.json();
+            if (json.status === 'ok') {
+                //setTimeout just to show the loader
+                setTimeout(() => {
+                    dispatch(submit(METADATA_STEP_NAME));
+                    setSending(false);
+                    if (isValid) {
+                        if (cb) cb(); //go next
+                    }
+                }, 1000);
             }
-        }, 3000);
+        })();
     };
+
     const footstepsValid = useSelector(footstepValidation);
     if (footstepsValid)
         return (
             <HeaderContentsFooterTemplate onFinish={handleFinish}>
-                <MetaFormEditor initialValues={metadataStore} onSubmit={() => {}} />
-                <ServerSender open={sending} />
+                <MetaFormEditor initialValues={metadataStore} fields={fields} onSubmit={() => {}} />
+                <ServerSendingDialog open={sending} />
             </HeaderContentsFooterTemplate>
         );
     else return <Redirect to={ROUTE_MAIN} />;

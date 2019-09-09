@@ -15,6 +15,8 @@ import { getCurrentSheet, getCurrentSheetIndex, getResourceSheetNames } from '..
 import { setCurrentSheet } from '../../redux/actions/resourceActions';
 import MappingRow from '../molecules/MappingRow';
 import { setMapping } from '../../redux/actions/mainActions';
+import { addSelectedProperty, removeSelectedProperty } from '../../redux/actions/mappingActions';
+import { getAvailableProperties, getMappingProperties } from '../../redux/selectors/mappingSelectors';
 
 const Mapper = () => {
     const dispatch = useDispatch();
@@ -24,6 +26,8 @@ const Mapper = () => {
     const currentSheetIndex = useSelector(getCurrentSheetIndex);
     const currentSheet = useSelector(getCurrentSheet);
     const mappings = useSelector(getUploadMappings);
+    const availableProperties = useSelector(getAvailableProperties);
+    const allProperties = useSelector(getMappingProperties);
 
     const headers = currentSheet.length > 0 ? currentSheet[0] : [];
     const previews = currentSheet.length > 1 ? currentSheet[1] : [];
@@ -32,16 +36,20 @@ const Mapper = () => {
         dispatch(setCurrentSheet(sheet));
     };
     const setHeaderMapping = (header, value) => {
+        //set mapping store
+        if (mappings[header]) dispatch(removeSelectedProperty(mappings[header]));
+        if (value) dispatch(addSelectedProperty(value));
+
+        //set main store
         let mapping = {};
         mapping[header] = value;
         dispatch(setMapping(mapping));
     };
-    const properties = [{ label: 'Name', value: 'name' }, { label: 'Email', value: 'email' }, { label: 'Do not include', value: null }];
 
     return (
         <div>
             {sheetNames.length > 0 && (
-                <Grid container spacing={16}>
+                <Grid container spacing={10}>
                     <Grid item xs={12}>
                         <AppBar position="static" color="default">
                             <Tabs
@@ -79,7 +87,7 @@ const Mapper = () => {
                                         selected={!!mappings[header]}
                                         header={header}
                                         preview={previews[i]}
-                                        properties={properties}
+                                        properties={[...availableProperties, allProperties.find(prop => prop.value === mappings[header]), { value: null, label: 'None' }]}
                                         selectedProperty={mappings[header]}
                                         onChange={value => {
                                             setHeaderMapping(header, value);
