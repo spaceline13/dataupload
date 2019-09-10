@@ -30,7 +30,7 @@ app.use(express.urlencoded());
 
 //ROUTES
 app.use('/entranceScreen', require('./routes/entranceScreen'));
-app.use('/uploadedData', require('./routes/entranceScreen'));
+app.use('/uploadedData', require('./routes/uploadedData'));
 app.use('/steps', require('./routes/steps'));
 app.use('/objectProperties', require('./routes/objectProperties'));
 app.use('/metadataFields', require('./routes/metadataFields'));
