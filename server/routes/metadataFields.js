@@ -1,7 +1,7 @@
 var router = require('express').Router();
 
 //get metadata
-router.get('/metadataFields', (req, res) => {
+router.get('/', (req, res) => {
     res.send({
         status: 'ok',
         data: [

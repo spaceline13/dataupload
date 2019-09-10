@@ -7,7 +7,7 @@ import HeaderContentsFooterTemplate from '../components/templates/HeaderContents
 import MetaFormEditor from '../components/organisms/MetaFormEditor';
 import { setMetadata } from '../redux/actions/mainActions';
 import { METADATA_STEP_NAME } from '../EN_Texts';
-import { getUploadMappings, getUploadMetadata } from '../redux/selectors/mainSelectors';
+import { getMainState, getUploadMappings, getUploadMetadata } from '../redux/selectors/mainSelectors';
 import ServerSendingDialog from '../components/molecules/ServerSendingDialog';
 import { footstepValidation } from '../redux/selectors/stepsSelectors';
 import { ROUTE_MAIN } from '../STEPS_and_routes';
@@ -25,6 +25,7 @@ const MetadataAndSendPage = () => {
     const metadataStore = useSelector(getUploadMetadata);
     const currentSheet = useSelector(getCurrentSheet);
     const mappings = useSelector(getUploadMappings);
+    const mainState = useSelector(getMainState);
 
     const [fields, setFields] = useState([]);
     useEffect(() => {
@@ -55,7 +56,7 @@ const MetadataAndSendPage = () => {
     const handleFinish = cb => {
         dispatch(setMetadata(form));
         setSending(true);
-
+        console.log(mainState);
         //sendToServer
         (async () => {
             let response = await fetch(`${process.env.REACT_APP_SERVER_ENDPOINT}/sendCSV`, {
@@ -67,6 +68,7 @@ const MetadataAndSendPage = () => {
                 },
                 body: JSON.stringify({
                     csv: composeCSVselectedCols(currentSheet, mappings),
+                    json: JSON.stringify(mainState),
                 }),
             });
             let json = await response.json();
