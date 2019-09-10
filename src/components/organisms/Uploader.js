@@ -37,7 +37,7 @@ const Uploader = () => {
             //add filename to the resource
             wb.name = file.name;
             //set store
-            dispatch(setUploadFile(file));
+            dispatch(setUploadFile(excelfile));
             dispatch(setResource(wb, sheetArray));
             dispatch(setCurrentSheet(0));
             dispatch(initMappings(initialMappings));

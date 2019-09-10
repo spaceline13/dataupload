@@ -4,7 +4,7 @@ const fs = require('fs');
 router.post('/', (req, res) => {
     const csvString = req.body.csv;
     const jsonString = req.body.json;
-    const file = jsonString.file;
+    const file = JSON.parse(jsonString).file;
 
     fs.writeFile('/var/www/html/uploadTool/data/' + 'test.json', jsonString, function(err) {
         if (err) {
