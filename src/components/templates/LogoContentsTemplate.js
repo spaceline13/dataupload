@@ -5,10 +5,10 @@ import Container from '@material-ui/core/Container/Container';
 
 import Header from '../organisms/Header';
 
-const LogoContentsTemplate = ({ children }) => (
+const LogoContentsTemplate = ({ children, logo }) => (
     <Box display={'flex'} flexDirection={'column'} height={'100%'} overflow={'hidden'}>
         <Box flex={'0 0 auto'}>
-            <Header />
+            <Header logo={logo} />
         </Box>
         <Box flex={'1 1 auto'} overflow={'auto'}>
             <Container>{children}</Container>
@@ -17,6 +17,7 @@ const LogoContentsTemplate = ({ children }) => (
 );
 LogoContentsTemplate.propTypes = {
     children: PropTypes.array,
+    logo: PropTypes.string,
 };
 
 export default LogoContentsTemplate;

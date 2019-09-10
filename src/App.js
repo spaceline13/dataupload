@@ -4,7 +4,7 @@ import { ThemeProvider } from '@material-ui/styles';
 import { useDispatch } from 'react-redux';
 
 import SelectTypePage from './pages/SelectTypePage';
-import MainPage from './pages/MainPage';
+import FirstPage from './pages/FirstPage';
 import SelectObjectsPage from './pages/SelectObjectsPage';
 import { ROUTE_FINISHED, ROUTE_MAIN, ROUTE_MAPPING, ROUTE_METADATA, ROUTE_SELECT_OJECTS, ROUTE_SELECT_TYPE, ROUTE_UPLOAD_FILE, ROUTE_UPLOAD_STREAM, STEPS } from './STEPS_and_routes';
 import { setFileSteps, setSteps, setStreamSteps } from './redux/actions/stepsActions';
@@ -42,7 +42,7 @@ const App = () => {
         <ThemeProvider theme={theme}>
             {/* TO DO: USE Material UI CssBaseline here instead of body css in index html*/}
             <Router>
-                <Route exact path={ROUTE_MAIN} component={MainPage} />
+                <Route exact path={ROUTE_MAIN} component={FirstPage} />
                 <Route exact path={ROUTE_SELECT_TYPE} component={SelectTypePage} />
                 <Route exact path={ROUTE_SELECT_OJECTS} component={SelectObjectsPage} />
                 <Route exact path={ROUTE_UPLOAD_FILE} component={UploadFilePage} />

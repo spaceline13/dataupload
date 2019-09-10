@@ -16,12 +16,34 @@ import LogoContentsTemplate from '../components/templates/LogoContentsTemplate';
 import { getStepsList } from '../redux/selectors/stepsSelectors';
 import { addFootstep } from '../redux/actions/stepsActions';
 
-const MainPage = ({ history }) => {
+const FirstPage = ({ history }) => {
     const dispatch = useDispatch();
     const steps = useSelector(getStepsList);
 
     const [rows, setRows] = useState([]);
+    const [title, setTitle] = useState('');
+    const [text, setText] = useState('');
+    const [logo, setLogo] = useState();
+
     useEffect(() => {
+        //GET FIRST SCREEN DATA
+        (async () => {
+            let response = await fetch(`${process.env.REACT_APP_SERVER_ENDPOINT}/entranceScreen`, {
+                method: 'GET',
+                credentials: 'include',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                },
+            });
+            let json = await response.json();
+            if (json.status === 'ok') {
+                setLogo(json.data.logo);
+                setTitle(json.data.title);
+                setText(json.data.text);
+            }
+        })();
+
         //GET USER DATA
         (async () => {
             let response = await fetch(`${process.env.REACT_APP_SERVER_ENDPOINT}/uploadedData`, {
@@ -40,16 +62,14 @@ const MainPage = ({ history }) => {
     }, []);
 
     return (
-        <LogoContentsTemplate>
+        <LogoContentsTemplate logo={logo}>
             <Box marginTop={'10vh'} />
             <Typography align={'center'} variant="h1" component="h2">
-                Data Upload Tool
+                {title}
             </Typography>
             <Box marginTop={'8vh'} />
             <Typography align={'justify'}>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                {text}
             </Typography>
             <Box marginTop={'8vh'} />
             <center>
@@ -96,7 +116,7 @@ const MainPage = ({ history }) => {
     );
 };
 
-MainPage.propTypes = {
+FirstPage.propTypes = {
     history: PropTypes.object,
 };
-export default MainPage;
+export default FirstPage;

@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const port = 5000;
+const port = 5151;
 const session = require('express-session');
 const cors = require('cors');
 require('es6-promise').polyfill();
@@ -10,7 +10,7 @@ require('dotenv').config();
 //CORS
 app.use(
     cors({
-        origin: 'http://localhost:3006', //the port my react app is running on.
+        origin: ['http://dev.k2p.agroknow.com:3006','http://localhost:3006'], //the port my react app is running on.
         credentials: true,
     }),
 );
@@ -27,6 +27,22 @@ app.use(express.json());
 
 //URLENCODED
 app.use(express.urlencoded());
+
+//get first screen content
+
+app.get('/entranceScreen', (req, res) => {
+    res.send({
+        status: 'ok',
+        data: {
+            logo: 'https://www.foodakai.com/wp-content/uploads/2017/07/Logo-full.png',
+            title: 'Data Upload Tool',
+            text:
+                'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco\n' +
+                '                laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat\n' +
+                '                cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+        },
+    });
+});
 
 //get user data
 app.get('/uploadedData', (req, res) => {
@@ -199,6 +215,7 @@ app.get('/steps', (req, res) => {
     });
 });
 
+// get properties
 app.get('/objectProperties', (req, res) => {
     const object = req.query.object;
     let props = [];
@@ -229,6 +246,7 @@ app.get('/objectProperties', (req, res) => {
     });
 });
 
+//get metadata
 app.get('/metadataFields', (req, res) => {
     res.send({
         status: 'ok',
@@ -258,6 +276,7 @@ app.get('/metadataFields', (req, res) => {
         ],
     });
 });
+
 app.post('/sendCSV', (req, res) => {
     const csv = req.body.csv;
     res.send({
