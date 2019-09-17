@@ -8,7 +8,6 @@ import RFRadioButton from '../atoms/RFRadioButton';
 import RFSelectBox from '../atoms/RFSelectBox';
 import CustomForm from '../molecules/CustomForm';
 import { METADATA_STEP_NAME } from '../../EN_Texts';
-import ServerSendingDialog from "../molecules/ServerSendingDialog";
 
 //async validate
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
@@ -23,9 +22,10 @@ const asyncValidate = (values /*, dispatch */) => {
 };
 
 //sync validate
-const validate = values => {
+const validate = (values, props) => {
     const errors = {};
-    const requiredFields = ['firstName', 'lastName', 'email', 'description'];
+    const requiredFields = props.fields.filter(field => field.required).map(field => field.name);
+    console.log(props,requiredFields);
     requiredFields.forEach(field => {
         if (!values[field]) {
             errors[field] = 'Required';
@@ -51,6 +51,7 @@ const getFieldComponent = type => {
     }
 };
 const MetaFormEditor = ({ fields }) => {
+    console.log('metaform editor redner');
     const items = fields.map(field => ({ ...field, component: getFieldComponent(field.type) }));
     return (
         <center>
@@ -65,5 +66,4 @@ MetaFormEditor.propTypes = {
 export default reduxForm({
     form: METADATA_STEP_NAME, // a unique identifier for this form
     validate,
-    asyncValidate,
 })(MetaFormEditor);

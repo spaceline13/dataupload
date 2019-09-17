@@ -23,10 +23,10 @@ app.use(
 );
 
 //JSON RESPONSE
-app.use(express.json());
+app.use(express.json({limit: '50mb'}));
 
 //URLENCODED
-app.use(express.urlencoded());
+app.use(express.urlencoded({limit: '50mb'}));
 
 //ROUTES
 app.use('/entranceScreen', require('./routes/entranceScreen'));

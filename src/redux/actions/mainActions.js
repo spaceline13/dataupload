@@ -21,13 +21,6 @@ const setUploadObjects = objects => ({
     },
 });
 
-const setUploadFile = file => ({
-    type: SET_UPLOAD_FILE,
-    payload: {
-        file,
-    },
-});
-
 const setUploadStream = stream => ({
     type: SET_UPLOAD_STREAM,
     payload: {
@@ -56,4 +49,4 @@ const setMetadata = metadata => ({
     },
 });
 
-export { setUploadType, setUploadObjects, setUploadFile, setUploadStream, initMappings, setMapping, setMetadata };
+export { setUploadType, setUploadObjects, setUploadStream, initMappings, setMapping, setMetadata };

@@ -4,7 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon server.js",
+    "start": "nodemon server.js --ignore data",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "babel --presets es2015 -d build/ src/"
   },
@@ -15,6 +15,7 @@
     "es6-promise": "^4.2.8",
     "express": "^4.17.1",
     "express-session": "^1.16.2",
+    "isomorphic-fetch": "^2.2.1",
     "nodemon": "^1.19.2"
   },
   "devDependencies": {

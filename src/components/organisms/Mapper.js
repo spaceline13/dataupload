@@ -10,8 +10,8 @@ import TableCell from '@material-ui/core/TableCell/TableCell';
 import TableBody from '@material-ui/core/TableBody/TableBody';
 import Table from '@material-ui/core/Table/Table';
 
-import { getUploadFile, getUploadMappings } from '../../redux/selectors/mainSelectors';
-import { getCurrentSheet, getCurrentSheetIndex, getResourceSheetNames } from '../../redux/selectors/resourceSelectors';
+import { getUploadMappings } from '../../redux/selectors/mainSelectors';
+import { getCurrentSheet, getCurrentSheetIndex, getFilename, getResourceSheetNames } from '../../redux/selectors/resourceSelectors';
 import { setCurrentSheet } from '../../redux/actions/resourceActions';
 import MappingRow from '../molecules/MappingRow';
 import { setMapping } from '../../redux/actions/mainActions';
@@ -20,8 +20,7 @@ import { getAvailableProperties, getMappingProperties } from '../../redux/select
 
 const Mapper = () => {
     const dispatch = useDispatch();
-    const file = useSelector(getUploadFile);
-    const fileName = file ? file.name : null;
+    const fileName = useSelector(getFilename);
     const sheetNames = useSelector(getResourceSheetNames);
     const currentSheetIndex = useSelector(getCurrentSheetIndex);
     const currentSheet = useSelector(getCurrentSheet);
@@ -36,6 +35,8 @@ const Mapper = () => {
         dispatch(setCurrentSheet(sheet));
     };
     const setHeaderMapping = (header, value) => {
+        console.log('entered', header, value);
+
         //set mapping store
         if (mappings[header]) dispatch(removeSelectedProperty(mappings[header]));
         if (value) dispatch(addSelectedProperty(value));

@@ -7,13 +7,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import DragDropFile from '../molecules/DragDropFile';
 import DataInput from '../molecules/DataInput';
 import { DRAG_DROP, SELECT_FILE } from '../../EN_Texts';
-import { getUploadFile } from '../../redux/selectors/mainSelectors';
-import { initMappings, setUploadFile } from '../../redux/actions/mainActions';
-import { setCurrentSheet, setResource } from '../../redux/actions/resourceActions';
+import { initMappings } from '../../redux/actions/mainActions';
+import { setCurrentSheet, setFile, setResource } from '../../redux/actions/resourceActions';
+import { getFile } from '../../redux/selectors/resourceSelectors';
 
 const Uploader = () => {
     const dispatch = useDispatch();
-    const file = useSelector(getUploadFile);
+    const file = useSelector(getFile);
     const handleFile = file => {
         const reader = new FileReader();
         const rABS = !!reader.readAsBinaryString;
@@ -37,7 +37,7 @@ const Uploader = () => {
             //add filename to the resource
             wb.name = file.name;
             //set store
-            dispatch(setUploadFile(excelfile));
+            dispatch(setFile(excelfile));
             dispatch(setResource(wb, sheetArray));
             dispatch(setCurrentSheet(0));
             dispatch(initMappings(initialMappings));

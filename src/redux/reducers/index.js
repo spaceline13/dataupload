@@ -5,5 +5,6 @@ import steps from './steps';
 import main from './main';
 import resource from './resource';
 import mapping from './mapping';
+import validation from './validation';
 
-export default combineReducers({ steps, main, resource, mapping, form: formReducer });
+export default combineReducers({ steps, main, resource, mapping, validation, form: formReducer });

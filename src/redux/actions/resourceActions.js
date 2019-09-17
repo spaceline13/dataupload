@@ -1,5 +1,11 @@
-import { SET_CURRENT_SHEET, SET_RESOURCE } from './actionTypes';
+import { SET_CURRENT_SHEET, SET_FILE, SET_RESOURCE } from './actionTypes';
 
+const setFile = file => ({
+    type: SET_FILE,
+    payload: {
+        file,
+    },
+});
 const setResource = (resource, sheetArray) => ({
     type: SET_RESOURCE,
     payload: {
@@ -14,4 +20,4 @@ const setCurrentSheet = sheet => ({
     },
 });
 
-export { setResource, setCurrentSheet };
+export { setFile, setResource, setCurrentSheet };

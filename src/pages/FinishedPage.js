@@ -5,7 +5,7 @@ import { Redirect } from 'react-router-dom';
 
 import HeaderContentsFooterTemplate from '../components/templates/HeaderContentsFooterTemplate';
 import { footstepValidation } from '../redux/selectors/stepsSelectors';
-import { ROUTE_MAIN } from '../STEPS_and_routes';
+import { ROUTE_MAIN } from '../ROUTES';
 
 const FinishedPage = () => {
     const footstepsValid = useSelector(footstepValidation);

@@ -10,9 +10,9 @@ import { METADATA_STEP_NAME } from '../EN_Texts';
 import { getMainState, getUploadMappings, getUploadMetadata } from '../redux/selectors/mainSelectors';
 import ServerSendingDialog from '../components/molecules/ServerSendingDialog';
 import { footstepValidation } from '../redux/selectors/stepsSelectors';
-import { ROUTE_MAIN } from '../STEPS_and_routes';
+import { ROUTE_MAIN } from '../ROUTES';
 import composeCSVselectedCols from '../utils/composeCSVselectedCols';
-import { getCurrentSheet } from '../redux/selectors/resourceSelectors';
+import { getCurrentSheet, getFile } from '../redux/selectors/resourceSelectors';
 
 /*************
  * Needs to be done:
@@ -26,6 +26,7 @@ const MetadataAndSendPage = () => {
     const currentSheet = useSelector(getCurrentSheet);
     const mappings = useSelector(getUploadMappings);
     const mainState = useSelector(getMainState);
+    const file = useSelector(getFile);
 
     const [fields, setFields] = useState([]);
     useEffect(() => {
@@ -42,6 +43,7 @@ const MetadataAndSendPage = () => {
             let json = await response.json();
             if (json.status === 'ok') {
                 setFields(json.data);
+                console.log('set fields');
             }
         })();
     }, []);
@@ -53,45 +55,58 @@ const MetadataAndSendPage = () => {
         (!formSyncErrors || (Object.keys(formSyncErrors).length === 0 && formSyncErrors.constructor === Object)) &&
         (!formAsyncErrors || (Object.keys(formAsyncErrors).length === 0 && formAsyncErrors.constructor === Object));
     const [sending, setSending] = useState(false);
+
     const handleFinish = cb => {
         dispatch(setMetadata(form));
         setSending(true);
-        console.log(mainState);
+        console.log(formSyncErrors, formAsyncErrors);
         //sendToServer
-        (async () => {
-            let response = await fetch(`${process.env.REACT_APP_SERVER_ENDPOINT}/sendCSV`, {
-                method: 'POST',
-                credentials: 'include',
-                headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    csv: composeCSVselectedCols(currentSheet, mappings),
-                    json: JSON.stringify(mainState),
-                }),
-            });
-            let json = await response.json();
-            if (json.status === 'ok') {
-                //setTimeout just to show the loader
-                setTimeout(() => {
-                    dispatch(submit(METADATA_STEP_NAME));
-                    setSending(false);
-                    if (isValid) {
+        if (isValid) {
+            (async () => {
+                let response = await fetch(`${process.env.REACT_APP_SERVER_ENDPOINT}/sendCSV`, {
+                    method: 'POST',
+                    credentials: 'include',
+                    headers: {
+                        Accept: 'application/json',
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        csv: composeCSVselectedCols(currentSheet, mappings),
+                        json: JSON.stringify(mainState),
+                        file: btoa(file),
+                    }),
+                });
+                let json = await response.json();
+                if (json.status === 'ok') {
+                    //setTimeout just to show the loader
+                    setTimeout(() => {
+                        dispatch(submit(METADATA_STEP_NAME));
+                        setSending(false);
                         if (cb) cb(); //go next
-                    }
-                }, 1000);
-            }
-        })();
+                    }, 1000);
+                } else {
+                    setSending(false);
+                    alert('There was a problem trying to send to the server');
+                }
+            })();
+        } else {
+            setSending(false);
+        }
     };
 
     const footstepsValid = useSelector(footstepValidation);
     if (footstepsValid)
         return (
-            <HeaderContentsFooterTemplate onFinish={handleFinish}>
-                <MetaFormEditor initialValues={metadataStore} fields={fields} onSubmit={() => {}} />
-                <ServerSendingDialog open={sending} />
-            </HeaderContentsFooterTemplate>
+            <div>
+                {fields.length > 0 ? (
+                    <HeaderContentsFooterTemplate onFinish={handleFinish}>
+                        <MetaFormEditor initialValues={metadataStore} fields={fields} onSubmit={() => {}} />
+                        <ServerSendingDialog open={sending} />
+                    </HeaderContentsFooterTemplate>
+                ) : (
+                    <span>Loading</span>
+                )}
+            </div>
         );
     else return <Redirect to={ROUTE_MAIN} />;
 };

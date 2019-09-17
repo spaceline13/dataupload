@@ -10,7 +10,7 @@ export const SELECT_FILE = 'Choose a File';
 
 export const SELECT_TYPE_STEP_NAME = 'type';
 export const SELECT_OBJECTS_STEP_NAME = 'objects';
-export const UPLOAD_FILE_STEP_NAME = 'upload';
+export const UPLOAD_FILE_STEP_NAME = 'file';
 export const UPLOAD_STREAM_STEP_NAME = 'stream';
 export const MAPPING_STEP_NAME = 'mapping';
 export const METADATA_STEP_NAME = 'metadata';

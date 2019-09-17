@@ -26,7 +26,7 @@ const Stepper = ({ history }) => {
             <Hidden smDown>
                 <Grid item sm={1}>
                     <Box padding={'26px'} textAlign={'right'}>
-                        {STEP_TEXT} {activeStep} {OF_TEXT} {stepTexts.length}
+                        {STEP_TEXT} {activeStep+1} {OF_TEXT} {stepTexts.length}
                     </Box>
                 </Grid>
             </Hidden>

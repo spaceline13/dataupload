@@ -5,7 +5,7 @@ import { Redirect } from 'react-router-dom';
 import HeaderContentsFooterTemplate from '../components/templates/HeaderContentsFooterTemplate';
 import Uploader from '../components/organisms/Uploader';
 import { footstepValidation } from '../redux/selectors/stepsSelectors';
-import { ROUTE_MAIN } from '../STEPS_and_routes';
+import { ROUTE_MAIN } from '../ROUTES';
 
 const UploadFilePage = () => {
     const footstepsValid = useSelector(footstepValidation);

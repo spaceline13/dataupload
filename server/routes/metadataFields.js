@@ -1,33 +1,24 @@
 var router = require('express').Router();
 
 //get metadata
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
+    let metadata = [];
+    let response = await fetch(`http://148.251.22.254:8080/mock/metadata.json`, {
+        method: 'GET',
+        credentials: 'include',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+        },
+    });
+    let jsonResponse = await response.json();
+    if (jsonResponse.entityType === 'metadata') {
+        let fields = jsonResponse.fields;
+        metadata = fields.map(field => ({ name: field.name, required: true, label: field.name, type: 'TextField' }));
+    }
     res.send({
         status: 'ok',
-        data: [
-            { name: 'firstName', type: 'TextField', label: 'First Name' },
-            { name: 'lastName', type: 'TextField', label: 'Last Name' },
-            { name: 'email', type: 'TextField', label: 'Email' },
-            {
-                name: 'a sample radio',
-                type: 'RadioButton',
-                label: 'Test',
-                items: [{ value: 'test1', name: 'Test1' }, { value: 'test2', name: 'Test2' }, { value: 'test3', name: 'Test3' }],
-            },
-            {
-                name: 'usage',
-                type: 'SelectBox',
-                label: 'I want to upload my data for',
-                items: [
-                    { value: '', name: '' },
-                    { value: 'personal', name: 'Personal Use' },
-                    { value: 'foodakai', name: 'Upload to Foodakai Platform' },
-                    { value: 'global', name: 'Available to all Agroknow apps' },
-                ],
-            },
-            { name: 'agree', type: 'Checkbox', label: 'I agree with the terms' },
-            { name: 'description', type: 'TextField', label: 'Description' },
-        ],
+        data: metadata,
     });
 });
 

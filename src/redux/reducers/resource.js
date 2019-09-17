@@ -1,6 +1,7 @@
-import { SET_CURRENT_SHEET, SET_RESOURCE } from '../actions/actionTypes';
+import { SET_CURRENT_SHEET, SET_FILE, SET_RESOURCE } from '../actions/actionTypes';
 
 const initialState = {
+    file: null,
     name: '',
     SheetNames: [],
     Sheets: {},
@@ -10,6 +11,13 @@ const initialState = {
 
 const resource = (state = initialState, action) => {
     switch (action.type) {
+        case SET_FILE: {
+            const { file } = action.payload;
+            return {
+                ...state,
+                file,
+            };
+        }
         case SET_RESOURCE: {
             const { resource, sheetArray } = action.payload;
             return {

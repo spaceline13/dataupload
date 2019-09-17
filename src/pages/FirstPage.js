@@ -14,7 +14,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import FancyButton from '../components/atoms/FancyButton';
 import LogoContentsTemplate from '../components/templates/LogoContentsTemplate';
 import { getStepsList } from '../redux/selectors/stepsSelectors';
-import { addFootstep } from '../redux/actions/stepsActions';
+import { addFootstep, setFileSteps, setSteps, setStreamSteps } from '../redux/actions/stepsActions';
+import { setValidations } from '../redux/actions/validationActions';
 
 const FirstPage = ({ history }) => {
     const dispatch = useDispatch();
@@ -57,6 +58,49 @@ const FirstPage = ({ history }) => {
             let json = await response.json();
             if (json.status === 'ok') {
                 setRows(json.data);
+            }
+        })();
+
+        //GET VALIDATORS
+        const validations = {
+            type: {
+                state: 'main',
+                requiredFields: ['type'],
+            },
+            objects: {
+                state: 'main',
+                requiredFields: ['objects'],
+            },
+            file: {
+                state: 'resource',
+                requiredFields: ['file'],
+            },
+            mapping: {
+                state: 'mapping',
+                requiredFields: ['name'],
+            },
+            metadata: {
+                state: 'main',
+                requiredFields: ['metadata'],
+            },
+        };
+        dispatch(setValidations(validations));
+
+        //GET STEPS
+        (async () => {
+            let response = await fetch(`${process.env.REACT_APP_SERVER_ENDPOINT}/steps`, {
+                method: 'GET',
+                credentials: 'include',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                },
+            });
+            let json = await response.json();
+            if (json.status === 'ok') {
+                dispatch(setSteps(json.data.fileSteps));
+                dispatch(setFileSteps(json.data.fileSteps));
+                dispatch(setStreamSteps(json.data.streamSteps));
             }
         })();
     }, []);

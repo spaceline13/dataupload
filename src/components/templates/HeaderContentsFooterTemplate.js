@@ -4,7 +4,7 @@ import Box from '@material-ui/core/Box/Box';
 import { useSelector } from 'react-redux';
 
 import Stepper from '../organisms/Stepper';
-import Footer_StepController from '../organisms/Footer_StepController';
+import Footer_StepController_Validator from '../organisms/Footer_StepController_Validator';
 import StepTitle from '../molecules/StepTitle';
 import StepSubtitle from '../molecules/StepSubtitle';
 import Infobox from '../molecules/Infobox';
@@ -31,7 +31,7 @@ const HeaderContentsFooterTemplate = ({ children, onFinish }) => {
                 </MiddleScreenContainer>
             </Box>
             <Box flex={'0 0 auto'}>
-                <Footer_StepController onFinish={onFinish} />
+                <Footer_StepController_Validator onFinish={onFinish} />
             </Box>
         </Box>
     );

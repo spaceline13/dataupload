@@ -1,7 +1,10 @@
 var router = require('express').Router();
 
 //get steps
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
+    //get objects
+    const result = await fetch('http://148.251.22.254:8080/mock/options.json');
+    const resultJson = await result.json();
     res.send({
         status: 'ok',
         data: {
@@ -36,42 +39,17 @@ router.get('/', (req, res) => {
                     title: 'What kind of objects do you like to import?',
                     subtitle: 'In Agroknow, objects are data types used to organize your info. Common objects are incidents, companies, prices and more.',
                     infobox: null,
-                    selectables: [
-                        {
-                            name: 'Incidents',
-                            value: 'incidents',
-                            text: 'Incidents that have happened to various kinds of food.',
-                            image: 'https://static.hsappstatic.net/ui-images/static-2.313/optimized/contacts.svg',
-                        },
-                        {
-                            name: 'Companies',
-                            value: 'companies',
-                            text: 'The businesses you work with, which are commonly called accounts or organizations.',
-                            image: 'https://static.hsappstatic.net/ui-images/static-2.313/optimized/companies.svg',
-                        },
-                        {
-                            name: 'Prices',
-                            value: 'prices',
-                            text: 'Current price for specific products.',
-                            image: 'https://static.hsappstatic.net/ui-images/static-2.313/optimized/deals-small.svg',
-                        },
-                        {
-                            name: 'Extra Info',
-                            value: 'extra',
-                            text: 'Anything that cannot be described by the categories listed.',
-                            image: 'https://static.hsappstatic.net/ui-images/static-2.314/optimized/ticket-small.svg',
-                        },
-                    ],
+                    selectables: resultJson.options.map(option => ({ name: option.name, value: option.name, text: option.description, image: option.image })),
                     route: '/objects',
                 },
                 {
                     index: 2,
-                    name: 'upload',
+                    name: 'file',
                     text: 'Upload Data',
                     title: 'Upload your file',
                     subtitle: 'Before you upload your file, please make sure it is ready to be imported.',
                     infobox: 'If the file contains tabular data, the first row must have unique headers to distinguish the different columns.',
-                    route: '/upload',
+                    route: '/file',
                 },
                 {
                     index: 3,

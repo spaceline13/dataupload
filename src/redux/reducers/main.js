@@ -2,7 +2,6 @@ import {
     INIT_MAPPINGS,
     SET_MAPPING,
     SET_METADATA,
-    SET_UPLOAD_FILE,
     SET_UPLOAD_OBJECTS,
     SET_UPLOAD_STREAM,
     SET_UPLOAD_TYPE
@@ -31,13 +30,6 @@ const main = (state = initialState, action) => {
             return {
                 ...state,
                 objects,
-            };
-        }
-        case SET_UPLOAD_FILE: {
-            const { file } = action.payload;
-            return {
-                ...state,
-                file,
             };
         }
         case SET_UPLOAD_STREAM: {

@@ -1,33 +1,19 @@
 var router = require('express').Router();
 
 // get properties
-router.get('/', (req, res) => {
-    const object = req.query.object;
-    let props = [];
-    switch (object) {
-        case 'incidents': {
-            props = [{ label: 'Name', value: 'name' }, { label: 'Product', value: 'product' }, { label: 'Country', value: 'country' }, { label: 'Date', value: 'date' }];
-            break;
-        }
-        case 'companies': {
-            props = [{ label: 'Name', value: 'name' }, { label: 'Subject', value: 'subject' }, { label: 'Country', value: 'country' }, { label: 'Size', value: 'size' }];
-            break;
-        }
-        case 'prices': {
-            props = [{ label: 'Product', value: 'product' }, { label: 'Price', value: 'price' }, { label: 'Currency', value: 'currency' }, { label: 'Date', value: 'date' }];
-            break;
-        }
-        case 'extra': {
-            props = [{ label: 'Name', value: 'name' }, { label: 'Subject', value: 'subject' }, { label: 'Extra', value: 'extra' }, { label: 'Date', value: 'date' }];
-            break;
-        }
-        default: {
-            break;
-        }
-    }
+router.get('/', async (req, res) => {
+    const { object } = req.query;
+    const result = await fetch(`http://148.251.22.254:8080/mock/${object}.json`);
+    const resultJson = await result.json();
+    const { fields } = resultJson.schema;
+    const props = Object.keys(fields).map(key => ({ label: key, value: key, required: fields[key].required }));
+    const validations = props.filter(prop => prop.required).map(prop => prop.value);
     res.send({
         status: 'ok',
-        data: props,
+        data: {
+            properties: props,
+            validations: validations,
+        },
     });
 });
 
