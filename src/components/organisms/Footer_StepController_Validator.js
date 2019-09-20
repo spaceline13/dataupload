@@ -50,18 +50,20 @@ const Footer_StepController_Validator = ({ history, onFinish }) => {
     const validator = () => {
         if (validations) {
             const validation = validations[current.name];
-            switch (validation.state) {
-                case 'main': {
-                    return main[validation.requiredFields] && !(Object.keys(main[validation.requiredFields]).length === 0 && main[validation.requiredFields].constructor === Object);
-                }
-                case 'resource': {
-                    return filename && filename !== '';
-                }
-                case 'mapping': {
-                    return validation.requiredFields.filter(field => !selectedMappings.includes(field)).length == 0;
-                }
-                default: {
-                    return true;
+            if (validation) {
+                switch (validation.state) {
+                    case 'main': {
+                        return main[validation.requiredFields] && !(Object.keys(main[validation.requiredFields]).length === 0 && main[validation.requiredFields].constructor === Object);
+                    }
+                    case 'resource': {
+                        return filename && filename !== '';
+                    }
+                    case 'mapping': {
+                        return validation.requiredFields.filter(field => !selectedMappings.includes(field)).length == 0;
+                    }
+                    default: {
+                        return true;
+                    }
                 }
             }
         }

@@ -62,7 +62,7 @@ const MetadataAndSendPage = () => {
 
     const handleFinish = cb => {
         dispatch(setMetadata(form));
-        //since dispatch is slow and async for an unexpected reason, we'll do it manually
+        //since dispatch is slow and async for an unexpected reason, we'll add the metadata to the json to be sent manually
         const json1 = {
             ...jsonForServer,
             metadata: form,
@@ -74,9 +74,14 @@ const MetadataAndSendPage = () => {
         if (isValid) {
             (async () => {
                 var formData = new FormData();
-                formData.append('csv', composeCSVselectedCols(currentSheet, mappings));
+                //in case of file upload
+                if (file) {
+                    formData.append('csv', composeCSVselectedCols(currentSheet, mappings));
+                    formData.append('file', file);
+                }
+                //both in file and stream upload
                 formData.append('json', JSON.stringify(json1));
-                formData.append('file', file);
+
                 let response = await fetch(`${process.env.REACT_APP_SERVER_ENDPOINT}/sendCSV`, {
                     method: 'POST',
                     credentials: 'include',

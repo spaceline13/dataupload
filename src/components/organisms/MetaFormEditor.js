@@ -8,6 +8,7 @@ import RFRadioButton from '../atoms/RFRadioButton';
 import RFSelectBox from '../atoms/RFSelectBox';
 import CustomForm from '../molecules/CustomForm';
 import { METADATA_STEP_NAME } from '../../EN_Texts';
+import RFMultiInput from '../atoms/RFMultiInput';
 
 //async validate
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
@@ -45,6 +46,8 @@ const getFieldComponent = type => {
             return RFSelectBox;
         case 'Checkbox':
             return RFCheckbox;
+        case 'MultiInput':
+            return RFMultiInput;
         default:
             return null;
     }

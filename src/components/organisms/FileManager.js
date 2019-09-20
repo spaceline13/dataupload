@@ -9,8 +9,9 @@ import PropTypes from 'prop-types';
 import DownloadButton from '../molecules/DownloadButton';
 import RemoveButton from '../molecules/RemoveButton';
 import RemoveItemDialog from '../molecules/RemoveItemDialog';
+import ShowStreamButton from '../molecules/ShowStreamButton';
 
-const FileManager = ({ rows, handleDatasetDownload, handleDelete }) => {
+const FileManager = ({ rows, handleDatasetDownload, handleStreamShow, handleDelete }) => {
     const [selectedItem, setSelectedItem] = useState();
     const [deleteDialogOpened, setDeleteDialogOpened] = useState(false);
     const handleRemoveButtonClick = item => {
@@ -35,11 +36,15 @@ const FileManager = ({ rows, handleDatasetDownload, handleDelete }) => {
                             <TableCell component="th" scope="row">
                                 {row.title}
                             </TableCell>
-                            <TableCell align="center">{row.entityType}</TableCell>
+                            <TableCell align="center">{row.entityType.substring(9)}</TableCell>
                             <TableCell align="center">{row.description}</TableCell>
                             <TableCell align="center">{new Date(row.createdOn).toISOString().slice(0, 10)}</TableCell>
                             <TableCell align="right">
-                                <DownloadButton rowid={row.id} onDownload={handleDatasetDownload} />
+                                {row.entityType === 'internal_dataset' ? (
+                                    <DownloadButton rowid={row.id} onDownload={handleDatasetDownload} />
+                                ) : (
+                                    <ShowStreamButton rowid={row.id} onShowStream={handleStreamShow} />
+                                )}
                                 <RemoveButton
                                     onClick={() => {
                                         handleRemoveButtonClick(row);

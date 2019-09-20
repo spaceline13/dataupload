@@ -1,7 +1,7 @@
 import FormHelperText from '@material-ui/core/FormHelperText/FormHelperText';
 import React from 'react';
 
-const RFFromHelper = ({ touched, error }) => {
+const RFFormHelper = ({ touched, error }) => {
     if (!(touched && error)) {
         return;
     } else {
@@ -9,4 +9,4 @@ const RFFromHelper = ({ touched, error }) => {
     }
 };
 
-export default RFFromHelper;
+export default RFFormHelper;

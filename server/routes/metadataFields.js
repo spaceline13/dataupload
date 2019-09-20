@@ -19,7 +19,7 @@ router.get('/', async (req, res) => {
                 name: field.name,
                 required: true,
                 label: field.name,
-                type: 'TextField',
+                type: field.input,
             }));
         }
         res.send({

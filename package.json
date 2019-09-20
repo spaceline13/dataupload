@@ -12,6 +12,7 @@
     "dotenv": "^8.1.0",
     "js-file-download": "^0.4.8",
     "loaders.css": "^0.1.2",
+    "material-ui-chip-input": "^1.0.0",
     "notistack": "^0.9.0",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",

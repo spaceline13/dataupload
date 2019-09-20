@@ -83,6 +83,10 @@ const FirstPage = ({ history }) => {
                 state: 'resource',
                 requiredFields: ['file'],
             },
+            stream: {
+                state: 'main',
+                requiredFields: ['stream'],
+            },
             mapping: {
                 state: 'mapping',
                 requiredFields: ['name'],
@@ -115,7 +119,7 @@ const FirstPage = ({ history }) => {
             }
         })();
     }, [dispatch]);
-    const handleDatasetDownload = async (id, callback) => {
+    const getItemFromServer = async (id) => {
         let response = await fetch(`${process.env.REACT_APP_SERVER_ENDPOINT}/uploadedData?id=${id}`, {
             method: 'GET',
             credentials: 'include',
@@ -125,6 +129,27 @@ const FirstPage = ({ history }) => {
             },
         });
         let json = await response.json();
+        return json;
+    }
+    const handleStreamShow = async (id, callback) => {
+        const json = await getItemFromServer(id);
+        if (json.status === 'ok') {
+            if (json.data.length > 0) {
+                const { information } = json.data[0];
+                const { url } = information;
+                alert(`The stream url is: ${url}`);
+                if (callback) callback(); //eg. stop loader
+            } else {
+                const message = 'There was a problem trying to get stream data (Client)';
+                enqueueSnackbar(message, { variant: 'error', autoHideDuration: 5000 });
+            }
+        } else {
+            const { message } = json;
+            enqueueSnackbar(message, { variant: 'error', autoHideDuration: 5000 });
+        }
+    }
+    const handleDatasetDownload = async (id, callback) => {
+        const json = await getItemFromServer(id);
         if (json.status === 'ok') {
             if (json.data.length > 0) {
                 const { information } = json.data[0];
@@ -175,7 +200,7 @@ const FirstPage = ({ history }) => {
                 </FancyButton>
             </center>
             <Box marginTop={'8vh'} />
-            {userDataLoading ? <Loader /> : <FileManager rows={rows} handleDatasetDownload={handleDatasetDownload} handleDelete={handleDelete} />}
+            {userDataLoading ? <Loader /> : <FileManager rows={rows} handleStreamShow={handleStreamShow} handleDatasetDownload={handleDatasetDownload} handleDelete={handleDelete} />}
             <Box marginTop={'6vh'} />
         </LogoContentsTemplate>
     );

@@ -3,7 +3,7 @@ import Select from '@material-ui/core/Select/Select';
 import React from 'react';
 import MenuItem from '@material-ui/core/MenuItem/MenuItem';
 
-import RFFromHelper from './RFFormHelper';
+import RFFormHelper from './RFFormHelper';
 
 const RFSelectBox = ({ input, label, meta: { touched, error }, items, ...custom }) => (
     <FormControl error={touched && error}>
@@ -11,8 +11,8 @@ const RFSelectBox = ({ input, label, meta: { touched, error }, items, ...custom 
             {...input}
             {...custom}
             inputProps={{
-                name: 'age',
-                id: 'age-native-simple',
+                name: {label},
+                id: {label},
             }}>
             {items.map((item, index) => (
                 <MenuItem key={index} value={item.value}>
@@ -20,7 +20,7 @@ const RFSelectBox = ({ input, label, meta: { touched, error }, items, ...custom 
                 </MenuItem>
             ))}
         </Select>
-        {RFFromHelper({ touched, error })}
+        {RFFormHelper({ touched, error })}
     </FormControl>
 );
 

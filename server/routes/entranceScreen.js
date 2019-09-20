@@ -8,11 +8,10 @@ router.get('/', (req, res) => {
             status: 'ok',
             data: {
                 logo: 'https://www.foodakai.com/wp-content/uploads/2017/07/Logo-full.png',
-                title: 'Data Upload Tool',
+                title: 'Data Integration Tool',
                 text:
-                    'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco\n' +
-                    '                laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat\n' +
-                    '                cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+                    'Using the Data Integration Tool, you can transform your data in a way that can be used from our services. You can start by clicking the [Add New] button.' +
+                    'You can also check or remove previously uploaded data in the table shown bellow. For any questions regarding the sage of the tool please visit the website www.test.test or contact us.',
             },
         });
     } else {

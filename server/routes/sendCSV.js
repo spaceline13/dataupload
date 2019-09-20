@@ -15,19 +15,26 @@ router.post('/', upload.single('file'), async (req, res) => {
         {
             id: null,
             dataSource: 'AB_internal',
-            entityType: 'internal_dataset', //or internal stream
+            entityType: json.type === 'file' ? 'internal_dataset' : 'internal_stream',
             published: true,
-            information: {
-                csv: csv,
-                json: jsonString,
-                fileBuffer: file.buffer,
-                mimeType: file.mimetype,
-                size: file.size,
-                encoding: file.encoding,
-                originalname: file.originalname,
-                schema: json.mappings,
-            },
-            tags: [json.metadata.tags],
+            information:
+                json.type === 'file'
+                    ? {
+                          csv: csv,
+                          json: jsonString,
+                          fileBuffer: file.buffer,
+                          mimeType: file.mimetype,
+                          size: file.size,
+                          encoding: file.encoding,
+                          originalname: file.originalname,
+                          schema: json.mappings,
+                      }
+                    : {
+                          url: json.stream,
+                          json: jsonString,
+                          schema: json.mappings,
+                      },
+            tags: json.metadata.tags,
             title: json.metadata.title,
             description: json.metadata.description,
             createdOn: new Date(),
