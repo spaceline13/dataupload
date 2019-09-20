@@ -179,6 +179,9 @@ const FirstPage = ({ history }) => {
         let json = await response.json();
         if (json.status === 'ok') {
             setRows(rows.filter(row => row.id !== id));
+        } else {
+            const { message } = json;
+            enqueueSnackbar(message, { variant: 'error', autoHideDuration: 5000 });
         }
     }
     return (

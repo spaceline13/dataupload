@@ -44,7 +44,7 @@ router.get('/', async (req, res) => {
                             name: option.name,
                             value: option.name,
                             text: option.description,
-                            image: option.image
+                            image: option.image,
                         })),
                         route: '/objects',
                     },
@@ -133,7 +133,7 @@ router.get('/', async (req, res) => {
                         name: 'finished',
                         text: 'Finished',
                         title: 'Congratulations! Your data have been added successfully to the Data Platform!',
-                        subtitle: 'Thank you for using the Data Upload Tool!',
+                        subtitle: 'Thank you for using the Data Integration Tool!',
                         infobox: null,
                         route: '/finished',
                     },
