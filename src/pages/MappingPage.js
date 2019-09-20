@@ -1,6 +1,7 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
+import { useSnackbar } from 'notistack';
 
 import Mapper from '../components/organisms/Mapper';
 import HeaderContentsFooterTemplate from '../components/templates/HeaderContentsFooterTemplate';
@@ -9,12 +10,14 @@ import { ROUTE_MAIN } from '../ROUTES';
 import { getUploadObjects } from '../redux/selectors/mainSelectors';
 import { setProperties } from '../redux/actions/mappingActions';
 import { setValidationsByStep } from '../redux/actions/validationActions';
+import Loader from '../components/molecules/Loader';
 
 const MappingPage = () => {
     const dispatch = useDispatch();
     const footstepsValid = useSelector(footstepValidation);
     const selectedObject = useSelector(getUploadObjects);
     const currentStep = useSelector(getActiveStep);
+    const { enqueueSnackbar } = useSnackbar();
     useEffect(() => {
         //GET USER DATA
         (async () => {
@@ -30,17 +33,22 @@ const MappingPage = () => {
             if (json.status === 'ok') {
                 dispatch(setProperties(json.data.properties));
                 dispatch(setValidationsByStep(json.data.validations, currentStep.name));
+            } else {
+                const { message } = json;
+                enqueueSnackbar(message, { variant: 'error', autoHideDuration: 5000 });
             }
         })();
-    }, [selectedObject]);
+    }, [currentStep.name, dispatch, enqueueSnackbar, selectedObject]);
 
-    if (footstepsValid)
+    if (footstepsValid) {
         return (
             <HeaderContentsFooterTemplate>
                 <Mapper />
             </HeaderContentsFooterTemplate>
         );
-    else return <Redirect to={ROUTE_MAIN} />;
+    } else {
+        return <Redirect to={ROUTE_MAIN} />;
+    }
 };
 
 export default MappingPage;

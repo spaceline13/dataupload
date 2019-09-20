@@ -6,7 +6,7 @@ import Box from '@material-ui/core/Box/Box';
 import Grid from '@material-ui/core/Grid/Grid';
 import Hidden from '@material-ui/core/Hidden/Hidden';
 
-import NavigationStepper from '../molecules/NavigationStepper';
+import NavigationSteps from '../molecules/NavigationSteps';
 import { getStepByRoute, getStepsTexts } from '../../redux/selectors/stepsSelectors';
 import { APP_TITLE, OF_TEXT, STEP_TEXT } from '../../EN_Texts';
 
@@ -21,7 +21,7 @@ const Stepper = ({ history }) => {
                 </Grid>
             </Hidden>
             <Grid item sm={12} md={10}>
-                <NavigationStepper activeStep={activeStep} steps={stepTexts} />
+                <NavigationSteps activeStep={activeStep} steps={stepTexts} />
             </Grid>
             <Hidden smDown>
                 <Grid item sm={1}>

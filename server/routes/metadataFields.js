@@ -11,15 +11,27 @@ router.get('/', async (req, res) => {
             'Content-Type': 'application/json',
         },
     });
-    let jsonResponse = await response.json();
-    if (jsonResponse.entityType === 'metadata') {
-        let fields = jsonResponse.fields;
-        metadata = fields.map(field => ({ name: field.name, required: true, label: field.name, type: 'TextField' }));
+    if (response.ok) {
+        let jsonResponse = await response.json();
+        if (jsonResponse.entityType === 'metadata') {
+            let fields = jsonResponse.fields;
+            metadata = fields.map(field => ({
+                name: field.name,
+                required: true,
+                label: field.name,
+                type: 'TextField',
+            }));
+        }
+        res.send({
+            status: 'ok',
+            data: metadata,
+        });
+    } else {
+        res.send({
+            status: 'err',
+            message: 'There was a problem trying to get the necessary metadata fields (Server)',
+        });
     }
-    res.send({
-        status: 'ok',
-        data: metadata,
-    });
 });
 
 module.exports = router;

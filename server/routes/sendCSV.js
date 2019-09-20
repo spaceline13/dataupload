@@ -1,32 +1,38 @@
-var router = require('express').Router();
-
 const fs = require('fs');
 
-router.post('/', async (req, res) => {
-    const csvString = req.body.csv;
+const router = require('express').Router();
+const multer = require('multer');
+
+const upload = multer();
+
+router.post('/', upload.single('file'), async (req, res) => {
+    const { csv } = req.body;
     const jsonString = req.body.json;
-    const fileString = req.body.file;
+    const { file } = req;
     const json = JSON.parse(jsonString);
-    const dataFolder = './data/';
     const apiKey = '84190bf3-5cf6-3d84-af87-e28d3ce22bc4';
-    const body = [{
-        id: null,
-        dataSource: 'AB_internal',
-        entityType: 'internal_dataset',
-        published: true,
-        information: {
-            csv: 'csvString',
-            json: jsonString,
-            fileBlob: 'fileString',
-            mimeType: 'string',
-            size: '3829048',
-            schema: json.mappings,
+    const body = [
+        {
+            id: null,
+            dataSource: 'AB_internal',
+            entityType: 'internal_dataset', //or internal stream
+            published: true,
+            information: {
+                csv: csv,
+                json: jsonString,
+                fileBuffer: file.buffer,
+                mimeType: file.mimetype,
+                size: file.size,
+                encoding: file.encoding,
+                originalname: file.originalname,
+                schema: json.mappings,
+            },
+            tags: [json.metadata.tags],
+            title: json.metadata.title,
+            description: json.metadata.description,
+            createdOn: new Date(),
         },
-        tags: [json.metadata.lastName],
-        title: json.metadata.firstName,
-        description: json.metadata.description,
-        createdOn: new Date(),
-    }];
+    ];
     let response = await fetch(`http://148.251.22.254:8080/schema-api-1.0/entity/smart-scheme/mass-create?apikey=${apiKey}`, {
         method: 'PUT',
         credentials: 'include',
@@ -36,33 +42,16 @@ router.post('/', async (req, res) => {
         },
         body: JSON.stringify(body),
     });
-    let jsonResponse = await response.json();
-    console.log(body);
-    console.log(jsonResponse);
-
-    fs.writeFile(dataFolder + 'test.json', jsonString, function(err) {
-        if (err) {
-            return console.log(err);
-        }
-        console.log('The json was saved!');
-        fs.writeFile(dataFolder + 'test.csv', csvString, function(err) {
-            if (err) {
-                return console.log(err);
-            }
-            console.log('The csv was saved!');
-            fs.writeFile(dataFolder + 'test.xlsx', fileString, function(err) {
-                if (err) {
-                    return console.log(err);
-                }
-                console.log('The file was saved!');
-            });
+    if (response.ok) {
+        res.send({
+            status: 'ok',
         });
-    });
-    console.log('timostest');
-    res.send({
-        status: 'ok',
-        csv: csvString,
-    });
+    } else {
+        res.send({
+            status: 'err',
+            message: 'There was an error trying to upload file (Server)',
+        });
+    }
 });
 
 module.exports = router;

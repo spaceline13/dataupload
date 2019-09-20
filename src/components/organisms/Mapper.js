@@ -35,8 +35,6 @@ const Mapper = () => {
         dispatch(setCurrentSheet(sheet));
     };
     const setHeaderMapping = (header, value) => {
-        console.log('entered', header, value);
-
         //set mapping store
         if (mappings[header]) dispatch(removeSelectedProperty(mappings[header]));
         if (value) dispatch(addSelectedProperty(value));

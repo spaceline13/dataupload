@@ -1,52 +1,56 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Box from '@material-ui/core/Box/Box';
-import XLSX from 'xlsx';
 import { useTheme } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 
+import xlsxRead from '../../utils/xlsxRead';
 import DragDropFile from '../molecules/DragDropFile';
 import DataInput from '../molecules/DataInput';
 import { DRAG_DROP, SELECT_FILE } from '../../EN_Texts';
 import { initMappings } from '../../redux/actions/mainActions';
 import { setCurrentSheet, setFile, setResource } from '../../redux/actions/resourceActions';
 import { getFile } from '../../redux/selectors/resourceSelectors';
+import WebWorker from '../../utils/WebWorker';
+import xlsxReadWorker from '../../utils/xlsxReadForWorker';
+import Loader from '../molecules/Loader';
 
 const Uploader = () => {
     const dispatch = useDispatch();
     const file = useSelector(getFile);
-    const handleFile = file => {
-        const reader = new FileReader();
-        const rABS = !!reader.readAsBinaryString;
-        reader.onload = e => {
-            //file
-            const excelfile = e.target.result;
-            //resource
-            const wb = XLSX.read(excelfile, { type: rABS ? 'binary' : 'array' });
-            //sheetArray
-            const sheetArray = wb.SheetNames ? wb.SheetNames.map(name => XLSX.utils.sheet_to_json(wb.Sheets[name], { header: 1 })) : [];
-            //allHeadersCombined
-            let headers = [];
-            sheetArray.forEach(sheet => {
-                headers = [...headers, ...sheet[0]];
-            });
-            //initialMappings
-            const initialMappings = {};
-            headers.forEach(header => {
-                initialMappings[header] = null;
-            });
-            //add filename to the resource
-            wb.name = file.name;
-            //set store
-            dispatch(setFile(excelfile));
-            dispatch(setResource(wb, sheetArray));
-            dispatch(setCurrentSheet(0));
-            dispatch(initMappings(initialMappings));
+    const [isLoading, setLoading] = useState(false);
 
-            //console.log('file loaded:', wb);
-        };
-        if (rABS) reader.readAsBinaryString(file);
-        else reader.readAsArrayBuffer(file);
+    const handleFile = async file => {
+        setLoading(true);
+        // check if browser supports workers
+        const useworker = typeof Worker !== 'undefined';
+        // with worker support
+        if (useworker) {
+            // a seperate worker thread for not stopping the UI in case of big files loading
+            let webWorker = new WebWorker(xlsxReadWorker);
+            // send the file to the worker
+            webWorker.postMessage(file);
+            // the listener for the response of the worker when done
+            webWorker.addEventListener('message', event => {
+                //get the read data
+                const { wb, sheetArray, initialMappings } = JSON.parse(event.data);
+                //set the store
+                doOnceFileLoaded(file, wb, sheetArray, initialMappings);
+            });
+            // if no worker support
+        } else {
+            const { wb, sheetArray, initialMappings } = await xlsxRead(file);
+            doOnceFileLoaded(file, wb, sheetArray, initialMappings);
+        }
     };
+
+    const doOnceFileLoaded = (file, wb, sheetArray, initialMappings) => {
+        dispatch(setFile(file));
+        dispatch(setResource(wb, sheetArray));
+        dispatch(setCurrentSheet(0));
+        dispatch(initMappings(initialMappings));
+        setLoading(false);
+    };
+
     const theme = useTheme();
     const primaryColor = theme.palette.primary.main;
     const successColor = theme.palette.success.dark;
@@ -58,11 +62,15 @@ const Uploader = () => {
                 </Box>
             )}
             <DragDropFile handleFile={handleFile} text={DRAG_DROP}>
-                <Box textAlign={'center'} fontSize={'1.3em'}>
-                    Drag n Drop or <DataInput handleFile={handleFile} text={file ? '' : SELECT_FILE} mainColor={'white'} backgroundColor={primaryColor} /> to upload to the Data Platform.
-                    <br />
-                    All .csv, .xlsx, and .xls file types are supported.
-                </Box>
+                {isLoading ? (
+                    <Loader />
+                ) : (
+                    <Box textAlign={'center'} fontSize={'1.3em'}>
+                        Drag n Drop or <DataInput handleFile={handleFile} text={file ? '' : SELECT_FILE} mainColor={'white'} backgroundColor={primaryColor} /> to upload to the Data Platform.
+                        <br />
+                        All .csv, .xlsx, and .xls file types are supported.
+                    </Box>
+                )}
             </DragDropFile>
         </Box>
     );

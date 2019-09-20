@@ -25,7 +25,6 @@ const asyncValidate = (values /*, dispatch */) => {
 const validate = (values, props) => {
     const errors = {};
     const requiredFields = props.fields.filter(field => field.required).map(field => field.name);
-    console.log(props,requiredFields);
     requiredFields.forEach(field => {
         if (!values[field]) {
             errors[field] = 'Required';
@@ -51,7 +50,6 @@ const getFieldComponent = type => {
     }
 };
 const MetaFormEditor = ({ fields }) => {
-    console.log('metaform editor redner');
     const items = fields.map(field => ({ ...field, component: getFieldComponent(field.type) }));
     return (
         <center>

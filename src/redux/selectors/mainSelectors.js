@@ -4,6 +4,6 @@ const getUploadType = store => (getMainState(store) ? getMainState(store).type :
 const getUploadObjects = store => (getMainState(store) ? getMainState(store).objects : null);
 const getUploadStream = store => (getMainState(store) ? getMainState(store).stream : null);
 const getUploadMappings = store => (getMainState(store) ? getMainState(store).mappings : null);
-const getMappingsUsed = store => getUploadMappings.filter();
 const getUploadMetadata = store => (getMainState(store) ? getMainState(store).metadata : null);
-export { getMainState, getMainStateObject, getUploadType, getUploadObjects, getUploadStream, getUploadMappings, getUploadMetadata };
+const getJsonForServer = store => ({ mappings: getUploadMappings(store), metadata: getUploadMetadata(store), type: getUploadType(store), objects: getUploadObjects(store) });
+export { getMainState, getMainStateObject, getUploadType, getUploadObjects, getUploadStream, getUploadMappings, getUploadMetadata, getJsonForServer };

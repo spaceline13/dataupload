@@ -23,10 +23,10 @@ app.use(
 );
 
 //JSON RESPONSE
-app.use(express.json({limit: '50mb'}));
+app.use(express.json({ limit: '50mb' }));
 
 //URLENCODED
-app.use(express.urlencoded({limit: '50mb'}));
+app.use(express.urlencoded({ limit: '50mb' }));
 
 //ROUTES
 app.use('/entranceScreen', require('./routes/entranceScreen'));
@@ -35,6 +35,7 @@ app.use('/steps', require('./routes/steps'));
 app.use('/objectProperties', require('./routes/objectProperties'));
 app.use('/metadataFields', require('./routes/metadataFields'));
 app.use('/sendCSV', require('./routes/sendCSV'));
+app.use('/removeItem', require('./routes/removeItem'));
 
 //START SERVER
 app.listen(port, () => console.log(`Upload Tool Server listening on port ${port}!`));
