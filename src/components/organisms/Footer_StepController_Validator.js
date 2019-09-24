@@ -14,6 +14,7 @@ import { getValidations } from '../../redux/selectors/validationSelectors';
 import { getCommunity, getMainState } from '../../redux/selectors/mainSelectors';
 import { getFilename } from '../../redux/selectors/resourceSelectors';
 import { getSelectedProperties } from '../../redux/selectors/mappingSelectors';
+import { ROUTE_MAIN } from '../../ROUTES';
 
 const Footer_StepController_Validator = ({ history, onFinish }) => {
     const dispatch = useDispatch();
@@ -36,7 +37,7 @@ const Footer_StepController_Validator = ({ history, onFinish }) => {
         history.push(next.route);
     };
     const doCancel = () => {
-        window.location.href = `/main/${community}`;
+        window.location.href = `${ROUTE_MAIN}/${community}`;
     };
     const doFinish = () => {
         if (onFinish) onFinish(goNext);

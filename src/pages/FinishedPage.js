@@ -18,7 +18,7 @@ const FinishedPage = () => {
                     <Button
                         variant={'outlined'}
                         onClick={() => {
-                            window.location.href = '/';
+                            window.location.href = `${ROUTE_MAIN}/${community}`;
                         }}>
                         Go to Home Page
                     </Button>
