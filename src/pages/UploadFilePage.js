@@ -17,7 +17,7 @@ const UploadFilePage = () => {
                 <Uploader />
             </HeaderContentsFooterTemplate>
         );
-    else return <Redirect to={`${ROUTE_MAIN}?community=${community}`} />;
+    else return <Redirect to={`${ROUTE_MAIN}/${community}`} />;
 };
 
 export default UploadFilePage;

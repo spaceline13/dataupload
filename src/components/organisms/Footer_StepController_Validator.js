@@ -11,13 +11,14 @@ import CancelButton from '../molecules/CancelButton';
 import { getStepByRoute, getStepsList } from '../../redux/selectors/stepsSelectors';
 import { addFootstep, setActive } from '../../redux/actions/stepsActions';
 import { getValidations } from '../../redux/selectors/validationSelectors';
-import { getMainState } from '../../redux/selectors/mainSelectors';
+import { getCommunity, getMainState } from '../../redux/selectors/mainSelectors';
 import { getFilename } from '../../redux/selectors/resourceSelectors';
 import { getSelectedProperties } from '../../redux/selectors/mappingSelectors';
 
 const Footer_StepController_Validator = ({ history, onFinish }) => {
     const dispatch = useDispatch();
     //for navigation
+    const community = useSelector(getCommunity);
     const steps = useSelector(getStepsList);
     const current = useSelector(getStepByRoute(history.location.pathname));
     const back = current.index > 1 ? steps[current.index - 1] : null; // current.index > 1 to display back on the second and not the first page
@@ -35,7 +36,7 @@ const Footer_StepController_Validator = ({ history, onFinish }) => {
         history.push(next.route);
     };
     const doCancel = () => {
-        window.location.href = '/';
+        window.location.href = `/main/${community}`;
     };
     const doFinish = () => {
         if (onFinish) onFinish(goNext);

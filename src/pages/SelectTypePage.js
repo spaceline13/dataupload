@@ -11,14 +11,13 @@ import { getCommunity } from '../redux/selectors/mainSelectors';
 const SelectTypePage = () => {
     const footstepsValid = useSelector(footstepValidation);
     const community = useSelector(getCommunity);
-    console.log(community);
     if (footstepsValid)
         return (
             <HeaderContentsFooterTemplate>
                 <TypeSelector />
             </HeaderContentsFooterTemplate>
         );
-    else return <Redirect from={'/test'} to={`${ROUTE_MAIN}`} />;
+    else return <Redirect to={`${ROUTE_MAIN}/${community}`} />;
 };
 
 export default SelectTypePage;

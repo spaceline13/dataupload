@@ -36,12 +36,12 @@ const App = () => {
     const personalizedTheme = useSelector(getTheme);
 
     return (
-        <ThemeProvider theme={personalizedTheme?theme(personalizedTheme):null}>
+        <ThemeProvider theme={personalizedTheme ? theme(personalizedTheme) : null}>
             <SnackbarProvider maxSnack={2}>
                 {/* TO DO: USE Material UI CssBaseline here instead of body css in index html*/}
                 <Router>
                     <Animation atEnter={bounceTransition.atEnter} atLeave={bounceTransition.atLeave} atActive={bounceTransition.atActive} mapStyles={mapStyles} className="route-wrapper">
-                        <Route exact path={ROUTE_MAIN} component={FirstPage} />
+                        <Route exact path={`${ROUTE_MAIN}/:community`} component={FirstPage} />
                         <Route exact path={ROUTE_SELECT_TYPE} component={SelectTypePage} />
                         <Route exact path={ROUTE_SELECT_OJECTS} component={SelectObjectsPage} />
                         <Route exact path={ROUTE_UPLOAD_FILE} component={UploadFilePage} />

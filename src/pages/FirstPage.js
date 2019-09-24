@@ -17,7 +17,7 @@ import { getUserItems } from '../redux/selectors/fileManagementSelectors';
 import { deleteUserItem, setUserItems } from '../redux/actions/fileManagementActions';
 import { setCommunity, setTheme } from '../redux/actions/mainActions';
 
-const FirstPage = ({history, match}) => {
+const FirstPage = ({ history, match }) => {
     const dispatch = useDispatch();
     const steps = useSelector(getStepsList);
     const items = useSelector(getUserItems);
@@ -33,7 +33,6 @@ const FirstPage = ({history, match}) => {
     const { community } = match.params;
 
     useEffect(() => {
-        console.log('test');
         if (community) {
             dispatch(setCommunity(community));
             //GET THEME
@@ -42,6 +41,7 @@ const FirstPage = ({history, match}) => {
                 const jsonResponse = await response.json();
                 if (jsonResponse.status === 'ok') {
                     dispatch(setTheme(jsonResponse.data));
+                    setServerResponded(true);
                 }
             })();
             //GET FIRST SCREEN DATA
@@ -59,7 +59,6 @@ const FirstPage = ({history, match}) => {
                     setLogo(json.data.logo);
                     setTitle(json.data.title);
                     setText(json.data.text);
-                    setServerResponded(true);
                 } else {
                     const { message } = json;
                     enqueueSnackbar(message, { variant: 'error', autoHideDuration: 5000 });
@@ -127,7 +126,7 @@ const FirstPage = ({history, match}) => {
                 }
             })();
         }
-    }, [community, dispatch, enqueueSnackbar]);
+    }, [community]);
 
     // GET DETAILED ITEM
     const getItemFromServer = async id => {

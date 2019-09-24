@@ -47,7 +47,7 @@ const MappingPage = () => {
             </HeaderContentsFooterTemplate>
         );
     } else {
-        return <Redirect to={`${ROUTE_MAIN}?community=${community}`} />;
+        return <Redirect to={`${ROUTE_MAIN}/${community}`} />;
     }
 };
 
