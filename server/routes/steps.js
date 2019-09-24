@@ -3,9 +3,12 @@ var router = require('express').Router();
 //get steps
 router.get('/', async (req, res) => {
     //get objects
-    const result = await fetch('http://148.251.22.254:8080/mock/options.json');
+    const { community } = req.query;
+    const url = `http://148.251.22.254:8080/mock/${community}/options.json`;
+    const result = await fetch(url);
     if (result.ok) {
         const resultJson = await result.json();
+        console.log(resultJson);
         res.send({
             status: 'ok',
             data: {

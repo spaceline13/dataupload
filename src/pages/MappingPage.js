@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
@@ -7,21 +7,21 @@ import Mapper from '../components/organisms/Mapper';
 import HeaderContentsFooterTemplate from '../components/templates/HeaderContentsFooterTemplate';
 import { footstepValidation, getActiveStep } from '../redux/selectors/stepsSelectors';
 import { ROUTE_MAIN } from '../ROUTES';
-import { getUploadObjects } from '../redux/selectors/mainSelectors';
+import { getCommunity, getUploadObjects } from '../redux/selectors/mainSelectors';
 import { setProperties } from '../redux/actions/mappingActions';
 import { setValidationsByStep } from '../redux/actions/validationActions';
-import Loader from '../components/molecules/Loader';
 
 const MappingPage = () => {
     const dispatch = useDispatch();
     const footstepsValid = useSelector(footstepValidation);
     const selectedObject = useSelector(getUploadObjects);
     const currentStep = useSelector(getActiveStep);
+    const community = useSelector(getCommunity);
     const { enqueueSnackbar } = useSnackbar();
     useEffect(() => {
         //GET USER DATA
         (async () => {
-            let response = await fetch(`${process.env.REACT_APP_SERVER_ENDPOINT}/objectProperties?object=${selectedObject}`, {
+            let response = await fetch(`${process.env.REACT_APP_SERVER_ENDPOINT}/objectProperties?object=${selectedObject}&community=${community}`, {
                 method: 'GET',
                 credentials: 'include',
                 headers: {
@@ -47,7 +47,7 @@ const MappingPage = () => {
             </HeaderContentsFooterTemplate>
         );
     } else {
-        return <Redirect to={ROUTE_MAIN} />;
+        return <Redirect to={`${ROUTE_MAIN}?community=${community}`} />;
     }
 };
 

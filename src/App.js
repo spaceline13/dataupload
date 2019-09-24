@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { ThemeProvider } from '@material-ui/styles';
 import { SnackbarProvider } from 'notistack';
 import { AnimatedSwitch } from 'react-router-transition';
 import styled from 'styled-components';
+import queryString from 'query-string';
 
 import SelectTypePage from './pages/SelectTypePage';
 import FirstPage from './pages/FirstPage';
@@ -16,9 +17,11 @@ import FinishedPage from './pages/FinishedPage';
 import theme from './styles/theme';
 import UploadStreamPage from './pages/UploadStreamPage';
 import { bounceTransition, mapStyles } from './styles/pageAnimationConfig';
+import { useDispatch, useSelector } from 'react-redux';
+import { setCommunity } from './redux/actions/mainActions';
+import { getTheme } from './redux/selectors/mainSelectors';
 
 require('dotenv').config();
-
 const Animation = styled(AnimatedSwitch)`
     position: relative;
     height: 100%;
@@ -30,8 +33,10 @@ const Animation = styled(AnimatedSwitch)`
 `;
 
 const App = () => {
+    const personalizedTheme = useSelector(getTheme);
+
     return (
-        <ThemeProvider theme={theme}>
+        <ThemeProvider theme={personalizedTheme?theme(personalizedTheme):null}>
             <SnackbarProvider maxSnack={2}>
                 {/* TO DO: USE Material UI CssBaseline here instead of body css in index html*/}
                 <Router>

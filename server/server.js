@@ -29,7 +29,9 @@ app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ limit: '50mb' }));
 
 //ROUTES
+app.use('/theme', require('./routes/theme'));
 app.use('/entranceScreen', require('./routes/entranceScreen'));
+app.use('/validations', require('./routes/validations'));
 app.use('/uploadedData', require('./routes/uploadedData'));
 app.use('/steps', require('./routes/steps'));
 app.use('/objectProperties', require('./routes/objectProperties'));

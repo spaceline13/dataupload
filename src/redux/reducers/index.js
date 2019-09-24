@@ -6,5 +6,6 @@ import main from './main';
 import resource from './resource';
 import mapping from './mapping';
 import validation from './validation';
+import fileManagement from './fileManagement';
 
-export default combineReducers({ steps, main, resource, mapping, validation, form: formReducer });
+export default combineReducers({ steps, main, fileManagement, resource, mapping, validation, form: formReducer });

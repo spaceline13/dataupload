@@ -1,10 +1,9 @@
 var router = require('express').Router();
 
-//get metadata
+//get theme
 router.get('/', async (req, res) => {
-    let metadata = [];
     const { community } = req.query;
-    const url = `http://148.251.22.254:8080/mock/${community}/metadata.json`;
+    const url = `http://148.251.22.254:8080/mock/${community}/theme/styling.json`;
     let response = await fetch(url, {
         method: 'GET',
         credentials: 'include',
@@ -15,23 +14,14 @@ router.get('/', async (req, res) => {
     });
     if (response.ok) {
         let jsonResponse = await response.json();
-        if (jsonResponse.entityType === 'metadata') {
-            let fields = jsonResponse.fields;
-            metadata = fields.map(field => ({
-                name: field.name,
-                required: true,
-                label: field.name,
-                type: field.input,
-            }));
-        }
         res.send({
             status: 'ok',
-            data: metadata,
+            data: jsonResponse,
         });
     } else {
         res.send({
             status: 'err',
-            message: 'There was a problem trying to get the necessary metadata fields (Server)',
+            message: 'There was a problem trying to get the theme (Server)',
         });
     }
 });

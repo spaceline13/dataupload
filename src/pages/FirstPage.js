@@ -13,114 +13,125 @@ import { addFootstep, setFileSteps, setSteps, setStreamSteps } from '../redux/ac
 import { setValidations } from '../redux/actions/validationActions';
 import FileManager from '../components/organisms/FileManager';
 import Loader from '../components/molecules/Loader';
+import { getUserItems } from '../redux/selectors/fileManagementSelectors';
+import { deleteUserItem, setUserItems } from '../redux/actions/fileManagementActions';
+import { setCommunity, setTheme } from '../redux/actions/mainActions';
 
-const FirstPage = ({ history }) => {
+const FirstPage = ({history, match}) => {
     const dispatch = useDispatch();
     const steps = useSelector(getStepsList);
+    const items = useSelector(getUserItems);
 
     const [userDataLoading, setUserDataLoading] = useState(false);
-    const [rows, setRows] = useState([]);
+    const [serverResponded, setServerResponded] = useState(false);
     const [title, setTitle] = useState('');
     const [text, setText] = useState('');
     const [logo, setLogo] = useState();
 
     const { enqueueSnackbar } = useSnackbar();
 
+    const { community } = match.params;
+
     useEffect(() => {
-        //GET FIRST SCREEN DATA
-        (async () => {
-            let response = await fetch(`${process.env.REACT_APP_SERVER_ENDPOINT}/entranceScreen`, {
-                method: 'GET',
-                credentials: 'include',
-                headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                },
-            });
-            let json = await response.json();
-            if (json.status === 'ok') {
-                setLogo(json.data.logo);
-                setTitle(json.data.title);
-                setText(json.data.text);
-            } else {
-                const { message } = json;
-                enqueueSnackbar(message, { variant: 'error', autoHideDuration: 5000 });
-            }
-        })();
+        console.log('test');
+        if (community) {
+            dispatch(setCommunity(community));
+            //GET THEME
+            (async () => {
+                const response = await fetch(`${process.env.REACT_APP_SERVER_ENDPOINT}/theme?community=${community}`);
+                const jsonResponse = await response.json();
+                if (jsonResponse.status === 'ok') {
+                    dispatch(setTheme(jsonResponse.data));
+                }
+            })();
+            //GET FIRST SCREEN DATA
+            (async () => {
+                let response = await fetch(`${process.env.REACT_APP_SERVER_ENDPOINT}/entranceScreen?community=${community}`, {
+                    method: 'GET',
+                    credentials: 'include',
+                    headers: {
+                        Accept: 'application/json',
+                        'Content-Type': 'application/json',
+                    },
+                });
+                let json = await response.json();
+                if (json.status === 'ok') {
+                    setLogo(json.data.logo);
+                    setTitle(json.data.title);
+                    setText(json.data.text);
+                    setServerResponded(true);
+                } else {
+                    const { message } = json;
+                    enqueueSnackbar(message, { variant: 'error', autoHideDuration: 5000 });
+                }
+            })();
 
-        //GET USER DATA
-        (async () => {
-            setUserDataLoading(true);
-            let response = await fetch(`${process.env.REACT_APP_SERVER_ENDPOINT}/uploadedData`, {
-                method: 'GET',
-                credentials: 'include',
-                headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                },
-            });
-            let json = await response.json();
-            if (json.status === 'ok') {
-                setRows(json.data);
-                setUserDataLoading(false);
-            } else {
-                const { message } = json;
-                enqueueSnackbar(message, { variant: 'error', autoHideDuration: 5000 });
-            }
-        })();
+            //GET USER DATA
+            (async () => {
+                setUserDataLoading(true);
+                let response = await fetch(`${process.env.REACT_APP_SERVER_ENDPOINT}/uploadedData?community=${community}`, {
+                    method: 'GET',
+                    credentials: 'include',
+                    headers: {
+                        Accept: 'application/json',
+                        'Content-Type': 'application/json',
+                    },
+                });
+                let json = await response.json();
+                if (json.status === 'ok') {
+                    dispatch(setUserItems(json.data));
+                    setUserDataLoading(false);
+                } else {
+                    const { message } = json;
+                    enqueueSnackbar(message, { variant: 'error', autoHideDuration: 5000 });
+                }
+            })();
 
-        //GET VALIDATORS
-        const validations = {
-            type: {
-                state: 'main',
-                requiredFields: ['type'],
-            },
-            objects: {
-                state: 'main',
-                requiredFields: ['objects'],
-            },
-            file: {
-                state: 'resource',
-                requiredFields: ['file'],
-            },
-            stream: {
-                state: 'main',
-                requiredFields: ['stream'],
-            },
-            mapping: {
-                state: 'mapping',
-                requiredFields: ['name'],
-            },
-            metadata: {
-                state: 'main',
-                requiredFields: ['metadata'],
-            },
-        };
-        dispatch(setValidations(validations));
+            //GET VALIDATORS
+            (async () => {
+                let response = await fetch(`${process.env.REACT_APP_SERVER_ENDPOINT}/validations?community=${community}`, {
+                    method: 'GET',
+                    credentials: 'include',
+                    headers: {
+                        Accept: 'application/json',
+                        'Content-Type': 'application/json',
+                    },
+                });
+                let json = await response.json();
+                if (json.status === 'ok') {
+                    dispatch(setValidations(json.data.validations));
+                } else {
+                    const { message } = json;
+                    enqueueSnackbar(message, { variant: 'error', autoHideDuration: 5000 });
+                }
+            })();
 
-        //GET STEPS
-        (async () => {
-            let response = await fetch(`${process.env.REACT_APP_SERVER_ENDPOINT}/steps`, {
-                method: 'GET',
-                credentials: 'include',
-                headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                },
-            });
-            let json = await response.json();
-            if (json.status === 'ok') {
-                dispatch(setSteps(json.data.fileSteps));
-                dispatch(setFileSteps(json.data.fileSteps));
-                dispatch(setStreamSteps(json.data.streamSteps));
-            } else {
-                const { message } = json;
-                enqueueSnackbar(message, { variant: 'error', autoHideDuration: 5000 });
-            }
-        })();
-    }, [dispatch]);
-    const getItemFromServer = async (id) => {
-        let response = await fetch(`${process.env.REACT_APP_SERVER_ENDPOINT}/uploadedData?id=${id}`, {
+            //GET STEPS
+            (async () => {
+                let response = await fetch(`${process.env.REACT_APP_SERVER_ENDPOINT}/steps?community=${community}`, {
+                    method: 'GET',
+                    credentials: 'include',
+                    headers: {
+                        Accept: 'application/json',
+                        'Content-Type': 'application/json',
+                    },
+                });
+                let json = await response.json();
+                if (json.status === 'ok') {
+                    dispatch(setSteps(json.data.fileSteps));
+                    dispatch(setFileSteps(json.data.fileSteps));
+                    dispatch(setStreamSteps(json.data.streamSteps));
+                } else {
+                    const { message } = json;
+                    enqueueSnackbar(message, { variant: 'error', autoHideDuration: 5000 });
+                }
+            })();
+        }
+    }, [community, dispatch, enqueueSnackbar]);
+
+    // GET DETAILED ITEM
+    const getItemFromServer = async id => {
+        let response = await fetch(`${process.env.REACT_APP_SERVER_ENDPOINT}/uploadedData?id=${id}&community=${community}`, {
             method: 'GET',
             credentials: 'include',
             headers: {
@@ -130,7 +141,8 @@ const FirstPage = ({ history }) => {
         });
         let json = await response.json();
         return json;
-    }
+    };
+
     const handleStreamShow = async (id, callback) => {
         const json = await getItemFromServer(id);
         if (json.status === 'ok') {
@@ -147,7 +159,8 @@ const FirstPage = ({ history }) => {
             const { message } = json;
             enqueueSnackbar(message, { variant: 'error', autoHideDuration: 5000 });
         }
-    }
+    };
+
     const handleDatasetDownload = async (id, callback) => {
         const json = await getItemFromServer(id);
         if (json.status === 'ok') {
@@ -167,8 +180,9 @@ const FirstPage = ({ history }) => {
             enqueueSnackbar(message, { variant: 'error', autoHideDuration: 5000 });
         }
     };
-    const handleDelete = async (id) => {
-        let response = await fetch(`${process.env.REACT_APP_SERVER_ENDPOINT}/removeItem?id=${id}`, {
+
+    const handleDelete = async id => {
+        let response = await fetch(`${process.env.REACT_APP_SERVER_ENDPOINT}/removeItem?id=${id}&community=${community}`, {
             method: 'DELETE',
             credentials: 'include',
             headers: {
@@ -178,13 +192,13 @@ const FirstPage = ({ history }) => {
         });
         let json = await response.json();
         if (json.status === 'ok') {
-            setRows(rows.filter(row => row.id !== id));
+            dispatch(deleteUserItem(id));
         } else {
             const { message } = json;
             enqueueSnackbar(message, { variant: 'error', autoHideDuration: 5000 });
         }
-    }
-    return (
+    };
+    return serverResponded ? (
         <LogoContentsTemplate logo={logo}>
             <Box marginTop={'10vh'} />
             <Typography align={'center'} variant="h1" component="h2">
@@ -203,13 +217,16 @@ const FirstPage = ({ history }) => {
                 </FancyButton>
             </center>
             <Box marginTop={'8vh'} />
-            {userDataLoading ? <Loader /> : <FileManager rows={rows} handleStreamShow={handleStreamShow} handleDatasetDownload={handleDatasetDownload} handleDelete={handleDelete} />}
+            {userDataLoading ? <Loader /> : <FileManager items={items} handleStreamShow={handleStreamShow} handleDatasetDownload={handleDatasetDownload} handleDelete={handleDelete} />}
             <Box marginTop={'6vh'} />
         </LogoContentsTemplate>
+    ) : (
+        <div></div>
     );
 };
 
 FirstPage.propTypes = {
     history: PropTypes.object,
+    match: PropTypes.object,
 };
 export default FirstPage;

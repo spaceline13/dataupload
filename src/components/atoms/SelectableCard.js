@@ -10,7 +10,7 @@ const SelectableCard = props => {
         <Box padding={'18px'} borderRadius={'5px'} border={props.selected ? '2px solid #526c91' : '1px solid lightgrey'}>
             <Grid container>
                 <Grid item xs={10}>
-                    <img alt={''} src={props.image} />
+                    <img style={{maxWidth:'100px'}} alt={''} src={props.image} />
                 </Grid>
                 <Grid item xs={2}>
                     <Radio {...props} />

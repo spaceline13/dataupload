@@ -9,16 +9,16 @@ router.post('/', upload.single('file'), async (req, res) => {
     const { csv } = req.body;
     const jsonString = req.body.json;
     const { file } = req;
-    const json = JSON.parse(jsonString);
+    const { type, metadata, mappings, stream, community } = JSON.parse(jsonString);
     const apiKey = '84190bf3-5cf6-3d84-af87-e28d3ce22bc4';
     const body = [
         {
             id: null,
-            dataSource: 'AB_internal',
-            entityType: json.type === 'file' ? 'internal_dataset' : 'internal_stream',
+            dataSource: community,
+            entityType: type === 'file' ? 'internal_dataset' : 'internal_stream',
             published: true,
             information:
-                json.type === 'file'
+                type === 'file'
                     ? {
                           csv: csv,
                           json: jsonString,
@@ -27,16 +27,16 @@ router.post('/', upload.single('file'), async (req, res) => {
                           size: file.size,
                           encoding: file.encoding,
                           originalname: file.originalname,
-                          schema: json.mappings,
+                          schema: mappings,
                       }
                     : {
-                          url: json.stream,
+                          url: stream,
                           json: jsonString,
-                          schema: json.mappings,
+                          schema: mappings,
                       },
-            tags: json.metadata.tags,
-            title: json.metadata.title,
-            description: json.metadata.description,
+            tags: metadata.tags,
+            title: metadata.title,
+            description: metadata.description,
             createdOn: new Date(),
         },
     ];

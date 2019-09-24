@@ -7,22 +7,50 @@ import { useTheme } from '@material-ui/core';
 
 import SelectBox from '../atoms/SelectBox';
 
-const MappingRow = ({ selected, header, preview, properties, selectedProperty, onChange }) => {
+import AutocompleteRemote from './AutocompleteRemote';
+
+const MappingRow = ({ isSelected, header, preview, properties, selectedProperty, onChange }) => {
     const theme = useTheme();
     const successColor = theme.palette.success.dark;
+    let api = null,
+        autocomplete = null,
+        filter = null,
+        label = null;
+    if (selectedProperty) {
+        api = selectedProperty.api;
+        autocomplete = selectedProperty.type === 'autocomplete';
+        label = selectedProperty.label;
+        filter = selectedProperty.filter;
+    }
+
     return (
         <TableRow>
-            <TableCell>{selected && <SelectedIcon htmlColor={successColor} />}</TableCell>
+            <TableCell>{isSelected && <SelectedIcon htmlColor={successColor} />}</TableCell>
             <TableCell>{header}</TableCell>
             <TableCell>{preview}</TableCell>
             <TableCell>
-                <SelectBox items={properties} givenValue={selectedProperty} onChange={onChange} />
+                <SelectBox items={properties} givenValue={label} onChange={onChange} />
+                {autocomplete && (
+                    <AutocompleteRemote
+                        url={api}
+                        filter={filter}
+                        style={{ display: 'inline-block' }}
+                        defaultValue={''}
+                        onSelect={value => {}}
+                        isValid={true}
+                        onKeypress={e => {}}
+                        onFocus={() => {}}
+                        getItemValue={item => {
+                            return item.name.english + ' (' + item.ontology_name + ')';
+                        }}
+                    />
+                )}
             </TableCell>
         </TableRow>
     );
 };
 MappingRow.propTypes = {
-    selected: PropTypes.bool,
+    isSelected: PropTypes.bool,
     header: PropTypes.string,
     preview: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     selectedProperty: PropTypes.string,

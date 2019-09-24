@@ -1,13 +1,15 @@
 import {
-    INIT_MAPPINGS,
+    INIT_MAPPINGS, SET_COMMUNITY,
     SET_MAPPING,
-    SET_METADATA,
+    SET_METADATA, SET_THEME,
     SET_UPLOAD_OBJECTS,
     SET_UPLOAD_STREAM,
-    SET_UPLOAD_TYPE
+    SET_UPLOAD_TYPE,
 } from '../actions/actionTypes';
 
 const initialState = {
+    community: null,
+    theme: null,
     type: null,
     objects: null,
     file: null,
@@ -18,6 +20,20 @@ const initialState = {
 
 const main = (state = initialState, action) => {
     switch (action.type) {
+        case SET_COMMUNITY: {
+            const { community } = action.payload;
+            return {
+                ...state,
+                community,
+            };
+        }
+        case SET_THEME: {
+            const { theme } = action.payload;
+            return {
+                ...state,
+                theme,
+            };
+        }
         case SET_UPLOAD_TYPE: {
             const { type } = action.payload;
             return {

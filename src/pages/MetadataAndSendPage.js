@@ -8,18 +8,24 @@ import HeaderContentsFooterTemplate from '../components/templates/HeaderContents
 import MetaFormEditor from '../components/organisms/MetaFormEditor';
 import { setMetadata } from '../redux/actions/mainActions';
 import { METADATA_STEP_NAME } from '../EN_Texts';
-import { getJsonForServer, getMainState, getUploadMappings, getUploadMetadata } from '../redux/selectors/mainSelectors';
+import {
+    getCommunity,
+    getJsonForServer,
+    getMainState,
+    getUploadMappings,
+    getUploadMetadata,
+} from '../redux/selectors/mainSelectors';
 import ServerSendingDialog from '../components/molecules/ServerSendingDialog';
 import { footstepValidation, getActiveStep } from '../redux/selectors/stepsSelectors';
 import { ROUTE_MAIN } from '../ROUTES';
 import composeCSVselectedCols from '../utils/composeCSVselectedCols';
 import { getCurrentSheet, getFile } from '../redux/selectors/resourceSelectors';
 import { setValidationsByStep } from '../redux/actions/validationActions';
-import Loader from '../components/molecules/Loader';
 
 const MetadataAndSendPage = () => {
     const dispatch = useDispatch();
     const form = useSelector(getFormValues(METADATA_STEP_NAME));
+    const community = useSelector(getCommunity);
     const metadataStore = useSelector(getUploadMetadata);
     const currentSheet = useSelector(getCurrentSheet);
     const mappings = useSelector(getUploadMappings);
@@ -32,7 +38,7 @@ const MetadataAndSendPage = () => {
     useEffect(() => {
         //GET METADATA FIELDS
         (async () => {
-            let response = await fetch(`${process.env.REACT_APP_SERVER_ENDPOINT}/metadataFields`, {
+            let response = await fetch(`${process.env.REACT_APP_SERVER_ENDPOINT}/metadataFields?community=${community}`, {
                 method: 'GET',
                 credentials: 'include',
                 headers: {
@@ -124,7 +130,7 @@ const MetadataAndSendPage = () => {
                 <ServerSendingDialog open={sending} />
             </HeaderContentsFooterTemplate>
         );
-    else return <Redirect to={ROUTE_MAIN} />;
+    else return <Redirect to={`${ROUTE_MAIN}?community=${community}`} />;
 };
 
 export default MetadataAndSendPage;

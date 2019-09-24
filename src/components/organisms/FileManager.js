@@ -5,17 +5,24 @@ import TableBody from '@material-ui/core/TableBody';
 import Table from '@material-ui/core/Table';
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
 
 import DownloadButton from '../molecules/DownloadButton';
 import RemoveButton from '../molecules/RemoveButton';
 import RemoveItemDialog from '../molecules/RemoveItemDialog';
 import ShowStreamButton from '../molecules/ShowStreamButton';
+import { getSelectedItem } from '../../redux/selectors/fileManagementSelectors';
+import { setSelectedItem } from '../../redux/actions/fileManagementActions';
 
-const FileManager = ({ rows, handleDatasetDownload, handleStreamShow, handleDelete }) => {
-    const [selectedItem, setSelectedItem] = useState();
+const FileManager = ({ items, handleDatasetDownload, handleStreamShow, handleDelete }) => {
+    const dispatch = useDispatch();
+    const selectedItem = useSelector(getSelectedItem);
     const [deleteDialogOpened, setDeleteDialogOpened] = useState(false);
     const handleRemoveButtonClick = item => {
-        setSelectedItem(item);
+        console.log(item);
+        dispatch(setSelectedItem(item));
+        setTimeout(()=>{console.log(selectedItem);},1000);
+
         setDeleteDialogOpened(true);
     };
     return (
@@ -31,28 +38,29 @@ const FileManager = ({ rows, handleDatasetDownload, handleStreamShow, handleDele
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {rows.map(row => (
-                        <TableRow key={row.id}>
-                            <TableCell component="th" scope="row">
-                                {row.title}
-                            </TableCell>
-                            <TableCell align="center">{row.entityType.substring(9)}</TableCell>
-                            <TableCell align="center">{row.description}</TableCell>
-                            <TableCell align="center">{new Date(row.createdOn).toISOString().slice(0, 10)}</TableCell>
-                            <TableCell align="right">
-                                {row.entityType === 'internal_dataset' ? (
-                                    <DownloadButton rowid={row.id} onDownload={handleDatasetDownload} />
-                                ) : (
-                                    <ShowStreamButton rowid={row.id} onShowStream={handleStreamShow} />
-                                )}
-                                <RemoveButton
-                                    onClick={() => {
-                                        handleRemoveButtonClick(row);
-                                    }}
-                                />
-                            </TableCell>
-                        </TableRow>
-                    ))}
+                    {items &&
+                        items.map(item => (
+                            <TableRow key={item.id}>
+                                <TableCell component="th" scope="row">
+                                    {item.title}
+                                </TableCell>
+                                <TableCell align="center">{item.entityType.substring(9)}</TableCell>
+                                <TableCell align="center">{item.description}</TableCell>
+                                <TableCell align="center">{new Date(item.createdOn).toISOString().slice(0, 10)}</TableCell>
+                                <TableCell align="right">
+                                    {item.entityType === 'internal_dataset' ? (
+                                        <DownloadButton rowid={item.id} onDownload={handleDatasetDownload} />
+                                    ) : (
+                                        <ShowStreamButton rowid={item.id} onShowStream={handleStreamShow} />
+                                    )}
+                                    <RemoveButton
+                                        onClick={() => {
+                                            handleRemoveButtonClick(item);
+                                        }}
+                                    />
+                                </TableCell>
+                            </TableRow>
+                        ))}
                 </TableBody>
             </Table>
             {selectedItem && <RemoveItemDialog onRemove={handleDelete} handleModal={setDeleteDialogOpened} open={deleteDialogOpened} item={selectedItem} />}
@@ -60,8 +68,9 @@ const FileManager = ({ rows, handleDatasetDownload, handleStreamShow, handleDele
     );
 };
 FileManager.propTypes = {
-    rows: PropTypes.array,
+    items: PropTypes.array,
     handleDatasetDownload: PropTypes.func,
+    handleStreamShow: PropTypes.func,
     handleDelete: PropTypes.func,
 };
 

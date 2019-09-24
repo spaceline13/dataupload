@@ -83,11 +83,11 @@ const Mapper = () => {
                                 {headers.map((header, i) => (
                                     <MappingRow
                                         key={header}
-                                        selected={!!mappings[header]}
+                                        isSelected={!!mappings[header]}
                                         header={header}
                                         preview={previews[i]}
-                                        properties={[...availableProperties, allProperties.find(prop => prop.value === mappings[header]), { value: null, label: 'None' }]}
-                                        selectedProperty={mappings[header]}
+                                        properties={[...availableProperties, allProperties.find(prop => prop.value === mappings[header]), { value: null, label: 'None' }].filter(prop => prop)}
+                                        selectedProperty={allProperties.find(prop => prop.label === mappings[header])}
                                         onChange={value => {
                                             setHeaderMapping(header, value);
                                         }}
