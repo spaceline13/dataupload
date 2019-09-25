@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { ThemeProvider } from '@material-ui/styles';
 import { SnackbarProvider } from 'notistack';
 import { AnimatedSwitch } from 'react-router-transition';
 import styled from 'styled-components';
-import queryString from 'query-string';
 
+import { useSelector } from 'react-redux';
 import SelectTypePage from './pages/SelectTypePage';
 import FirstPage from './pages/FirstPage';
 import SelectObjectsPage from './pages/SelectObjectsPage';
@@ -17,11 +17,12 @@ import FinishedPage from './pages/FinishedPage';
 import theme from './styles/theme';
 import UploadStreamPage from './pages/UploadStreamPage';
 import { bounceTransition, mapStyles } from './styles/pageAnimationConfig';
-import { useDispatch, useSelector } from 'react-redux';
-import { setCommunity } from './redux/actions/mainActions';
 import { getTheme } from './redux/selectors/mainSelectors';
+import { Auth0Provider } from './components/organisms/Auth0Wrapper';
+import PrivateRoute from './components/molecules/PrivateRoute';
 
 require('dotenv').config();
+// page animations wraper
 const Animation = styled(AnimatedSwitch)`
     position: relative;
     height: 100%;
@@ -31,28 +32,32 @@ const Animation = styled(AnimatedSwitch)`
         width: 100%;
     }
 `;
-
+// A function that routes the user to the right place after login
+const onRedirectCallback = appState => {
+    window.history.replaceState({}, document.title, appState && appState.targetUrl ? appState.targetUrl : window.location.pathname);
+};
 const App = () => {
     const personalizedTheme = useSelector(getTheme);
-
     return (
-        <ThemeProvider theme={personalizedTheme ? theme(personalizedTheme) : null}>
-            <SnackbarProvider maxSnack={2}>
-                {/* TO DO: USE Material UI CssBaseline here instead of body css in index html*/}
-                <Router>
-                    <Animation atEnter={bounceTransition.atEnter} atLeave={bounceTransition.atLeave} atActive={bounceTransition.atActive} mapStyles={mapStyles} className="route-wrapper">
-                        <Route exact path={`${ROUTE_MAIN}/:community`} component={FirstPage} />
-                        <Route exact path={ROUTE_SELECT_TYPE} component={SelectTypePage} />
-                        <Route exact path={ROUTE_SELECT_OJECTS} component={SelectObjectsPage} />
-                        <Route exact path={ROUTE_UPLOAD_FILE} component={UploadFilePage} />
-                        <Route exact path={ROUTE_UPLOAD_STREAM} component={UploadStreamPage} />
-                        <Route exact path={ROUTE_MAPPING} component={MappingPage} />
-                        <Route exact path={ROUTE_METADATA} component={MetadataAndSendPage} />
-                        <Route exact path={ROUTE_FINISHED} component={FinishedPage} />
-                    </Animation>
-                </Router>
-            </SnackbarProvider>
-        </ThemeProvider>
+        <Auth0Provider domain={process.env.REACT_APP_AUTH0_DOMAIN} client_id={process.env.REACT_APP_AUTH0_ID} redirect_uri={`${window.location.origin}${ROUTE_MAIN}/foodakai`} onRedirectCallback={onRedirectCallback}>
+            <ThemeProvider theme={personalizedTheme ? theme(personalizedTheme) : null}>
+                <SnackbarProvider maxSnack={2}>
+                    {/* TO DO: USE Material UI CssBaseline here instead of body css in index html*/}
+                    <Router>
+                        <Animation atEnter={bounceTransition.atEnter} atLeave={bounceTransition.atLeave} atActive={bounceTransition.atActive} mapStyles={mapStyles} className="route-wrapper">
+                            <Route exact path={`${ROUTE_MAIN}/:community`} component={FirstPage} />
+                            <PrivateRoute exact path={ROUTE_SELECT_TYPE} component={SelectTypePage} />
+                            <PrivateRoute exact path={ROUTE_SELECT_OJECTS} component={SelectObjectsPage} />
+                            <PrivateRoute exact path={ROUTE_UPLOAD_FILE} component={UploadFilePage} />
+                            <PrivateRoute exact path={ROUTE_UPLOAD_STREAM} component={UploadStreamPage} />
+                            <PrivateRoute exact path={ROUTE_MAPPING} component={MappingPage} />
+                            <PrivateRoute exact path={ROUTE_METADATA} component={MetadataAndSendPage} />
+                            <PrivateRoute exact path={ROUTE_FINISHED} component={FinishedPage} />
+                        </Animation>
+                    </Router>
+                </SnackbarProvider>
+            </ThemeProvider>
+        </Auth0Provider>
     );
 };
 

@@ -21,6 +21,7 @@ import { ROUTE_MAIN } from '../ROUTES';
 import composeCSVselectedCols from '../utils/composeCSVselectedCols';
 import { getCurrentSheet, getFile } from '../redux/selectors/resourceSelectors';
 import { setValidationsByStep } from '../redux/actions/validationActions';
+import { useAuth0 } from '../components/organisms/Auth0Wrapper';
 
 const MetadataAndSendPage = () => {
     const dispatch = useDispatch();
@@ -33,6 +34,7 @@ const MetadataAndSendPage = () => {
     const currentStep = useSelector(getActiveStep);
     const file = useSelector(getFile);
     const { enqueueSnackbar } = useSnackbar();
+    const { user } = useAuth0();
 
     const [fields, setFields] = useState([]);
     useEffect(() => {
@@ -87,6 +89,7 @@ const MetadataAndSendPage = () => {
                 }
                 //both in file and stream upload
                 formData.append('json', JSON.stringify(json1));
+                formData.append('apiKey', user['http://apiKey']);
 
                 let response = await fetch(`${process.env.REACT_APP_SERVER_ENDPOINT}/sendCSV`, {
                     method: 'POST',

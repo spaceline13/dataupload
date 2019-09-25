@@ -6,11 +6,10 @@ const multer = require('multer');
 const upload = multer();
 
 router.post('/', upload.single('file'), async (req, res) => {
-    const { csv } = req.body;
+    const { csv, apiKey } = req.body;
     const jsonString = req.body.json;
     const { file } = req;
     const { type, metadata, mappings, stream, community } = JSON.parse(jsonString);
-    const apiKey = '84190bf3-5cf6-3d84-af87-e28d3ce22bc4';
     const body = [
         {
             id: null,

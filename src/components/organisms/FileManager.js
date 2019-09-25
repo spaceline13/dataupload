@@ -13,6 +13,7 @@ import RemoveItemDialog from '../molecules/RemoveItemDialog';
 import ShowStreamButton from '../molecules/ShowStreamButton';
 import { getSelectedItem } from '../../redux/selectors/fileManagementSelectors';
 import { setSelectedItem } from '../../redux/actions/fileManagementActions';
+import Hidden from '@material-ui/core/Hidden';
 
 const FileManager = ({ items, handleDatasetDownload, handleStreamShow, handleDelete }) => {
     const dispatch = useDispatch();
@@ -32,8 +33,8 @@ const FileManager = ({ items, handleDatasetDownload, handleStreamShow, handleDel
                     <TableRow>
                         <TableCell>Name</TableCell>
                         <TableCell align="center">Type</TableCell>
-                        <TableCell align="center">Description</TableCell>
-                        <TableCell align="center">Created</TableCell>
+                        <Hidden xsDown><TableCell align="center">Description</TableCell></Hidden>
+                        <Hidden xsDown><TableCell align="center">Created</TableCell></Hidden>
                         <TableCell align="right">Actions</TableCell>
                     </TableRow>
                 </TableHead>
@@ -45,8 +46,8 @@ const FileManager = ({ items, handleDatasetDownload, handleStreamShow, handleDel
                                     {item.title}
                                 </TableCell>
                                 <TableCell align="center">{item.entityType.substring(9)}</TableCell>
-                                <TableCell align="center">{item.description}</TableCell>
-                                <TableCell align="center">{new Date(item.createdOn).toISOString().slice(0, 10)}</TableCell>
+                                <Hidden xsDown><TableCell align="center">{item.description}</TableCell></Hidden>
+                                <Hidden xsDown><TableCell align="center">{new Date(item.createdOn).toISOString().slice(0, 10)}</TableCell></Hidden>
                                 <TableCell align="right">
                                     {item.entityType === 'internal_dataset' ? (
                                         <DownloadButton rowid={item.id} onDownload={handleDatasetDownload} />

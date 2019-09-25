@@ -2,8 +2,7 @@ var router = require('express').Router();
 
 //get user data
 router.get('/', async (req, res) => {
-    const { id, community } = req.query; //if id is given, the request is detailed for the specific id, otherwise detailed is set to false
-    const apiKey = '84190bf3-5cf6-3d84-af87-e28d3ce22bc4';
+    const { id, community, apiKey } = req.query; //if id is given, the request is detailed for the specific id, otherwise detailed is set to false
     const url = `http://148.251.22.254:8080/search-api-1.0/search/`;
 
     const results = await fetch(url, {

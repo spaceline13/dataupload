@@ -7,7 +7,8 @@ import { useTheme } from '@material-ui/core';
 
 import SelectBox from '../atoms/SelectBox';
 
-import AutocompleteRemote from './AutocompleteRemote';
+import AutosuggestRemote from './AutosuggestRemote';
+import Hidden from '@material-ui/core/Hidden';
 
 const MappingRow = ({ isSelected, header, preview, properties, selectedProperty, onChange }) => {
     const theme = useTheme();
@@ -25,23 +26,22 @@ const MappingRow = ({ isSelected, header, preview, properties, selectedProperty,
 
     return (
         <TableRow>
-            <TableCell>{isSelected && <SelectedIcon htmlColor={successColor} />}</TableCell>
+            <Hidden xsDown>
+                <TableCell>{isSelected && <SelectedIcon htmlColor={successColor} />}</TableCell>
+            </Hidden>
             <TableCell>{header}</TableCell>
-            <TableCell>{preview}</TableCell>
+            <Hidden xsDown>
+                <TableCell>{preview}</TableCell>
+            </Hidden>
             <TableCell>
                 <SelectBox items={properties} givenValue={label} onChange={onChange} />
                 {autocomplete && (
-                    <AutocompleteRemote
+                    <AutosuggestRemote
                         url={api}
                         filter={filter}
-                        style={{ display: 'inline-block' }}
-                        defaultValue={''}
-                        onSelect={value => {}}
-                        isValid={true}
-                        onKeypress={e => {}}
-                        onFocus={() => {}}
-                        getItemValue={item => {
-                            return item.name.english + ' (' + item.ontology_name + ')';
+                        placeholder={'Name of the measured trait'}
+                        onChange={value => {
+                            console.log(value);
                         }}
                     />
                 )}

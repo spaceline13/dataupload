@@ -8,7 +8,6 @@ router.get('/', async (req, res) => {
     const result = await fetch(url);
     if (result.ok) {
         const resultJson = await result.json();
-        console.log(resultJson);
         res.send({
             status: 'ok',
             data: {

@@ -17,6 +17,7 @@ import MappingRow from '../molecules/MappingRow';
 import { setMapping } from '../../redux/actions/mainActions';
 import { addSelectedProperty, removeSelectedProperty } from '../../redux/actions/mappingActions';
 import { getAvailableProperties, getMappingProperties } from '../../redux/selectors/mappingSelectors';
+import Hidden from '@material-ui/core/Hidden';
 
 const Mapper = () => {
     const dispatch = useDispatch();
@@ -65,15 +66,19 @@ const Mapper = () => {
                         <Table>
                             <TableHead>
                                 <TableRow>
-                                    <TableCell>
-                                        <b>SELECTED</b>
-                                    </TableCell>
+                                    <Hidden xsDown>
+                                        <TableCell>
+                                            <b>SELECTED</b>
+                                        </TableCell>
+                                    </Hidden>
                                     <TableCell>
                                         <b>HEADER</b>
                                     </TableCell>
-                                    <TableCell>
-                                        <b>PREVIEW (the value of the first row)</b>
-                                    </TableCell>
+                                    <Hidden xsDown>
+                                        <TableCell>
+                                            <b>PREVIEW (the value of the first row)</b>
+                                        </TableCell>
+                                    </Hidden>
                                     <TableCell>
                                         <b>MATCHED PROPERTY</b>
                                     </TableCell>

@@ -5,6 +5,8 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Box from '@material-ui/core/Box';
 
+import TooltipedSelectItem from './TooltipedSelectItem';
+
 /*
  * @prop givenValue: The default value given from parent
  * @prop items: The items on the list. They contain the label, the value and the required option
@@ -25,12 +27,19 @@ const SelectBox = ({ givenValue, items, onChange }) => {
                     (item, i) =>
                         item && (
                             <MenuItem key={i} value={item ? item.value : null}>
-                                {item ? item.label : 'None'}
-                                {item.required && (
-                                    <Box display={'inline-block'} marginLeft={'6px'} color={'red'}>
-                                        &#8226;
-                                    </Box>
-                                )}
+                                <TooltipedSelectItem
+                                    overlay={item ? item.description : ''}
+                                    itemValue={
+                                        <div>
+                                            <span>{item ? item.label : 'None'}</span>
+                                            {item.required && (
+                                                <Box display={'inline-block'} marginLeft={'6px'} color={'red'}>
+                                                    &#8226;
+                                                </Box>
+                                            )}
+                                        </div>
+                                    }
+                                />
                             </MenuItem>
                         ),
                 )}

@@ -6,7 +6,9 @@ import PropTypes from 'prop-types';
 const MiddleScreenContainer = ({ children }) => (
     <Container style={{ height: '100%' }}>
         <Box display={'flex'} alignItems={'center'} justifyContent={'center'} height={'100%'}>
-            <Box flex={'1 1 0%'} maxHeight={'-webkit-fill-available'}>{children}</Box>
+            <Box flex={'1 1 0%'} maxHeight={'100%'}>
+                {children}
+            </Box>
         </Box>
     </Container>
 );

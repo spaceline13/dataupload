@@ -20,7 +20,7 @@ const Stepper = ({ history }) => {
                     <Box padding={'26px'}>{APP_TITLE}</Box>
                 </Grid>
             </Hidden>
-            <Grid item sm={12} md={10}>
+            <Grid item xs={12} sm={12} md={10} lg={10}>
                 <NavigationSteps activeStep={activeStep} steps={stepTexts} />
             </Grid>
             <Hidden smDown>

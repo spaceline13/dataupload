@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import fileDownload from 'js-file-download';
 import { useSnackbar } from 'notistack';
+import Hidden from '@material-ui/core/Hidden';
 
 import FancyButton from '../components/atoms/FancyButton';
 import LogoContentsTemplate from '../components/templates/LogoContentsTemplate';
@@ -16,11 +17,13 @@ import Loader from '../components/molecules/Loader';
 import { getUserItems } from '../redux/selectors/fileManagementSelectors';
 import { deleteUserItem, setUserItems } from '../redux/actions/fileManagementActions';
 import { setCommunity, setTheme } from '../redux/actions/mainActions';
+import { useAuth0 } from '../components/organisms/Auth0Wrapper';
 
 const FirstPage = ({ history, match }) => {
     const dispatch = useDispatch();
     const steps = useSelector(getStepsList);
     const items = useSelector(getUserItems);
+    const { loading, user } = useAuth0();
 
     const [userDataLoading, setUserDataLoading] = useState(false);
     const [serverResponded, setServerResponded] = useState(false);
@@ -59,27 +62,6 @@ const FirstPage = ({ history, match }) => {
                     setLogo(json.data.logo);
                     setTitle(json.data.title);
                     setText(json.data.text);
-                } else {
-                    const { message } = json;
-                    enqueueSnackbar(message, { variant: 'error', autoHideDuration: 5000 });
-                }
-            })();
-
-            //GET USER DATA
-            (async () => {
-                setUserDataLoading(true);
-                let response = await fetch(`${process.env.REACT_APP_SERVER_ENDPOINT}/uploadedData?community=${community}`, {
-                    method: 'GET',
-                    credentials: 'include',
-                    headers: {
-                        Accept: 'application/json',
-                        'Content-Type': 'application/json',
-                    },
-                });
-                let json = await response.json();
-                if (json.status === 'ok') {
-                    dispatch(setUserItems(json.data));
-                    setUserDataLoading(false);
                 } else {
                     const { message } = json;
                     enqueueSnackbar(message, { variant: 'error', autoHideDuration: 5000 });
@@ -128,9 +110,34 @@ const FirstPage = ({ history, match }) => {
         }
     }, [community]);
 
+    useEffect(() => {
+        //GET USER DATA
+        if(user) {
+            (async () => {
+                setUserDataLoading(true);
+                let response = await fetch(`${process.env.REACT_APP_SERVER_ENDPOINT}/uploadedData?community=${community}&apiKey=${user['http://apiKey']}`, {
+                    method: 'GET',
+                    credentials: 'include',
+                    headers: {
+                        Accept: 'application/json',
+                        'Content-Type': 'application/json',
+                    },
+                });
+                let json = await response.json();
+                if (json.status === 'ok') {
+                    dispatch(setUserItems(json.data));
+                    setUserDataLoading(false);
+                } else {
+                    const { message } = json;
+                    enqueueSnackbar(message, { variant: 'error', autoHideDuration: 5000 });
+                }
+            })();
+        }
+    }, [user]);
+
     // GET DETAILED ITEM
     const getItemFromServer = async id => {
-        let response = await fetch(`${process.env.REACT_APP_SERVER_ENDPOINT}/uploadedData?id=${id}&community=${community}`, {
+        let response = await fetch(`${process.env.REACT_APP_SERVER_ENDPOINT}/uploadedData?id=${id}&community=${community}&apiKey=${user['http://apiKey']}`, {
             method: 'GET',
             credentials: 'include',
             headers: {
@@ -181,7 +188,7 @@ const FirstPage = ({ history, match }) => {
     };
 
     const handleDelete = async id => {
-        let response = await fetch(`${process.env.REACT_APP_SERVER_ENDPOINT}/removeItem?id=${id}&community=${community}`, {
+        let response = await fetch(`${process.env.REACT_APP_SERVER_ENDPOINT}/removeItem?id=${id}&community=${community}&apiKey=${user['http://apiKey']}`, {
             method: 'DELETE',
             credentials: 'include',
             headers: {
@@ -197,27 +204,44 @@ const FirstPage = ({ history, match }) => {
             enqueueSnackbar(message, { variant: 'error', autoHideDuration: 5000 });
         }
     };
+
+    if (loading) {
+        return <div>Loading...</div>;
+    }
     return serverResponded ? (
         <LogoContentsTemplate logo={logo}>
             <Box marginTop={'10vh'} />
-            <Typography align={'center'} variant="h1" component="h2">
-                {title}
-            </Typography>
+            <Hidden xsDown>
+                <Typography align={'center'} variant="h1" component="h2">
+                    {title}
+                </Typography>
+            </Hidden>
+            <Hidden smUp>
+                <Typography align={'center'} variant="h2" component="h3">
+                    {title}
+                </Typography>
+            </Hidden>
             <Box marginTop={'8vh'} />
             <Typography align={'justify'}>{text}</Typography>
             <Box marginTop={'8vh'} />
-            <center>
-                <FancyButton
-                    onClick={() => {
-                        dispatch(addFootstep(-1));
-                        history.push(steps[0].route);
-                    }}>
-                    <span>Add New</span>
-                </FancyButton>
-            </center>
-            <Box marginTop={'8vh'} />
-            {userDataLoading ? <Loader /> : <FileManager items={items} handleStreamShow={handleStreamShow} handleDatasetDownload={handleDatasetDownload} handleDelete={handleDelete} />}
-            <Box marginTop={'6vh'} />
+            {user ? (
+                <div>
+                    <center>
+                        <FancyButton
+                            onClick={() => {
+                                dispatch(addFootstep(-1));
+                                history.push(steps[0].route);
+                            }}>
+                            <span>Add New</span>
+                        </FancyButton>
+                    </center>
+                    <Box marginTop={'8vh'} />
+                    {userDataLoading ? <Loader /> : <FileManager items={items} handleStreamShow={handleStreamShow} handleDatasetDownload={handleDatasetDownload} handleDelete={handleDelete} />}
+                    <Box marginTop={'6vh'} />
+                </div>
+            ) : (
+                <center> Please Log In to use the app </center>
+            )}
         </LogoContentsTemplate>
     ) : (
         <div></div>
