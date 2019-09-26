@@ -6,7 +6,7 @@ import { useSnackbar } from 'notistack';
 import Mapper from '../components/organisms/Mapper';
 import HeaderContentsFooterTemplate from '../components/templates/HeaderContentsFooterTemplate';
 import { footstepValidation, getActiveStep } from '../redux/selectors/stepsSelectors';
-import { ROUTE_MAIN } from '../ROUTES';
+import { ROUTE_HOME } from '../ROUTES';
 import { getCommunity, getUploadObjects } from '../redux/selectors/mainSelectors';
 import { setProperties } from '../redux/actions/mappingActions';
 import { setValidationsByStep } from '../redux/actions/validationActions';
@@ -38,7 +38,7 @@ const MappingPage = () => {
                 enqueueSnackbar(message, { variant: 'error', autoHideDuration: 5000 });
             }
         })();
-    }, [currentStep.name, dispatch, enqueueSnackbar, selectedObject]);
+    }, []);
 
     if (footstepsValid) {
         return (
@@ -47,7 +47,7 @@ const MappingPage = () => {
             </HeaderContentsFooterTemplate>
         );
     } else {
-        return <Redirect to={`${ROUTE_MAIN}/${community}`} />;
+        return <Redirect to={ROUTE_HOME} />;
     }
 };
 

@@ -8,16 +8,10 @@ import HeaderContentsFooterTemplate from '../components/templates/HeaderContents
 import MetaFormEditor from '../components/organisms/MetaFormEditor';
 import { setMetadata } from '../redux/actions/mainActions';
 import { METADATA_STEP_NAME } from '../EN_Texts';
-import {
-    getCommunity,
-    getJsonForServer,
-    getMainState,
-    getUploadMappings,
-    getUploadMetadata,
-} from '../redux/selectors/mainSelectors';
+import { getCommunity, getJsonForServer, getUploadMappings, getUploadMetadata } from '../redux/selectors/mainSelectors';
 import ServerSendingDialog from '../components/molecules/ServerSendingDialog';
 import { footstepValidation, getActiveStep } from '../redux/selectors/stepsSelectors';
-import { ROUTE_MAIN } from '../ROUTES';
+import { ROUTE_HOME } from '../ROUTES';
 import composeCSVselectedCols from '../utils/composeCSVselectedCols';
 import { getCurrentSheet, getFile } from '../redux/selectors/resourceSelectors';
 import { setValidationsByStep } from '../redux/actions/validationActions';
@@ -58,7 +52,7 @@ const MetadataAndSendPage = () => {
                 enqueueSnackbar(message, { variant: 'error', autoHideDuration: 5000 });
             }
         })();
-    }, [currentStep.name, dispatch, enqueueSnackbar]);
+    }, [community, currentStep.name, dispatch, enqueueSnackbar]);
 
     // VALIDATE AND SEND
     const formSyncErrors = useSelector(getFormSyncErrors(METADATA_STEP_NAME));
@@ -133,7 +127,7 @@ const MetadataAndSendPage = () => {
                 <ServerSendingDialog open={sending} />
             </HeaderContentsFooterTemplate>
         );
-    else return <Redirect to={`${ROUTE_MAIN}/${community}`} />;
+    else return <Redirect to={ROUTE_HOME} />;
 };
 
 export default MetadataAndSendPage;

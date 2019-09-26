@@ -4,11 +4,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import SelectedIcon from '@material-ui/icons/CheckCircle';
 import { useTheme } from '@material-ui/core';
+import Hidden from '@material-ui/core/Hidden';
 
 import SelectBox from '../atoms/SelectBox';
 
 import AutosuggestRemote from './AutosuggestRemote';
-import Hidden from '@material-ui/core/Hidden';
 
 const MappingRow = ({ isSelected, header, preview, properties, selectedProperty, onChange }) => {
     const theme = useTheme();

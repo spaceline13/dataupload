@@ -6,38 +6,37 @@ import { useDispatch, useSelector } from 'react-redux';
 import fileDownload from 'js-file-download';
 import { useSnackbar } from 'notistack';
 import Hidden from '@material-ui/core/Hidden';
+import { Redirect } from 'react-router-dom';
 
 import FancyButton from '../components/atoms/FancyButton';
 import LogoContentsTemplate from '../components/templates/LogoContentsTemplate';
-import { getStepsList } from '../redux/selectors/stepsSelectors';
 import { addFootstep, setFileSteps, setSteps, setStreamSteps } from '../redux/actions/stepsActions';
 import { setValidations } from '../redux/actions/validationActions';
 import FileManager from '../components/organisms/FileManager';
 import Loader from '../components/molecules/Loader';
 import { getUserItems } from '../redux/selectors/fileManagementSelectors';
 import { deleteUserItem, setUserItems } from '../redux/actions/fileManagementActions';
-import { setCommunity, setTheme } from '../redux/actions/mainActions';
+import { setTheme } from '../redux/actions/mainActions';
 import { useAuth0 } from '../components/organisms/Auth0Wrapper';
+import { getCommunity } from '../redux/selectors/mainSelectors';
+import { ROUTE_LOGIN } from '../ROUTES';
+import { getStepsList } from '../redux/selectors/stepsSelectors';
 
-const FirstPage = ({ history, match }) => {
+const HomePage = ({ history }) => {
     const dispatch = useDispatch();
     const steps = useSelector(getStepsList);
     const items = useSelector(getUserItems);
-    const { loading, user } = useAuth0();
-
+    const community = useSelector(getCommunity);
+    const { user } = useAuth0();
     const [userDataLoading, setUserDataLoading] = useState(false);
     const [serverResponded, setServerResponded] = useState(false);
     const [title, setTitle] = useState('');
     const [text, setText] = useState('');
     const [logo, setLogo] = useState();
-
     const { enqueueSnackbar } = useSnackbar();
-
-    const { community } = match.params;
 
     useEffect(() => {
         if (community) {
-            dispatch(setCommunity(community));
             //GET THEME
             (async () => {
                 const response = await fetch(`${process.env.REACT_APP_SERVER_ENDPOINT}/theme?community=${community}`);
@@ -107,12 +106,7 @@ const FirstPage = ({ history, match }) => {
                     enqueueSnackbar(message, { variant: 'error', autoHideDuration: 5000 });
                 }
             })();
-        }
-    }, [community]);
-
-    useEffect(() => {
-        //GET USER DATA
-        if(user) {
+            // GET USER DATA
             (async () => {
                 setUserDataLoading(true);
                 let response = await fetch(`${process.env.REACT_APP_SERVER_ENDPOINT}/uploadedData?community=${community}&apiKey=${user['http://apiKey']}`, {
@@ -133,7 +127,7 @@ const FirstPage = ({ history, match }) => {
                 }
             })();
         }
-    }, [user]);
+    }, [community, dispatch, enqueueSnackbar, user]);
 
     // GET DETAILED ITEM
     const getItemFromServer = async id => {
@@ -145,8 +139,7 @@ const FirstPage = ({ history, match }) => {
                 'Content-Type': 'application/json',
             },
         });
-        let json = await response.json();
-        return json;
+        return await response.json();
     };
 
     const handleStreamShow = async (id, callback) => {
@@ -204,52 +197,51 @@ const FirstPage = ({ history, match }) => {
             enqueueSnackbar(message, { variant: 'error', autoHideDuration: 5000 });
         }
     };
-
-    if (loading) {
-        return <div>Loading...</div>;
+    if (community) {
+        return serverResponded ? (
+            <LogoContentsTemplate logo={logo}>
+                <Box marginTop={'10vh'} />
+                <Hidden xsDown>
+                    <Typography align={'center'} variant="h1" component="h2">
+                        {title}
+                    </Typography>
+                </Hidden>
+                <Hidden smUp>
+                    <Typography align={'center'} variant="h2" component="h3">
+                        {title}
+                    </Typography>
+                </Hidden>
+                <Box marginTop={'8vh'} />
+                <Typography align={'justify'}>{text}</Typography>
+                <Box marginTop={'8vh'} />
+                {user ? (
+                    <div>
+                        <center>
+                            <FancyButton
+                                onClick={() => {
+                                    dispatch(addFootstep(-1));
+                                    history.push(steps[0].route);
+                                }}>
+                                <span>Add New</span>
+                            </FancyButton>
+                        </center>
+                        <Box marginTop={'8vh'} />
+                        {userDataLoading ? <Loader /> : <FileManager items={items} handleStreamShow={handleStreamShow} handleDatasetDownload={handleDatasetDownload} handleDelete={handleDelete} />}
+                        <Box marginTop={'6vh'} />
+                    </div>
+                ) : (
+                    <center> Please Log In to use the app </center>
+                )}
+            </LogoContentsTemplate>
+        ) : (
+            <center>Waiting for server response</center>
+        );
+    } else {
+        return <Redirect to={ROUTE_LOGIN} />;
     }
-    return serverResponded ? (
-        <LogoContentsTemplate logo={logo}>
-            <Box marginTop={'10vh'} />
-            <Hidden xsDown>
-                <Typography align={'center'} variant="h1" component="h2">
-                    {title}
-                </Typography>
-            </Hidden>
-            <Hidden smUp>
-                <Typography align={'center'} variant="h2" component="h3">
-                    {title}
-                </Typography>
-            </Hidden>
-            <Box marginTop={'8vh'} />
-            <Typography align={'justify'}>{text}</Typography>
-            <Box marginTop={'8vh'} />
-            {user ? (
-                <div>
-                    <center>
-                        <FancyButton
-                            onClick={() => {
-                                dispatch(addFootstep(-1));
-                                history.push(steps[0].route);
-                            }}>
-                            <span>Add New</span>
-                        </FancyButton>
-                    </center>
-                    <Box marginTop={'8vh'} />
-                    {userDataLoading ? <Loader /> : <FileManager items={items} handleStreamShow={handleStreamShow} handleDatasetDownload={handleDatasetDownload} handleDelete={handleDelete} />}
-                    <Box marginTop={'6vh'} />
-                </div>
-            ) : (
-                <center> Please Log In to use the app </center>
-            )}
-        </LogoContentsTemplate>
-    ) : (
-        <div></div>
-    );
 };
 
-FirstPage.propTypes = {
+HomePage.propTypes = {
     history: PropTypes.object,
-    match: PropTypes.object,
 };
-export default FirstPage;
+export default HomePage;

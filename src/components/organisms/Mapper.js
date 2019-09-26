@@ -9,6 +9,7 @@ import TableRow from '@material-ui/core/TableRow/TableRow';
 import TableCell from '@material-ui/core/TableCell/TableCell';
 import TableBody from '@material-ui/core/TableBody/TableBody';
 import Table from '@material-ui/core/Table/Table';
+import Hidden from '@material-ui/core/Hidden';
 
 import { getUploadMappings } from '../../redux/selectors/mainSelectors';
 import { getCurrentSheet, getCurrentSheetIndex, getFilename, getResourceSheetNames } from '../../redux/selectors/resourceSelectors';
@@ -17,7 +18,6 @@ import MappingRow from '../molecules/MappingRow';
 import { setMapping } from '../../redux/actions/mainActions';
 import { addSelectedProperty, removeSelectedProperty } from '../../redux/actions/mappingActions';
 import { getAvailableProperties, getMappingProperties } from '../../redux/selectors/mappingSelectors';
-import Hidden from '@material-ui/core/Hidden';
 
 const Mapper = () => {
     const dispatch = useDispatch();
@@ -91,7 +91,11 @@ const Mapper = () => {
                                         isSelected={!!mappings[header]}
                                         header={header}
                                         preview={previews[i]}
-                                        properties={[...availableProperties, allProperties.find(prop => prop.value === mappings[header]), { value: null, label: 'None' }].filter(prop => prop)}
+                                        properties={[
+                                            ...availableProperties,
+                                            allProperties.find(prop => prop.value === mappings[header]),
+                                            { value: null, label: 'None', description: 'The column will not be included' },
+                                        ].filter(prop => prop)}
                                         selectedProperty={allProperties.find(prop => prop.label === mappings[header])}
                                         onChange={value => {
                                             setHeaderMapping(header, value);

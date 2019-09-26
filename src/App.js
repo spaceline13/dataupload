@@ -4,12 +4,12 @@ import { ThemeProvider } from '@material-ui/styles';
 import { SnackbarProvider } from 'notistack';
 import { AnimatedSwitch } from 'react-router-transition';
 import styled from 'styled-components';
-
 import { useSelector } from 'react-redux';
+
 import SelectTypePage from './pages/SelectTypePage';
-import FirstPage from './pages/FirstPage';
+import HomePage from './pages/HomePage';
 import SelectObjectsPage from './pages/SelectObjectsPage';
-import { ROUTE_FINISHED, ROUTE_MAIN, ROUTE_MAPPING, ROUTE_METADATA, ROUTE_SELECT_OJECTS, ROUTE_SELECT_TYPE, ROUTE_UPLOAD_FILE, ROUTE_UPLOAD_STREAM } from './ROUTES';
+import { ROUTE_FINISHED, ROUTE_HOME, ROUTE_LOGIN, ROUTE_MAPPING, ROUTE_METADATA, ROUTE_SELECT_OJECTS, ROUTE_SELECT_TYPE, ROUTE_UPLOAD_FILE, ROUTE_UPLOAD_STREAM } from './ROUTES';
 import UploadFilePage from './pages/UploadFilePage';
 import MetadataAndSendPage from './pages/MetadataAndSendPage';
 import MappingPage from './pages/MappingPage';
@@ -20,6 +20,7 @@ import { bounceTransition, mapStyles } from './styles/pageAnimationConfig';
 import { getTheme } from './redux/selectors/mainSelectors';
 import { Auth0Provider } from './components/organisms/Auth0Wrapper';
 import PrivateRoute from './components/molecules/PrivateRoute';
+import LoginPage from './pages/LoginPage';
 
 require('dotenv').config();
 // page animations wraper
@@ -28,7 +29,7 @@ const Animation = styled(AnimatedSwitch)`
     height: 100%;
     & > div {
         position: absolute;
-        height:100%;
+        height: 100%;
         width: 100%;
     }
 `;
@@ -39,13 +40,18 @@ const onRedirectCallback = appState => {
 const App = () => {
     const personalizedTheme = useSelector(getTheme);
     return (
-        <Auth0Provider domain={process.env.REACT_APP_AUTH0_DOMAIN} client_id={process.env.REACT_APP_AUTH0_ID} redirect_uri={`${window.location.origin}${ROUTE_MAIN}/foodakai`} onRedirectCallback={onRedirectCallback}>
+        <Auth0Provider
+            domain={process.env.REACT_APP_AUTH0_DOMAIN}
+            client_id={process.env.REACT_APP_AUTH0_ID}
+            redirect_uri={`${window.location.origin}${ROUTE_HOME}`}
+            onRedirectCallback={onRedirectCallback}>
             <ThemeProvider theme={personalizedTheme ? theme(personalizedTheme) : null}>
                 <SnackbarProvider maxSnack={2}>
                     {/* TO DO: USE Material UI CssBaseline here instead of body css in index html*/}
                     <Router>
                         <Animation atEnter={bounceTransition.atEnter} atLeave={bounceTransition.atLeave} atActive={bounceTransition.atActive} mapStyles={mapStyles} className="route-wrapper">
-                            <Route exact path={`${ROUTE_MAIN}/:community`} component={FirstPage} />
+                            <Route exact path={ROUTE_LOGIN} component={LoginPage} />
+                            <PrivateRoute exact path={ROUTE_HOME} component={HomePage} />
                             <PrivateRoute exact path={ROUTE_SELECT_TYPE} component={SelectTypePage} />
                             <PrivateRoute exact path={ROUTE_SELECT_OJECTS} component={SelectObjectsPage} />
                             <PrivateRoute exact path={ROUTE_UPLOAD_FILE} component={UploadFilePage} />

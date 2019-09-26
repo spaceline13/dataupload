@@ -1,4 +1,5 @@
-export const ROUTE_MAIN = '/main';
+export const ROUTE_LOGIN = '/';
+export const ROUTE_HOME = '/home';
 export const ROUTE_SELECT_TYPE = '/type';
 export const ROUTE_SELECT_OJECTS = '/objects';
 export const ROUTE_UPLOAD_FILE = '/file';

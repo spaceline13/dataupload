@@ -10,9 +10,13 @@ const TooltipedSelectItem = ({ overlay, itemValue }) => {
             placement="left"
             trigger={['hover']}
             overlay={
-                <div style={{ width: '300px', zIndex: 9999 }}>
-                    <div>{overlay ? overlay : ''}</div>
-                </div>
+                overlay ? (
+                    <div style={{ width: '300px', zIndex: 9999 }}>
+                        <div>{overlay}</div>
+                    </div>
+                ) : (
+                    false
+                )
             }>
             <div>
                 <b>{itemValue}</b>

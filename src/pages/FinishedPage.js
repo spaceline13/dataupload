@@ -5,12 +5,10 @@ import { Redirect } from 'react-router-dom';
 
 import HeaderContentsFooterTemplate from '../components/templates/HeaderContentsFooterTemplate';
 import { footstepValidation } from '../redux/selectors/stepsSelectors';
-import { ROUTE_MAIN } from '../ROUTES';
-import { getCommunity } from '../redux/selectors/mainSelectors';
+import { ROUTE_HOME } from '../ROUTES';
 
 const FinishedPage = () => {
     const footstepsValid = useSelector(footstepValidation);
-    const community = useSelector(getCommunity);
     if (footstepsValid)
         return (
             <HeaderContentsFooterTemplate>
@@ -18,14 +16,14 @@ const FinishedPage = () => {
                     <Button
                         variant={'outlined'}
                         onClick={() => {
-                            window.location.href = `${ROUTE_MAIN}/${community}`;
+                            window.location.href = ROUTE_HOME;
                         }}>
                         Go to Home Page
                     </Button>
                 </center>
             </HeaderContentsFooterTemplate>
         );
-    else return <Redirect to={`${ROUTE_MAIN}/${community}`} />;
+    else return <Redirect to={ROUTE_HOME} />;
 };
 
 export default FinishedPage;
