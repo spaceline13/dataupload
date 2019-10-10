@@ -15,7 +15,7 @@ router.get('/', async (req, res) => {
         body: JSON.stringify({
             apikey: apiKey,
             detail: id ? true : false,
-            entityType: 'internal_datasetORinternal_stream',
+            entityType: 'internal_dataset||internal_stream',
             strictQuery: id ? { id } : { dataSource: community },
         }),
     });
