@@ -1,3 +1,3 @@
 #!/bin/bash
-su -c /var/www/html/uploadTool/pm2_run_batch_file.sh root
+su -c /var/www/dataintegrationtool/pm2_run_batch_file.sh root
 
