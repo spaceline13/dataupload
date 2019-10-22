@@ -10,7 +10,7 @@ require('dotenv').config();
 //CORS
 app.use(
     cors({
-        origin: ['http://upload.agroknow.com','http://dev.k2p.agroknow.com:3006', 'http://localhost:3006'], //the port my react app is running on.
+        origin: ['https://upload.foodakai.com','http://localhost:3006'], //the port my react app is running on.
         credentials: true,
     }),
 );
