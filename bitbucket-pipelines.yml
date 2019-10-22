@@ -11,15 +11,15 @@ pipelines:
         - step: 
                 name: Project Upload
                 script:
-                  - rsync -zrSlh --stats ./ ubuntu@34.240.74.141:/var/www/html/uploadTool/
+                  - rsync -zrSlh --stats ./ ubuntu@52.214.72.17:/var/www/dataintegrationtool/
         - step:
                 name: Set execution permissions
                 script:
                  - pipe: atlassian/ssh-run:0.1.4
                    variables:
                      SSH_USER: 'ubuntu'
-                     SERVER: '34.240.74.141'
-                     COMMAND: 'sudo chmod 777 /var/www/html/uploadTool/pm2_run_batch_file.sh'
+                     SERVER: '52.214.72.17'
+                     COMMAND: 'sudo chmod 777 /var/www/dataintegrationtool/pm2_run_batch_file.sh'
 
         - step:
                name: Run
@@ -27,7 +27,7 @@ pipelines:
                 - pipe: atlassian/ssh-run:0.1.4
                   variables:
                     SSH_USER: 'ubuntu'
-                    SERVER: '34.240.74.141'
-                    COMMAND: 'sudo bash /var/www/html/uploadTool/run_batch_file_as_single_command.sh'
+                    SERVER: '52.214.72.17'
+                    COMMAND: 'sudo bash /var/www/dataintegrationtool/run_batch_file_as_single_command.sh'
 
 
