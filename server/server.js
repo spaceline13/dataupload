@@ -3,6 +3,7 @@ const app = express();
 const port = 5151;
 const session = require('express-session');
 const cors = require('cors');
+
 require('es6-promise').polyfill();
 require('isomorphic-fetch');
 require('dotenv').config();
@@ -27,6 +28,9 @@ app.use(express.json({ limit: '50mb' }));
 
 //URLENCODED
 app.use(express.urlencoded({ limit: '50mb' }));
+
+//FILE ACCESS TO THE APP FOLDER (ex of use remote xlsx library call for web workers)
+app.use('/static', express.static('../'));
 
 //ROUTES
 app.use('/theme', require('./routes/theme'));
