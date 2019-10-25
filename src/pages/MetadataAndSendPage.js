@@ -36,7 +36,6 @@ const MetadataAndSendPage = () => {
         (async () => {
             let response = await fetch(`${process.env.REACT_APP_SERVER_ENDPOINT}/metadataFields?community=${community}`, {
                 method: 'GET',
-                credentials: 'include',
                 headers: {
                     Accept: 'application/json',
                     'Content-Type': 'application/json',
@@ -87,7 +86,6 @@ const MetadataAndSendPage = () => {
 
                 let response = await fetch(`${process.env.REACT_APP_SERVER_ENDPOINT}/sendCSV`, {
                     method: 'POST',
-                    credentials: 'include',
                     body: formData,
                 });
                 let json = await response.json();

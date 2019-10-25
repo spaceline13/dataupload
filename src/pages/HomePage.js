@@ -50,7 +50,6 @@ const HomePage = ({ history }) => {
             (async () => {
                 let response = await fetch(`${process.env.REACT_APP_SERVER_ENDPOINT}/entranceScreen?community=${community}`, {
                     method: 'GET',
-                    credentials: 'include',
                     headers: {
                         Accept: 'application/json',
                         'Content-Type': 'application/json',
@@ -71,7 +70,6 @@ const HomePage = ({ history }) => {
             (async () => {
                 let response = await fetch(`${process.env.REACT_APP_SERVER_ENDPOINT}/validations?community=${community}`, {
                     method: 'GET',
-                    credentials: 'include',
                     headers: {
                         Accept: 'application/json',
                         'Content-Type': 'application/json',
@@ -90,7 +88,6 @@ const HomePage = ({ history }) => {
             (async () => {
                 let response = await fetch(`${process.env.REACT_APP_SERVER_ENDPOINT}/steps?community=${community}`, {
                     method: 'GET',
-                    credentials: 'include',
                     headers: {
                         Accept: 'application/json',
                         'Content-Type': 'application/json',
@@ -111,7 +108,6 @@ const HomePage = ({ history }) => {
                 setUserDataLoading(true);
                 let response = await fetch(`${process.env.REACT_APP_SERVER_ENDPOINT}/uploadedData?community=${community}&apiKey=${user['http://apiKey']}`, {
                     method: 'GET',
-                    credentials: 'include',
                     headers: {
                         Accept: 'application/json',
                         'Content-Type': 'application/json',
@@ -133,7 +129,6 @@ const HomePage = ({ history }) => {
     const getItemFromServer = async id => {
         let response = await fetch(`${process.env.REACT_APP_SERVER_ENDPOINT}/uploadedData?id=${id}&community=${community}&apiKey=${user['http://apiKey']}`, {
             method: 'GET',
-            credentials: 'include',
             headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/json',
@@ -183,7 +178,6 @@ const HomePage = ({ history }) => {
     const handleDelete = async id => {
         let response = await fetch(`${process.env.REACT_APP_SERVER_ENDPOINT}/removeItem?id=${id}&community=${community}&apiKey=${user['http://apiKey']}`, {
             method: 'DELETE',
-            credentials: 'include',
             headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/json',

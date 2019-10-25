@@ -23,7 +23,6 @@ const MappingPage = () => {
         (async () => {
             let response = await fetch(`${process.env.REACT_APP_SERVER_ENDPOINT}/objectProperties?object=${selectedObject}&community=${community}`, {
                 method: 'GET',
-                credentials: 'include',
                 headers: {
                     Accept: 'application/json',
                     'Content-Type': 'application/json',
