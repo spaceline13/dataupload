@@ -1,5 +1,7 @@
 var router = require('express').Router();
 
+const orDelimiter = 'OR';
+
 //get user data
 router.get('/', async (req, res) => {
     const { id, community, apiKey } = req.query; //if id is given, the request is detailed for the specific id, otherwise detailed is set to false
@@ -15,7 +17,7 @@ router.get('/', async (req, res) => {
         body: JSON.stringify({
             apikey: apiKey,
             detail: id ? true : false,
-            entityType: 'internal_datasetORinternal_stream',
+            entityType: 'internal_dataset' + orDelimiter + 'internal_stream',
             strictQuery: id ? { id } : { dataSource: community },
         }),
     });
