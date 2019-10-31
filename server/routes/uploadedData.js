@@ -1,6 +1,6 @@
 var router = require('express').Router();
 
-const orDelimiter = 'OR';
+const orDelimiter = '||';
 
 //get user data
 router.get('/', async (req, res) => {
