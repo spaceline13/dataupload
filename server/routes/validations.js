@@ -28,6 +28,10 @@ router.get('/', (req, res) => {
                         state: 'mapping',
                         requiredFields: ['name'],
                     },
+                    editor: {
+                        state: 'main',
+                        requiredFields: ['dataEditorValidation'],
+                    },
                     metadata: {
                         state: 'main',
                         requiredFields: ['metadata'],

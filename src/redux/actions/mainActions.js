@@ -1,6 +1,6 @@
 import {
     INIT_MAPPINGS,
-    SET_COMMUNITY,
+    SET_COMMUNITY, SET_DATA_EDITOR_VALIDATION,
     SET_MAPPING,
     SET_METADATA, SET_THEME,
     SET_UPLOAD_OBJECTS,
@@ -64,4 +64,11 @@ const setMetadata = metadata => ({
     },
 });
 
-export { setCommunity, setTheme, setUploadType, setUploadObjects, setUploadStream, initMappings, setMapping, setMetadata };
+const setDataEditorValidation = dataEditorValidation => ({
+    type: SET_DATA_EDITOR_VALIDATION,
+    payload: {
+        dataEditorValidation,
+    },
+});
+
+export { setCommunity, setTheme, setUploadType, setUploadObjects, setUploadStream, initMappings, setMapping, setMetadata, setDataEditorValidation };

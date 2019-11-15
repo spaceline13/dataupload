@@ -11,7 +11,7 @@ import Infobox from '../molecules/Infobox';
 import MiddleScreenContainer from '../molecules/MiddleScreenContainer';
 import { getActiveStep } from '../../redux/selectors/stepsSelectors';
 
-const HeaderContentsFooterTemplate = ({ children, onFinish }) => {
+const HeaderContentsFooterTemplate = ({ children, onBack, onNext, onFinish }) => {
     const { title, subtitle, infobox } = useSelector(getActiveStep);
     return (
         <Box display={'flex'} flexDirection={'column'} height={'100%'} overflow={'hidden'}>
@@ -31,13 +31,15 @@ const HeaderContentsFooterTemplate = ({ children, onFinish }) => {
                 </MiddleScreenContainer>
             </Box>
             <Box flex={'0 0 auto'}>
-                <Footer_StepController_Validator onFinish={onFinish} />
+                <Footer_StepController_Validator onBack={onBack} onNext={onNext} onFinish={onFinish} />
             </Box>
         </Box>
     );
 };
 HeaderContentsFooterTemplate.propTypes = {
     children: PropTypes.node,
+    onBack: PropTypes.func,
+    onNext: PropTypes.func,
     onFinish: PropTypes.func,
 };
 

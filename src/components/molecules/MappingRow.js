@@ -19,7 +19,7 @@ const MappingRow = ({ isSelected, header, preview, properties, selectedProperty,
         label = null;
     if (selectedProperty) {
         api = selectedProperty.api;
-        autocomplete = selectedProperty.type === 'autocomplete';
+        autocomplete = !!selectedProperty.autocomplete;
         label = selectedProperty.label;
         filter = selectedProperty.filter;
     }

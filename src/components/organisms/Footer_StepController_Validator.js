@@ -16,7 +16,7 @@ import { getFilename } from '../../redux/selectors/resourceSelectors';
 import { getSelectedProperties } from '../../redux/selectors/mappingSelectors';
 import { ROUTE_HOME } from '../../ROUTES';
 
-const Footer_StepController_Validator = ({ history, onFinish }) => {
+const Footer_StepController_Validator = ({ history, onBack, onNext, onFinish }) => {
     const dispatch = useDispatch();
     //for navigation
     const steps = useSelector(getStepsList);
@@ -29,11 +29,13 @@ const Footer_StepController_Validator = ({ history, onFinish }) => {
         dispatch(addFootstep(current.index));
         dispatch(setActive(back.index));
         history.push(back.route);
+        if (onBack) onBack();
     };
     const goNext = () => {
         dispatch(addFootstep(current.index));
         dispatch(setActive(next.index));
         history.push(next.route);
+        if (onNext) onNext();
     };
     const doCancel = () => {
         window.location.href = ROUTE_HOME;
@@ -85,6 +87,8 @@ const Footer_StepController_Validator = ({ history, onFinish }) => {
 };
 Footer_StepController_Validator.propTypes = {
     history: PropTypes.object,
+    onBack: PropTypes.func,
+    onNext: PropTypes.func,
     onFinish: PropTypes.func,
 };
 export default withRouter(Footer_StepController_Validator);

@@ -1,3 +1,7 @@
+/* WARNING!!!
+    ANY CHANGES MADE TO THIS FILE, MUST ALSO BE MADE ON THE FILE USED WITHOUT WEB WORKERS
+ */
+
 function XlsxReadForWorker() {
     /* the worker cannot access node_modules neither use import since it will run in a different thread than the main app,
      * so we are using importScripts to import the XLSX library from a remote path
@@ -20,7 +24,7 @@ function XlsxReadForWorker() {
 
             //resource: XLSX will be loaded remotely that's why we need to suppress eslint for the next line
             // eslint-disable-next-line no-undef
-            const wb = XLSX.read(excelfile, { type: rABS ? 'binary' : 'array' });
+            const wb = XLSX.read(excelfile, { type: rABS ? 'binary' : 'array', cellText: true, cellDates: true });
 
             //sheetArray: XLSX will be loaded remotely that's why we need to suppress eslint for the next line
             // eslint-disable-next-line no-undef

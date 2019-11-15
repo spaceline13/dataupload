@@ -7,9 +7,11 @@ import Mapper from '../components/organisms/Mapper';
 import HeaderContentsFooterTemplate from '../components/templates/HeaderContentsFooterTemplate';
 import { footstepValidation, getActiveStep } from '../redux/selectors/stepsSelectors';
 import { ROUTE_HOME } from '../ROUTES';
-import { getCommunity, getUploadObjects } from '../redux/selectors/mainSelectors';
+import { getCommunity, getUploadMappings, getUploadObjects } from '../redux/selectors/mainSelectors';
 import { setProperties } from '../redux/actions/mappingActions';
 import { setValidationsByStep } from '../redux/actions/validationActions';
+import { initAgGrid } from '../redux/actions/resourceActions';
+import { getMappingProperties } from '../redux/selectors/mappingSelectors';
 
 const MappingPage = () => {
     const dispatch = useDispatch();
@@ -17,6 +19,8 @@ const MappingPage = () => {
     const selectedObject = useSelector(getUploadObjects);
     const currentStep = useSelector(getActiveStep);
     const community = useSelector(getCommunity);
+    const mappings = useSelector(getUploadMappings);
+    const properties = useSelector(getMappingProperties);
     const { enqueueSnackbar } = useSnackbar();
     useEffect(() => {
         //GET USER DATA
@@ -41,7 +45,7 @@ const MappingPage = () => {
 
     if (footstepsValid) {
         return (
-            <HeaderContentsFooterTemplate>
+            <HeaderContentsFooterTemplate onNext={()=>{dispatch(initAgGrid(mappings, properties))}}>
                 <Mapper />
             </HeaderContentsFooterTemplate>
         );

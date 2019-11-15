@@ -1,5 +1,9 @@
 import XLSX from 'xlsx';
 
+/* WARNING!!!
+    ANY CHANGES MADE TO THIS FILE, MUST ALSO BE MADE ON THE FILE USED WITH WEB WORKERS
+ */
+
 const xlsxRead = (file)=>{
     let promise = new Promise((resolve, reject) => {
         const reader = new FileReader();
@@ -11,7 +15,7 @@ const xlsxRead = (file)=>{
             const excelfile = e.target.result;
 
             //resource
-            const wb = XLSX.read(excelfile, { type: rABS ? 'binary' : 'array' });
+            const wb = XLSX.read(excelfile, { type: rABS ? 'binary' : 'array', cellText: true, cellDates: false });
 
             //sheetArray
             const sheetArray = wb.SheetNames ? wb.SheetNames.map(name => XLSX.utils.sheet_to_json(wb.Sheets[name], { header: 1 })) : [];

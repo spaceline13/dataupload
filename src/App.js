@@ -21,6 +21,7 @@ import { getTheme } from './redux/selectors/mainSelectors';
 import { Auth0Provider } from './components/organisms/Auth0Wrapper';
 import PrivateRoute from './components/molecules/PrivateRoute';
 import LoginPage from './pages/LoginPage';
+import DataEditPage from './pages/DataEditPage';
 
 require('dotenv').config();
 // page animations wraper
@@ -57,6 +58,7 @@ const App = () => {
                             <PrivateRoute exact path={ROUTE_UPLOAD_FILE} component={UploadFilePage} />
                             <PrivateRoute exact path={ROUTE_UPLOAD_STREAM} component={UploadStreamPage} />
                             <PrivateRoute exact path={ROUTE_MAPPING} component={MappingPage} />
+                            <PrivateRoute exact path={'/editor'} component={DataEditPage} />
                             <PrivateRoute exact path={ROUTE_METADATA} component={MetadataAndSendPage} />
                             <PrivateRoute exact path={ROUTE_FINISHED} component={FinishedPage} />
                         </Animation>

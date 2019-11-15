@@ -13,6 +13,7 @@ import { getFile } from '../../redux/selectors/resourceSelectors';
 import WebWorker from '../../utils/WebWorker';
 import xlsxReadWorker from '../../utils/xlsxReadForWorker';
 import Loader from '../molecules/Loader';
+import { setSelectedProperties } from '../../redux/actions/mappingActions';
 
 const Uploader = () => {
     const dispatch = useDispatch();
@@ -48,6 +49,7 @@ const Uploader = () => {
         dispatch(setResource(wb, sheetArray));
         dispatch(setCurrentSheet(0));
         dispatch(initMappings(initialMappings));
+        dispatch(setSelectedProperties([]));
         setLoading(false);
     };
 

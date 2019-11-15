@@ -1,5 +1,5 @@
 import {
-    INIT_MAPPINGS, SET_COMMUNITY,
+    INIT_MAPPINGS, SET_COMMUNITY, SET_DATA_EDITOR_VALIDATION,
     SET_MAPPING,
     SET_METADATA, SET_THEME,
     SET_UPLOAD_OBJECTS,
@@ -16,6 +16,7 @@ const initialState = {
     stream: null,
     mappings: {},
     metadata: {},
+    dataEditorValidation: true,
 };
 
 const main = (state = initialState, action) => {
@@ -75,6 +76,13 @@ const main = (state = initialState, action) => {
             return {
                 ...state,
                 metadata,
+            };
+        }
+        case SET_DATA_EDITOR_VALIDATION: {
+            const { dataEditorValidation } = action.payload;
+            return {
+                ...state,
+                dataEditorValidation,
             };
         }
         default:

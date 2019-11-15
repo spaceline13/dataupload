@@ -8,6 +8,8 @@
     "@material-ui/icons": "^4.2.1",
     "@material-ui/lab": "^4.0.0-alpha.23",
     "@material-ui/styles": "^4.3.0",
+    "ag-grid-community": "^21.2.2",
+    "ag-grid-react": "^21.2.2",
     "classnames": "^2.2.6",
     "connected-react-router": "^6.5.2",
     "dotenv": "^8.1.0",

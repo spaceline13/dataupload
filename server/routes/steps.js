@@ -71,6 +71,16 @@ router.get('/', async (req, res) => {
                     },
                     {
                         index: 4,
+                        name: 'editor',
+                        text: 'Data Editor',
+                        title: 'Edit your Data',
+                        subtitle:
+                            "Each column header below should be mapped to a property in our Data Platform. Some of these may have already been mapped based on their names. Anything that hasn't been mapped yet can be manually mapped to a property with the dropdown menu.",
+                        infobox: null,
+                        route: '/editor',
+                    },
+                    {
+                        index: 5,
                         name: 'metadata',
                         text: 'Add Metadata',
                         title: 'Add some final useful information',
@@ -79,7 +89,7 @@ router.get('/', async (req, res) => {
                         route: '/metadata',
                     },
                     {
-                        index: 5,
+                        index: 6,
                         name: 'finished',
                         text: 'Finished',
                         title: 'Congratulations! Your data have been added successfully to the Data Platform!',
