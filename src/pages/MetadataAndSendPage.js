@@ -10,12 +10,13 @@ import { setMetadata } from '../redux/actions/mainActions';
 import { METADATA_STEP_NAME } from '../EN_Texts';
 import { getCommunity, getJsonForServer, getUploadMappings, getUploadMetadata } from '../redux/selectors/mainSelectors';
 import ServerSendingDialog from '../components/molecules/ServerSendingDialog';
-import { footstepValidation, getActiveStep } from '../redux/selectors/stepsSelectors';
+import { footstepValidation, getActiveStep, includesStep } from '../redux/selectors/stepsSelectors';
 import { ROUTE_HOME } from '../ROUTES';
 import composeCSVselectedCols from '../utils/composeCSVselectedCols';
-import { getCurrentSheet, getFile } from '../redux/selectors/resourceSelectors';
+import { getColumnDefs, getCurrentSheet, getDataArray, getFile } from '../redux/selectors/resourceSelectors';
 import { setValidationsByStep } from '../redux/actions/validationActions';
 import { useAuth0 } from '../components/organisms/Auth0Wrapper';
+import { formatDataForXLSX } from '../utils/AgGridDataFormatter';
 
 const MetadataAndSendPage = () => {
     const dispatch = useDispatch();
@@ -27,6 +28,10 @@ const MetadataAndSendPage = () => {
     const jsonForServer = useSelector(getJsonForServer);
     const currentStep = useSelector(getActiveStep);
     const file = useSelector(getFile);
+    const hasEditorStep = useSelector(includesStep('editor'));
+    const columnDefs = useSelector(getColumnDefs);
+    const rowData = useSelector(getDataArray);
+
     const { enqueueSnackbar } = useSnackbar();
     const { user } = useAuth0();
 
@@ -77,7 +82,8 @@ const MetadataAndSendPage = () => {
                 var formData = new FormData();
                 //in case of file upload
                 if (file) {
-                    formData.append('csv', composeCSVselectedCols(currentSheet, mappings));
+                    if (hasEditorStep) formData.append('csv', composeCSVselectedCols(formatDataForXLSX({ columnDefs, rowData })));
+                    else formData.append('csv', composeCSVselectedCols(currentSheet, mappings));
                     formData.append('file', file);
                 }
                 //both in file and stream upload

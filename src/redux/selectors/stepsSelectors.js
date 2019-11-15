@@ -18,6 +18,8 @@ const getActiveStep = store => getStepsList(store)[getActiveIndex(store)];
 
 const getFootsteps = store => (getStepsState(store) ? getStepsState(store).footsteps : []);
 
+const includesStep = stepName => store => getStepsList(store).find(step => step.name === stepName);
+
 //checks if it came to this page directly from the url
 const footstepValidation = store => {
     // passes the step param and not the (getActiveIndex) since the first time needs to be used by the url
@@ -34,4 +36,4 @@ const footstepValidation = store => {
     return isValid;
 };
 
-export { getStepsState, getStepsByType, getStepsList, getStepName, getActiveIndex, getActiveStep, getStepsTexts, getStepsNames, getStepByRoute, getFootsteps, footstepValidation };
+export { getStepsState, getStepsByType, getStepsList, getStepName, getActiveIndex, getActiveStep, getStepsTexts, getStepsNames, getStepByRoute, getFootsteps, footstepValidation, includesStep };
