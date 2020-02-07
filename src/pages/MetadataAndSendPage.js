@@ -15,7 +15,6 @@ import { ROUTE_HOME } from '../ROUTES';
 import composeCSVselectedCols from '../utils/composeCSVselectedCols';
 import { getColumnDefs, getCurrentSheet, getDataArray, getFile } from '../redux/selectors/resourceSelectors';
 import { setValidationsByStep } from '../redux/actions/validationActions';
-import { useAuth0 } from '../components/organisms/Auth0Wrapper';
 import { formatDataForXLSX } from '../utils/AgGridDataFormatter';
 
 const MetadataAndSendPage = () => {
@@ -33,7 +32,6 @@ const MetadataAndSendPage = () => {
     const rowData = useSelector(getDataArray);
 
     const { enqueueSnackbar } = useSnackbar();
-    const { user } = useAuth0();
 
     const [fields, setFields] = useState([]);
     useEffect(() => {
@@ -88,7 +86,7 @@ const MetadataAndSendPage = () => {
                 }
                 //both in file and stream upload
                 formData.append('json', JSON.stringify(json1));
-                formData.append('apiKey', user['http://apiKey']);
+                formData.append('apiKey', process.env.REACT_APP_API_KEY);
 
                 let response = await fetch(`${process.env.REACT_APP_SERVER_ENDPOINT}/sendCSV`, {
                     method: 'POST',

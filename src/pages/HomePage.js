@@ -17,7 +17,6 @@ import Loader from '../components/molecules/Loader';
 import { getUserItems } from '../redux/selectors/fileManagementSelectors';
 import { deleteUserItem, setUserItems } from '../redux/actions/fileManagementActions';
 import { setTheme } from '../redux/actions/mainActions';
-import { useAuth0 } from '../components/organisms/Auth0Wrapper';
 import { getCommunity } from '../redux/selectors/mainSelectors';
 import { ROUTE_LOGIN } from '../ROUTES';
 import { getStepsList } from '../redux/selectors/stepsSelectors';
@@ -27,7 +26,6 @@ const HomePage = ({ history }) => {
     const steps = useSelector(getStepsList);
     const items = useSelector(getUserItems);
     const community = useSelector(getCommunity);
-    const { user } = useAuth0();
     const [userDataLoading, setUserDataLoading] = useState(false);
     const [serverResponded, setServerResponded] = useState(false);
     const [title, setTitle] = useState('');
@@ -106,7 +104,7 @@ const HomePage = ({ history }) => {
             // GET USER DATA
             (async () => {
                 setUserDataLoading(true);
-                let response = await fetch(`${process.env.REACT_APP_SERVER_ENDPOINT}/uploadedData?community=${community}&apiKey=${user['http://apiKey']}`, {
+                let response = await fetch(`${process.env.REACT_APP_SERVER_ENDPOINT}/uploadedData?community=${community}&apiKey=${process.env.REACT_APP_API_KEY}`, {
                     method: 'GET',
                     headers: {
                         Accept: 'application/json',
@@ -123,11 +121,11 @@ const HomePage = ({ history }) => {
                 }
             })();
         }
-    }, [community, dispatch, enqueueSnackbar, user]);
+    }, [community, dispatch, enqueueSnackbar]);
 
     // GET DETAILED ITEM
     const getItemFromServer = async id => {
-        let response = await fetch(`${process.env.REACT_APP_SERVER_ENDPOINT}/uploadedData?id=${id}&community=${community}&apiKey=${user['http://apiKey']}`, {
+        let response = await fetch(`${process.env.REACT_APP_SERVER_ENDPOINT}/uploadedData?id=${id}&community=${community}&apiKey=${process.env.REACT_APP_API_KEY}`, {
             method: 'GET',
             headers: {
                 Accept: 'application/json',
@@ -176,7 +174,7 @@ const HomePage = ({ history }) => {
     };
 
     const handleDelete = async id => {
-        let response = await fetch(`${process.env.REACT_APP_SERVER_ENDPOINT}/removeItem?id=${id}&community=${community}&apiKey=${user['http://apiKey']}`, {
+        let response = await fetch(`${process.env.REACT_APP_SERVER_ENDPOINT}/removeItem?id=${id}&community=${community}&apiKey=${process.env.REACT_APP_API_KEY}`, {
             method: 'DELETE',
             headers: {
                 Accept: 'application/json',
@@ -208,24 +206,20 @@ const HomePage = ({ history }) => {
                 <Box marginTop={'8vh'} />
                 <Typography align={'justify'}>{text}</Typography>
                 <Box marginTop={'8vh'} />
-                {user ? (
-                    <div>
-                        <center>
-                            <FancyButton
-                                onClick={() => {
-                                    dispatch(addFootstep(-1));
-                                    history.push(steps[0].route);
-                                }}>
-                                <span>Add New</span>
-                            </FancyButton>
-                        </center>
-                        <Box marginTop={'8vh'} />
-                        {userDataLoading ? <Loader /> : <FileManager items={items} handleStreamShow={handleStreamShow} handleDatasetDownload={handleDatasetDownload} handleDelete={handleDelete} />}
-                        <Box marginTop={'6vh'} />
-                    </div>
-                ) : (
-                    <center> Please Log In to use the app </center>
-                )}
+                <div>
+                    <center>
+                        <FancyButton
+                            onClick={() => {
+                                dispatch(addFootstep(-1));
+                                history.push(steps[0].route);
+                            }}>
+                            <span>Add New</span>
+                        </FancyButton>
+                    </center>
+                    <Box marginTop={'8vh'} />
+                    {userDataLoading ? <Loader /> : <FileManager items={items} handleStreamShow={handleStreamShow} handleDatasetDownload={handleDatasetDownload} handleDelete={handleDelete} />}
+                    <Box marginTop={'6vh'} />
+                </div>
             </LogoContentsTemplate>
         ) : (
             <center>Waiting for server response</center>

@@ -18,8 +18,6 @@ import theme from './styles/theme';
 import UploadStreamPage from './pages/UploadStreamPage';
 import { bounceTransition, mapStyles } from './styles/pageAnimationConfig';
 import { getTheme } from './redux/selectors/mainSelectors';
-import { Auth0Provider } from './components/organisms/Auth0Wrapper';
-import PrivateRoute from './components/molecules/PrivateRoute';
 import LoginPage from './pages/LoginPage';
 import DataEditPage from './pages/DataEditPage';
 
@@ -34,38 +32,29 @@ const Animation = styled(AnimatedSwitch)`
         width: 100%;
     }
 `;
-// A function that routes the user to the right place after login
-const onRedirectCallback = appState => {
-    window.history.replaceState({}, document.title, appState && appState.targetUrl ? appState.targetUrl : window.location.pathname);
-};
+
 const App = () => {
     const personalizedTheme = useSelector(getTheme);
     return (
-        <Auth0Provider
-            domain={process.env.REACT_APP_AUTH0_DOMAIN}
-            client_id={process.env.REACT_APP_AUTH0_ID}
-            redirect_uri={`${window.location.origin}${ROUTE_HOME}`}
-            onRedirectCallback={onRedirectCallback}>
-            <ThemeProvider theme={personalizedTheme ? theme(personalizedTheme) : null}>
-                <SnackbarProvider maxSnack={2}>
-                    {/* TO DO: USE Material UI CssBaseline here instead of body css in index html*/}
-                    <Router>
-                        <Animation atEnter={bounceTransition.atEnter} atLeave={bounceTransition.atLeave} atActive={bounceTransition.atActive} mapStyles={mapStyles} className="route-wrapper">
-                            <Route exact path={ROUTE_LOGIN} component={LoginPage} />
-                            <PrivateRoute exact path={ROUTE_HOME} component={HomePage} />
-                            <PrivateRoute exact path={ROUTE_SELECT_TYPE} component={SelectTypePage} />
-                            <PrivateRoute exact path={ROUTE_SELECT_OJECTS} component={SelectObjectsPage} />
-                            <PrivateRoute exact path={ROUTE_UPLOAD_FILE} component={UploadFilePage} />
-                            <PrivateRoute exact path={ROUTE_UPLOAD_STREAM} component={UploadStreamPage} />
-                            <PrivateRoute exact path={ROUTE_MAPPING} component={MappingPage} />
-                            <PrivateRoute exact path={'/editor'} component={DataEditPage} />
-                            <PrivateRoute exact path={ROUTE_METADATA} component={MetadataAndSendPage} />
-                            <PrivateRoute exact path={ROUTE_FINISHED} component={FinishedPage} />
-                        </Animation>
-                    </Router>
-                </SnackbarProvider>
-            </ThemeProvider>
-        </Auth0Provider>
+        <ThemeProvider theme={personalizedTheme ? theme(personalizedTheme) : null}>
+            <SnackbarProvider maxSnack={2}>
+                {/* TO DO: USE Material UI CssBaseline here instead of body css in index html */}
+                <Router>
+                    <Animation atEnter={bounceTransition.atEnter} atLeave={bounceTransition.atLeave} atActive={bounceTransition.atActive} mapStyles={mapStyles} className="route-wrapper">
+                        <Route exact path={ROUTE_LOGIN} component={LoginPage} />
+                        <Route exact path={ROUTE_HOME} component={HomePage} />
+                        <Route exact path={ROUTE_SELECT_TYPE} component={SelectTypePage} />
+                        <Route exact path={ROUTE_SELECT_OJECTS} component={SelectObjectsPage} />
+                        <Route exact path={ROUTE_UPLOAD_FILE} component={UploadFilePage} />
+                        <Route exact path={ROUTE_UPLOAD_STREAM} component={UploadStreamPage} />
+                        <Route exact path={ROUTE_MAPPING} component={MappingPage} />
+                        <Route exact path={'/editor'} component={DataEditPage} />
+                        <Route exact path={ROUTE_METADATA} component={MetadataAndSendPage} />
+                        <Route exact path={ROUTE_FINISHED} component={FinishedPage} />
+                    </Animation>
+                </Router>
+            </SnackbarProvider>
+        </ThemeProvider>
     );
 };
 
