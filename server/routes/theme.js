@@ -3,7 +3,7 @@ var router = require('express').Router();
 //get theme
 router.get('/', async (req, res) => {
     const { community } = req.query;
-    const url = `http://148.251.22.254:8080/mock/${community}/theme/styling.json`;
+    const url = ``;
     let response = await fetch(url, {
         method: 'GET',
         credentials: 'include',
